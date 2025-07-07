@@ -263,6 +263,7 @@ const ClientsList = () => {
                                                             }
                                                         />
                                                     </Link>
+                                                    <Link to={'/client-edit-form'}>
                                                     <ActionButton
                                                         icon={FiEdit}
                                                         onClick={() =>
@@ -272,6 +273,7 @@ const ClientsList = () => {
                                                             )
                                                         }
                                                     />
+                                                    </Link>
                                                     <ActionButton
                                                         icon={FiTrash2}
                                                         onClick={() =>
