@@ -11,6 +11,8 @@ import LoginPage from "./pages/LoginPage";
 import ClientDetailPage from "./pages/ClientDetailPage";
 import ClientsListPage from "./pages/ClientsListPage";
 import ClientEditFormPage from "./pages/ClientEditFormPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
 const ProtectedRoute = ({ isAuthenticated, children }) => {
     if (!isAuthenticated) {
         return <Navigate to="/login" replace />;
@@ -34,6 +36,8 @@ const App = () => {
                 />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                <Route path="/change-password" element={<ChangePasswordPage />} />
                 <Route path="/clients/client-detail" element={<ClientDetailPage />} />
                 <Route path="/clients" element={<ClientsListPage />} />
                 <Route path="/client-edit-form" element={<ClientEditFormPage />} />
