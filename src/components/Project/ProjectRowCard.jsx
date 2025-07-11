@@ -1,5 +1,4 @@
 import React from "react";
-import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const ProjectRowCard = ({ project }) => {
@@ -54,7 +53,7 @@ const ProjectRowCard = ({ project }) => {
         </div>
 
         <div>
-          <p className="text-sm text-gray-500 font-medium mb-1">AI Health</p>
+          <p className="text-sm text-gray-500 font-medium mb-1">AI Health Indicator</p>
           <span
             className={`text-xs px-3 py-1 rounded-md ${project.healthColor}`}
           >
