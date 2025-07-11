@@ -9,8 +9,11 @@ import {
 
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ChangePasswordPage from "./components/ChangePassword"
 import ClientDetailPage from "./pages/ClientDetailPage";
 import ClientsListPage from "./pages/ClientsListPage";
+import ClientEditFormPage from "./pages/ClientEditFormPage";
 import Project from "./pages/Project";
 import ProjectDetail from "./pages/ProjectDetailPage";
 
@@ -41,10 +44,14 @@ const App = () => {
                 {/* Auth Pages */}
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                <Route path="/change-password" element={<ChangePasswordPage />} />
+
 
                 {/* Client Pages */}
-                <Route path="/clients/client-detail" element={<ClientDetailPage />} />
                 <Route path="/clients" element={<ClientsListPage />} />
+                <Route path="/clients/client-detail" element={<ClientDetailPage />} />
+                <Route path="/clients/edit-form" element={<ClientEditFormPage />} />
 
                 {/* Project Pages */}
                 <Route path="/projects" element={<Project />} />
