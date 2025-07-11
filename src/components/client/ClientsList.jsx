@@ -263,7 +263,7 @@ const ClientsList = () => {
                                                             }
                                                         />
                                                     </Link>
-                                                    <Link to={'/client-edit-form'}>
+                                                    <Link to={'/clients/edit-form'}>
                                                     <ActionButton
                                                         icon={FiEdit}
                                                         onClick={() =>
