@@ -8,7 +8,7 @@ import AIInsights from '../components/ProjectDetail/AIInsights';
 import MilestoneChecklist from '../components/ProjectDetail/MilestoneChecklist';
 import RecentActivity from '../components/ProjectDetail/RecentActivity';
 import TeamMembers from '../components/ProjectDetail/TeamMembers';
-import Footer from '../components/ProjectDetail/Footer';
+import Footer from '../components/Footer';
 
 const ProjectDetail = () => {
   const { id } = useParams();
