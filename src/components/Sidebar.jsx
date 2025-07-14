@@ -10,7 +10,7 @@ const menuItems = [
   { label: "Home", icon: <IoMdHome />, path: "/" },
   { label: "Clients", icon: <FaGlobeAmericas />, path: "/clients" },
   { label: "Projects", icon: <GrProjects />, path: "/projects" },
-  { label: "Team Management", icon: <MdGroups />, path: "/team" },
+  { label: "Team Management", icon: <MdGroups />, path: "/team-management" },
   { label: "Analytics", icon: <MdAnalytics />, path: "/analytics" },
   { label: "AI Console", icon: <MdAutoAwesome />, path: "/ai-console" },
   { label: "Settings", icon: <IoMdSettings />, path: "/settings" },
