@@ -16,6 +16,7 @@ import ClientsListPage from "./pages/ClientsListPage";
 import ClientEditFormPage from "./pages/ClientEditFormPage";
 import Project from "./pages/Project";
 import ProjectDetail from "./pages/ProjectDetailPage";
+import TeamMembersPage from "./pages/TeamMembersPage";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
     if (!isAuthenticated) {
@@ -57,6 +58,8 @@ const App = () => {
                 <Route path="/projects" element={<Project />} />
                 <Route path="/project/:id" element={<ProjectDetail />} />
 
+                {/* Team Management Pages */}
+                <Route path="/team-management" element={<TeamMembersPage />} />
                 {/* Catch All Route */}
                 <Route
                     path="*"
