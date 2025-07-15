@@ -8,7 +8,7 @@ const ProjectCard = ({ project }) => {
           <h3 className="text-lg font-semibold text-indigo-600">{project.name}</h3>
           <p className="text-sm text-gray-500">{project.client}</p>
         </div>
-        <p className="text-sm text-gray-400">Due {project.dueDate}</p>
+        <p className="text-sm text-indigo-600">Due {project.dueDate}</p>
       </div>
 
       <div className="mt-4">
