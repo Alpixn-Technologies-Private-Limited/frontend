@@ -17,6 +17,10 @@ import ClientEditFormPage from "./pages/ClientEditFormPage";
 import Project from "./pages/Project";
 import ProjectDetail from "./pages/ProjectDetailPage";
 import TeamMembersPage from "./pages/TeamMembersPage";
+import DashBoard from "./components/dashboard/projectManagement/DashBoard";
+import ProjectManagerDashboard from "./pages/ProjectManagerDashboard";
+import AdminDashBoardPage from "./pages/AdminDashBoardPage";
+import MemberDashBoardPage from "./pages/MemberDashBoardPage";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
     if (!isAuthenticated) {
@@ -26,7 +30,7 @@ const ProtectedRoute = ({ isAuthenticated, children }) => {
 };
 
 const App = () => {
-    const isAuthenticated = false;
+    const isAuthenticated = true;
 
     return (
         <Router>
@@ -53,6 +57,11 @@ const App = () => {
                 <Route path="/clients" element={<ClientsListPage />} />
                 <Route path="/clients/client-detail" element={<ClientDetailPage />} />
                 <Route path="/clients/edit-form" element={<ClientEditFormPage />} />
+
+                {/* Dashboard */}
+                <Route path="/dashboard" element={<ProjectManagerDashboard />} />
+                <Route path="/adminDashboard" element={<AdminDashBoardPage />} />
+                <Route path="/memberDashboard" element={<MemberDashBoardPage />} />
 
                 {/* Project Pages */}
                 <Route path="/projects" element={<Project />} />

@@ -7,7 +7,7 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { Link, useLocation } from "react-router-dom";
 
 const menuItems = [
-  { label: "Home", icon: <IoMdHome />, path: "/" },
+  { label: "Dashboard", icon: <IoMdHome />, path: "/dashboard" },
   { label: "Clients", icon: <FaGlobeAmericas />, path: "/clients" },
   { label: "Projects", icon: <GrProjects />, path: "/projects" },
   { label: "Team Management", icon: <MdGroups />, path: "/team-management" },
@@ -21,9 +21,9 @@ const Sidebar = () => {
   const location = useLocation();
 
   return (
-    <div className="h-screen w-64 bg-white border-r shadow border-gray-300 p-6 flex flex-col justify-between">
+    <div className="h-screen w-64 bg-white border-r shadow border-gray-300 py-6 flex flex-col justify-between font-[Segoe UI]">
       <div>
-        <h3 className="text-2xl font-bold mb-8 bg-clip-text text-transparent w-fit bg-gradient-to-r from-[#4F46E5] via-[#D6A700] to-[#B700FF]">
+        <h3 className="text-2xl text-center mx-auto font-bold mb-10 bg-clip-text text-transparent w-fit bg-gradient-to-r from-[#4F46E5] via-[#D6A700] to-[#B700FF]">
           Project Pilot
         </h3>
 
@@ -31,10 +31,10 @@ const Sidebar = () => {
           {menuItems.map((item, index) => (
             <Link to={item.path} key={index}>
               <div
-                className={`flex items-center space-x-3 p-2 rounded-md cursor-pointer transition duration-200 ${
+                className={`flex items-center space-x-3 p-2 my-1 font-medium text-[16px] cursor-pointer transition duration-200 ${
                   location.pathname === item.path
-                    ? "bg-gray-800 text-white"
-                    : "text-black hover:bg-gray-800 hover:text-white"
+                    ? "border-[#4F46E5] border-l-4 text-[#4F46E5]"
+                    : "text-black hover:bg-gray-100"
                 }`}
               >
                 <span className="text-xl">{item.icon}</span>

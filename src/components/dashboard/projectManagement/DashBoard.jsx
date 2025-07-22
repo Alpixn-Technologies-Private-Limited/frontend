@@ -1,15 +1,10 @@
 import React from "react";
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-} from "@tanstack/react-table";
-import { MdOutlineDangerous } from "react-icons/md";
+import { HandCoins, TrendingUpDown, TriangleAlert } from "lucide-react";
 import { FaBell, FaPhone, FaRupeeSign } from "react-icons/fa";
-import BarChart from "../../charts/BarChart"; // Make sure this is correct
+import BarChart from "../../charts/BarChart";
 import Footer from "../../Footer";
+import Table from "../../charts/Table";
 
-// Project Overview Table Data
 const projectData = [
   {
     project: "Website Redesign",
@@ -31,7 +26,6 @@ const projectData = [
   },
 ];
 
-// Upcoming Deadlines Table Data
 const deadlineData = [
   {
     icon: <FaBell />,
@@ -53,14 +47,12 @@ const deadlineData = [
   },
 ];
 
-// Utility for progress bar color
 const getProgressColor = (value) => {
   if (value <= 50) return "bg-red-600";
   if (value <= 75) return "bg-yellow-600";
   return "bg-green-600";
 };
 
-// Table Columns
 const overviewColumns = [
   {
     header: "Project Name",
@@ -115,7 +107,6 @@ const deadlineColumns = [
   },
 ];
 
-// Chart Data
 const chartData = {
   labels: ["Raj", "Ananya", "Mehul", "Priya", "Karan", "Sneha"],
   datasets: [
@@ -167,77 +158,76 @@ const chartOptions = {
   },
 };
 
-// Generic Table Component
-const Table = ({ data, columns }) => {
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
-
-  return (
-    <table className="min-w-full mt-2 border border-gray-300 text-sm text-left text-gray-600">
-      <thead className="bg-gray-100 text-gray-800 font-medium">
-        {table.getHeaderGroups().map((hg) => (
-          <tr key={hg.id}>
-            {hg.headers.map((header) => (
-              <th key={header.id} className="px-4 py-3 text-xl border-b border-gray-300">
-                {flexRender(header.column.columnDef.header, header.getContext())}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((row) => (
-          <tr key={row.id} className="hover:bg-gray-50">
-            {row.getVisibleCells().map((cell) => (
-              <td key={cell.id} className="px-4 py-3 border-b border-gray-300 text-lg">
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-};
+const suggestions = [
+  {
+    icon: <TriangleAlert className="text-xl" />,
+    title: "Resource Allocation",
+    message:
+      "You have 3 underutilized team members. Consider redistributing tasks.",
+    button: "Relocate Now",
+  },
+  {
+    icon: <TrendingUpDown className="text-xl" />,
+    title: "Forecasted Delay",
+    message:
+      "Testing team bandwidth is low between 2-4 July. Reschedule milestone accordingly.",
+    button: "Reschedule Milestone",
+  },
+  {
+    icon: <HandCoins className="text-xl" />,
+    title: "Budget Alert",
+    message: "Marketing costs exceeded Q2 estimates by ₹15,000.",
+    button: "View Budget Summary",
+  },
+  {
+    icon: <TriangleAlert className="text-xl" />,
+    title: "Missed Tasks Follow-up Alerts",
+    message:
+      "5 tasks haven't been updated in over 3 days. Follow up to avoid bottlenecks.",
+    button: "Follow Up Now",
+  },
+];
 
 const DashBoard = () => {
   return (
-    <div className="px-1 space-y-6">
-      {/* Header */}
+    <div className="px-1 space-y-6 font-[Segoe UI]">
       <div className="flex justify-end items-center w-full">
-        <button className="bg-gradient-to-r from-indigo-500 to-yellow-500 text-white px-4 py-1.5 flex gap-1 items-center justify-center rounded-lg shadow hover:opacity-90">
-          <div className="font-semibold scale-125 flex items-center justify-center w-fit">+</div> New Project
+        <button className="bg-gradient-to-r from-indigo-600 to-yellow-600 text-white px-4 py-1.5 flex gap-1 items-center justify-center rounded-lg shadow hover:opacity-90">
+          <div className="font-semibold scale-125">+</div> New Project
         </button>
       </div>
 
-      {/* Content */}
-      <div className="flex flex-col lg:flex-row gap-6">
-        {/* Left Section */}
+      <div className="flex flex-col lg:flex-row gap-6 h-full">
         <div className="w-full lg:w-[70%] space-y-6">
-          {/* Project Table */}
-          <div className="border border-gray-300 p-4 rounded-lg shadow-sm">
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">My Project Overview</h3>
+          <div className="border border-gray-300 p-4 bg-white rounded-lg shadow-sm">
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              My Project Overview
+            </h3>
             <Table data={projectData} columns={overviewColumns} />
           </div>
 
-          {/* Chart Section */}
-          <div className="border border-gray-300 p-4 rounded-lg shadow-sm">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Team Performance Metrics</h3>
+          <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">
+              Team Performance Metrics
+            </h3>
             <div className="flex gap-6 mb-4 text-sm text-gray-600 justify-between">
               <div className="px-4 py-6 border rounded-md border-slate-300">
                 <p className="font-medium">Avg. Task Completion Time:</p>
-                <p className="font-semibold text-xl text-center text-black mt-2">3.5 <span className="font-medium text-lg">Days</span></p>
+                <p className="font-semibold text-xl text-center text-black mt-2">
+                  3.5 <span className="font-medium text-lg">Days</span>
+                </p>
               </div>
               <div className="px-4 py-6 border rounded-md border-slate-300">
                 <p className="font-medium">Tasks Completed This Week:</p>
-                <p className="font-semibold text-xl text-center text-black mt-2">58</p>
+                <p className="font-semibold text-xl text-center text-black mt-2">
+                  58
+                </p>
               </div>
               <div className="px-4 py-6 border rounded-md border-slate-300">
                 <p className="font-medium">Active Members This Week:</p>
-                <p className="font-semibold text-xl text-center text-black mt-2">6 out of 7</p>
+                <p className="font-semibold text-xl text-center text-black mt-2">
+                  6 out of 7
+                </p>
               </div>
             </div>
             <div className="w-full h-[300px]">
@@ -245,32 +235,48 @@ const DashBoard = () => {
             </div>
           </div>
 
-          {/* Deadlines Table */}
-          <div className="border border-gray-300 p-4 rounded-lg shadow-sm">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">Upcoming Deadlines</h3>
+          <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              Upcoming Deadlines
+            </h3>
             <Table data={deadlineData} columns={deadlineColumns} />
           </div>
         </div>
 
-        {/* Right Section - AI Suggestions */}
-        <div className="w-full lg:w-[30%] border border-gray-300 py-3 px-6 rounded-lg shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-800 -mb-[4.5rem]">AI Suggestions</h2>
-          {[1, 2, 3, 4].map((_, i) => (
-            <div key={i} className="text-gray-400 py-3 px-5 flex border-[#E0E0E0] flex-col my-20 gap-2 border-2 min-h-[200px] items-center justify-center text-center mb-3 rounded-md">
-              <div className="flex items-center gap-2 font-medium">
-                <MdOutlineDangerous className="text-xl" />
-                Resource Reallocation
+        <div className="w-full lg:w-[30%] border border-gray-300 bg-white py-3 px-6 rounded-lg shadow-sm min-h-[700px] flex flex-col justify-between">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+            AI Suggestions
+          </h2>
+          <div className="flex flex-col gap-4 flex-1 justify-between">
+            {suggestions.map((item, i) => (
+              <div
+                key={i}
+                className="text-gray-600 px-8 py-3 flex flex-col gap-5 border items-center border-[#E0E0E0] rounded-md shadow-md shadow-gray-300 min-h-[150px]"
+              >
+                <div className="flex items-center gap-2 text-[15px] font-medium mt-3">
+                  {item.icon}
+                  {item.title}
+                </div>
+                <p className="text-[14px] font-normal leading-relaxed px-3 text-gray-500">
+                  {item.message}
+                </p>
+                {item.button && (
+                  <button
+                    className="text-sm font-medium text-black border border-gray-300 px-4 py-2 mb-6 cursor-pointer bg-white rounded hover:bg-gray-50 w-fit"
+                    style={{
+                      boxShadow:
+                        "inset 0 1px 2px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.2)",
+                    }}
+                  >
+                    {item.button}
+                  </button>
+                )}
               </div>
-              <p className="text-sm mt-1 font-[300] text-black">
-                You have 3 underutilized team members. Consider redistributing tasks.
-              </p>
-              <button className="mt-2 text-sm border rounded-sm px-6 py-2 border-[#E0E0E0]">Relocate Now</button>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
