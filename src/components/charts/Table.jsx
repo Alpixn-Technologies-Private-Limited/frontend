@@ -16,7 +16,7 @@ const Table = ({ data, columns }) => {
   });
 
   return (
-    <div className="overflow-x-auto w-full">
+    <div className="overflow-x-auto w-full border border-gray-200 rounded-lg shadow-sm">
       <table className="min-w-full divide-y divide-gray-200 text-sm text-left text-gray-700">
         <thead className="bg-gray-100">
           {table.getHeaderGroups().map((headerGroup) => (
