@@ -1,15 +1,16 @@
-import React from 'react'
-import TeamMemberProfile from '../components/team management/TeamMemberProfile'
-import Navbar from '../components/Navbar'
-import Sidebar from '../components/Sidebar'
-import Footer from '../components/Footer'
+import React from "react";
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
+import TeamMemberProfile from "../components/team management/TeamMemberProfile";
+import Footer from "../components/Footer";
 
-const TeamMemberProfilePage = () => {
-  return (
-    <div className="h-screen flex flex-col">
+const TeamMembersPage = () => {
+    return (
+        <div className="h-screen flex flex-col">
             <div className="fixed top-0 left-64 right-0 z-50">
                 <Navbar />
             </div>
+
             <div className="flex flex-1 pt-[64px]">
                 <div className="fixed top-0 left-0 bottom-0 w-64 z-40 border-r bg-white">
                     <Sidebar />
@@ -22,7 +23,7 @@ const TeamMemberProfilePage = () => {
                 <Footer />
             </div>
         </div>
-  )
-}
+    );
+};
 
-export default TeamMemberProfilePage
+export default TeamMembersPage;
