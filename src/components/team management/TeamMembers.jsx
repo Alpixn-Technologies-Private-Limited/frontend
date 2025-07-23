@@ -94,7 +94,7 @@ const TeamMembers = () => {
                     <select
                         value={roleFilter}
                         onChange={e => setRoleFilter(e.target.value)}
-                        className="w-20 px-2 py-2 border border-gray-300 rounded-2xl bg-[#F0F2F5] outline-0"
+                        className="w-20 h-8 px-2 py-1 border border-gray-300 rounded-2xl bg-[#F0F2F5] outline-0"
                     >
                         <option value="Role" disabled hidden>Role</option>
                         <option value="Role">Role</option>
@@ -106,7 +106,7 @@ const TeamMembers = () => {
                     <select
                         value={skillsFilter}
                         onChange={e => setSkillsFilter(e.target.value)}
-                        className="px-2 w-20 py-2 border border-gray-300 rounded-2xl bg-[#F0F2F5] focus:outline-none focus:ring focus:border-blue-300"
+                        className="px-2 w-20 py-1 h-8 border border-gray-300 rounded-2xl bg-[#F0F2F5] focus:outline-none focus:ring focus:border-blue-300"
                     >
                         <option value="Skills" disabled hidden>Skills</option>
                         <option value="Skills">Skills</option>
@@ -118,7 +118,7 @@ const TeamMembers = () => {
                     <select
                         value={statusFilter}
                         onChange={e => setStatusFilter(e.target.value)}
-                        className="px-2 py-2 border border-gray-300 rounded-2xl bg-[#F0F2F5] focus:outline-none focus:ring focus:border-blue-300"
+                        className="px-2 py-1 h-8 border border-gray-300 rounded-2xl bg-[#F0F2F5] focus:outline-none focus:ring focus:border-blue-300"
                     >
                         <option value="Status" disabled hidden>Status</option>
                         <option value="Status">Status</option>
