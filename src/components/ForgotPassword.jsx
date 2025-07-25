@@ -1,21 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "../utils/axios";
 import forgot_password from "../assets/forgot_password.png";
 
 const ForgotPassword = () => {
+    const [email, setEmail] = useState("");
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!email) {
+            toast.error("Please enter your registered email.");
+            return;
+        }
+        try {
+            const loadingToast = toast.loading("Sending reset instructions...");
+
+            const res = await axios.post(
+                "/auth/forgot-password",
+                { email },
+                { withCredentials: true }
+            );
+
+            toast.dismiss(loadingToast);
+
+            if (res.data?.success) {
+                toast.success(res.data.message || "Reset instructions sent to your email.");
+            } else {
+                toast.error(res.data.message || "Something went wrong, please try again.");
+            }
+        } catch (error) {
+            toast.dismiss();
+            const message = error.response?.data?.message || "Failed to send reset email.";
+            toast.error(message);
+        }
+    };
+
     return (
-        <div className="flex flex-col md:flex-row min-h-screen">
-            <div className="flex flex-col justify-center items-center w-full md:w-1/2 bg-gradient-to-b from-white to-[#EAE9FF] p-6 sm:p-12">
-                <div className="max-w-md w-full">
+        <div
+            style={{
+                backgroundImage: `
+                    linear-gradient(170.76deg, rgba(255, 255, 255, 0) 7%, rgba(183, 0, 255, 0.008) 100%),
+                    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(168, 162, 255, 0.2) 100%)
+                `,
+            }}
+            className="flex flex-col md:flex-row min-h-screen"
+        >
+            <div className="flex flex-col justify-center items-center w-full md:w-1/2 p-6 sm:p-12">
+                <div className="max-w-md w-full relative">
                     <h1 className="text-[50px] sm:text-3xl md:text-4xl font-bold text-[#4F46E5] bg-clip-text mb-4">
                         Forgot your password?
                     </h1>
                     <p className="text-gray-700 mb-8 text-sm sm:text-base">
-                        Enter your registered email address and we’ll send you
-                        instructions to reset your password.
+                        Enter your registered email address and we’ll send you instructions to reset your password.
                     </p>
 
-                    <form className="space-y-4">
+                    <form className="space-y-4" onSubmit={handleSubmit}>
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-1">
                                 Email Address
@@ -23,7 +62,9 @@ const ForgotPassword = () => {
                             <input
                                 type="email"
                                 placeholder="Enter Your Registered Email ID"
-                                className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 text-sm sm:text-base placeholder-gray-400"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="w-full bg-white border border-gray-200 rounded-lg  px-3 py-2 text-sm sm:text-base"
                             />
                         </div>
                         <button
@@ -41,9 +82,8 @@ const ForgotPassword = () => {
                         Back to Sign In
                     </Link>
 
-                    <p className="text-center text-xs text-gray-500 absolute bottom-10">
-                        © 2025 Alpixn Technologies Private Limited. All rights
-                        reserved.
+                    <p className="text-center text-xs text-gray-500 relative -bottom-44">
+                        © 2025 Alpixn Technologies Private Limited. All rights reserved.
                     </p>
                 </div>
             </div>
