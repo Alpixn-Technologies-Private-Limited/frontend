@@ -22,6 +22,7 @@ import ProjectManagerDashboard from "./pages/ProjectManagerDashboard";
 import AdminDashBoardPage from "./pages/AdminDashBoardPage";
 import MemberDashBoardPage from "./pages/MemberDashBoardPage";
 import TeamMemberProfilePage from "./pages/TeamMemberProfile";
+import AIConsole from "./pages/AIConsole";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
     if (!isAuthenticated) {
@@ -63,6 +64,9 @@ const App = () => {
                 <Route path="/dashboard" element={<ProjectManagerDashboard />} />
                 <Route path="/adminDashboard" element={<AdminDashBoardPage />} />
                 <Route path="/memberDashboard" element={<MemberDashBoardPage />} />
+
+                {/* AI Console */}
+                <Route path="/ai-console" element={<AIConsole />} />
 
                 {/* Project Pages */}
                 <Route path="/projects" element={<Project />} />
