@@ -70,7 +70,7 @@ const App = () => {
                 <Route path="/project/:id" element={<ProjectDetail />} />
                 <Route path="/project/tasks" element={<ProjectTaskPage />} />
                 <Route path="/project/task-board" element={<TaskBoardPage />} />
-                <Route path="/project/task-details" element={<ProjectTaskDetailsPage />} /> 
+                <Route path="/project/task-details/*" element={<ProjectTaskDetailsPage />} /> 
 
                 {/* Team Management Pages */}
                 <Route path="/team-management" element={<TeamMembersPage />} />
