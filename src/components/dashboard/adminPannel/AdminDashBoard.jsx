@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { AiFillWarning } from "react-icons/ai";
-import { FaCalendar, FaCaretUp, FaCube, FaChevronDown, FaCalendarAlt } from "react-icons/fa";
+import {
+  FaCalendar,
+  FaCaretUp,
+  FaChevronDown,
+  FaCalendarAlt,
+} from "react-icons/fa";
 import { MdGroup, MdTrendingUp, MdOutlineTask } from "react-icons/md";
 import { CiGlobe, CiSettings } from "react-icons/ci";
 import { IoTimerOutline } from "react-icons/io5";
 import BarChart from "../../charts/BarChart";
 import { PiCube } from "react-icons/pi";
 import { TbMoneybag } from "react-icons/tb";
-import { BiDownArrow } from "react-icons/bi";
 import { RxCountdownTimer } from "react-icons/rx";
 import { BsGraphUp } from "react-icons/bs";
 import riskGraph from "../../../assets/graphs/risk-alert.png";
@@ -21,181 +26,241 @@ import { IoMdCloudUpload } from "react-icons/io";
 import { GrGroup } from "react-icons/gr";
 import { FaClipboardList } from "react-icons/fa6";
 
-const stats = [
-  {
-    title: "Active Projects",
-    value: "12 Projects",
-    change: "+3 this week",
-    icon: <PiCube />,
-  },
-  {
-    title: "Total Clients",
-    value: "34 Clients",
-    change: "+5 New",
-    icon: <CiGlobe />,
-  },
-  {
-    title: "Team Utilisation",
-    value: "78%",
-    change: "Stable",
-    icon: <IoTimerOutline />,
-  },
-  {
-    title: "This month revenue (in Lac)",
-    value: "₹4.30",
-    change: "+12% from last month",
-    icon: <TbMoneybag />,
-  },
-];
-
-const aiInsights = [
-  {
-    title: "Risk Alert",
-    detail: "3 Projects at Risk",
-    change: "+2 risk this week",
-    icon: (
-      <AiFillWarning className="p-[3px] bg-red-500 text-white rounded-md scale-[160%] mr-1" />
-    ),
-    timeGap: "Delayed timeliness likely",
-    img: riskGraph,
-  },
-  {
-    title: "Deadline Prediction",
-    detail: "Delta project late",
-    change: "-12% On Time Confidence",
-    icon: (
-      <RxCountdownTimer className="p-[3px] bg-yellow-500 text-white rounded-md scale-[160%] mr-1" />
-    ),
-    timeGap: "May miss deadline",
-    img: deadlineGraph,
-  },
-  {
-    title: "Performance Insight",
-    detail: "+8% Revenue/Employee",
-    change: "Steady growth trend",
-    icon: (
-      <BsGraphUp className="p-[3px] bg-green-700 text-white rounded-md scale-[160%] mr-1" />
-    ),
-    timeGap: "Based on last 30 days",
-    img: performanceGraph,
-  },
-];
-
-const tasks = [
-  {
-    title: "Add New Task",
-    desc: "Create and Assign a Task",
-    icon: <FaClipboardList />,
-  },
-  {
-    title: "Add Team Member",
-    desc: "Invite Someone to the team",
-    icon: <GrGroup />,
-  },
-  {
-    title: "Schedule Meeting",
-    desc: "Setup a new meeitng",
-    icon: <FaCalendarAlt />,
-  },
-  {
-    title: "Upload File",
-    desc: "Add files to a project",
-    icon: <IoMdCloudUpload />,
-  },
-];
-
-const barData = {
-  labels: ["Apollo", "Vega", "Orion", "Nova", "Zenith", "Helix", "Lumen"],
-  datasets: [
-    {
-      label: "Forcasted Completion",
-      data: [60, 35, 65, 25, 40, 70, 55],
-      backgroundColor: "#D2CFFF", // Light Lavender
-    },
-    {
-      label: "Actual Completion",
-      data: [85, 65, 35, 55, 80, 40, 90],
-      backgroundColor: "#4F46E5", // Indigo
-    },
-  ],
-};
-
-const barChartOptions = {
-  responsive: true,
-  maintainAspectRatio: true,
-  aspectRatio: 2.3, // reduce this to shrink the chart (try 1.2 or 1 for smaller)
-  plugins: {
-    legend: {
-      display: true,
-      position: "bottom", // move legend below
-      labels: {
-        boxWidth: 20,
-        color: "#374151",
-        padding: 15,
-      },
-    },
-  },
-  scales: {
-    y: {
-      beginAtZero: true,
-      max: 100,
-      ticks: {
-        stepSize: 20,
-        callback: (value) => `${value}%`,
-        color: "#6B7280",
-      },
-      grid: {
-        color: "#E5E7EB",
-      },
-    },
-    x: {
-      ticks: {
-        color: "#6B7280",
-      },
-      grid: {
-        display: false,
-      },
-    },
-  },
-};
-
-const activities = [
-  {
-    title: "Project Apollo Marked Complete",
-    desc: "Final Milestone Reached Successfully",
-    icon: <MdGroup />,
-  },
-  {
-    title: "Nova Budget Approved",
-    desc: "Finance team confirmed the funding",
-    icon: <MdGroup />,
-  },
-  {
-    title: "Vega Client Feedback Received",
-    desc: "Positive feedback with suggestions",
-    icon: <MdGroup />,
-  },
-  {
-    title: "Zenith Kickoff Meeting Scheduled",
-    desc: "Initial team briefing set",
-    icon: <MdGroup />,
-  },
-  {
-    title: "Orion Phase 2 Started",
-    desc: "Development resumed as planned",
-    icon: <MdGroup />,
-  },
-  {
-    title: "Helix Delayed Report",
-    desc: "Blocked due to external dependency",
-    icon: <MdGroup />,
-  },
-];
-
 const AdminDashboard = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showAll, setShowAll] = useState(false);
+  const [dashboardData, setDashboardData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/dashboard/admin`
+        );
+        if (response.data?.response?.success) {
+          setDashboardData(response.data.response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
+
+  // Stats data combining API and frontend values
+  const stats = [
+    {
+      title: "Active Projects",
+      value: `${
+        dashboardData?.kpi_metrics?.total_active_projects || 0
+      } Projects`,
+      change: "+3 this week", // Frontend value
+      icon: <PiCube />,
+    },
+    {
+      title: "Total Clients",
+      value: `${dashboardData?.kpi_metrics?.total_clients || 0} Clients`,
+      change: "+5 New", // Frontend value
+      icon: <CiGlobe />,
+    },
+    {
+      title: "Team Utilisation",
+      value: `${dashboardData?.kpi_metrics?.team_utilization || 0}%`,
+      change: "Stable", // Frontend value
+      icon: <IoTimerOutline />,
+    },
+    {
+      title: "This month revenue (in Lac)",
+      value: `₹${
+        dashboardData?.kpi_metrics?.monthly_revenue
+          ? (dashboardData.kpi_metrics.monthly_revenue / 100000).toFixed(2)
+          : "0.00"
+      }`,
+      change: "+12% from last month", // Frontend value
+      icon: <TbMoneybag />,
+    },
+  ];
+
+  // AI Insights data combining API and frontend values
+  const aiInsights = [
+    {
+      title: "Risk Alert",
+      detail: dashboardData?.ai_insights?.risk_alerts?.length
+        ? `Project(s) ${dashboardData.ai_insights.risk_alerts.length} at Risk`
+        : "No current risks",
+      change: dashboardData?.ai_insights?.risk_alerts?.length
+        ? `+${dashboardData.ai_insights.risk_alerts.length} risk this week`
+        : "No changes",
+      icon: (
+        <AiFillWarning className="p-[3px] bg-red-500 text-white rounded-md scale-[160%] mr-1" />
+      ),
+      timeGap: "Delayed timeliness likely", // Frontend value
+      img: riskGraph,
+    },
+    {
+      title: "Deadline Prediction",
+      detail: dashboardData?.ai_insights?.deadline_predictions?.length
+        ? `Project(s) ${
+            dashboardData.ai_insights.deadline_predictions[0]?.project_id || "-"
+          } late`
+        : "No deadline predictions",
+      change: dashboardData?.ai_insights?.deadline_predictions?.length
+        ? `-${Math.round(
+            (1 -
+              dashboardData.ai_insights.deadline_predictions[0]?.confidence) *
+              100
+          )}% On Time Confidence`
+        : "No changes",
+      icon: (
+        <RxCountdownTimer className="p-[3px] bg-yellow-500 text-white rounded-md scale-[160%] mr-1" />
+      ),
+      timeGap: "May miss deadline", // Frontend value
+      img: deadlineGraph,
+    },
+    {
+      title: "Performance Insight",
+      detail: "+8% Revenue/Employee", // Frontend value
+      change: "Steady growth trend", // Frontend value
+      icon: (
+        <BsGraphUp className="p-[3px] bg-green-700 text-white rounded-md scale-[160%] mr-1" />
+      ),
+      timeGap: "Based on last 30 days", // Frontend value
+      img: performanceGraph,
+    },
+  ];
+
+  const quickActions = [
+    {
+      title: "Add New Task",
+      desc: "Create and Assign a Task",
+      icon: <FaClipboardList />,
+    },
+    {
+      title: "Add Team Member",
+      desc: "Invite Someone to the team",
+      icon: <GrGroup />,
+    },
+    {
+      title: "Schedule Meeting",
+      desc: "Setup a new meeting",
+      icon: <FaCalendarAlt />,
+    },
+    {
+      title: "Upload File",
+      desc: "Add files to a project",
+      icon: <IoMdCloudUpload />,
+    },
+  ];
+
+  // Bar chart data (frontend values)
+  const barData = {
+    labels: ["Apollo", "Vega", "Orion", "Nova", "Zenith", "Helix", "Lumen"],
+    datasets: [
+      {
+        label: "Forcasted Completion",
+        data: [60, 35, 65, 25, 40, 70, 55],
+        backgroundColor: "#D2CFFF", // Light Lavender
+      },
+      {
+        label: "Actual Completion",
+        data: [85, 65, 35, 55, 80, 40, 90],
+        backgroundColor: "#4F46E5", // Indigo
+      },
+    ],
+  };
+
+  const barChartOptions = {
+    responsive: true,
+    maintainAspectRatio: true,
+    aspectRatio: 2.3,
+    plugins: {
+      legend: {
+        display: true,
+        position: "bottom",
+        labels: {
+          boxWidth: 20,
+          color: "#374151",
+          padding: 15,
+        },
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: 100,
+        ticks: {
+          stepSize: 10,
+          callback: (value) => `${value}%`,
+          color: "#6B7280",
+        },
+        grid: {
+          color: "#E5E7EB",
+        },
+      },
+      x: {
+        ticks: {
+          color: "#6B7280",
+        },
+        grid: {
+          display: false,
+        },
+      },
+    },
+  };
+
+  // Recent activities (frontend values)
+  const activities = [dashboardData?.recent_activities[0]] || [
+    {
+      title: "Project Apollo Marked Complete",
+      desc: "Final Milestone Reached Successfully",
+      icon: <MdGroup />,
+    },
+    {
+      title: "Nova Budget Approved",
+      desc: "Finance team confirmed the funding",
+      icon: <MdGroup />,
+    },
+    {
+      title: "Vega Client Feedback Received",
+      desc: "Positive feedback with suggestions",
+      icon: <MdGroup />,
+    },
+    {
+      title: "Zenith Kickoff Meeting Scheduled",
+      desc: "Initial team briefing set",
+      icon: <MdGroup />,
+    },
+    {
+      title: "Orion Phase 2 Started",
+      desc: "Development resumed as planned",
+      icon: <MdGroup />,
+    },
+    {
+      title: "Helix Delayed Report",
+      desc: "Blocked due to external dependency",
+      icon: <MdGroup />,
+    },
+  ];
+
   const visibleActivities = showAll ? activities : activities.slice(0, 4);
+
+  if (loading || !dashboardData) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-50 bg-opacity-75 z-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500 mx-auto"></div>
+          <p className="mt-4 text-lg font-medium text-gray-700">
+            Loading dashboard data...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="px-6 space-y-4 bg-gray-50 min-h-screen">
@@ -293,7 +358,7 @@ const AdminDashboard = () => {
 
         <div className="w-[49%] h-[fit] bg-[tranparent] rounded-xl p-0">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {tasks.map((task, i) => (
+            {quickActions.map((task, i) => (
               <div
                 key={i}
                 className="border border-gray-300 h-[11rem] px-4 rounded-lg bg-white transition shadow-sm flex flex-col items-center justify-center gap-2 hover:shadow-lg cursor-pointer"
@@ -326,7 +391,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="w-full flex flex-col justify-between border border-gray-300 shadow-sm rounded-lg bg-white md:w-1/3 p-3 max-w-sm text-left">
+        <div className="w-full flex flex-col border border-gray-300 shadow-sm rounded-lg bg-white md:w-1/3 p-3 max-w-sm text-left">
           <h4 className="text-lg font-semibold text-gray-800 mb-4">
             Recent Activity
           </h4>
@@ -339,12 +404,16 @@ const AdminDashboard = () => {
             {visibleActivities.map((item, index) => (
               <div
                 key={index}
-                className="flex items-center gap-3 bg-gray-100 py-1.5 px-3 rounded-lg shadow-md border border-gray-300 hover:bg-gray-50 transition"
+                className="flex w-full items-center gap-3 bg-gray-100 py-1.5 px-3 rounded-lg shadow-md border border-gray-300 hover:bg-gray-50 transition"
               >
-                <div className="text-2xl text-indigo-500 mt-2">{item.icon}</div>
+                {item.icon ? (
+                  <span className="text-2xl text-gray-600">{item.icon}</span>
+                ) : (
+                  <MdGroup className="text-2xl text-gray-600" />
+                )}
                 <div className="flex-1">
-                  <h5 className="font-medium text-gray-700">{item.title}</h5>
-                  <p className="text-sm text-gray-500">{item.desc}</p>
+                  <h5 className="font-medium text-gray-700">{item.type}</h5>
+                  <p className="text-sm text-gray-500">{item.message}</p>
                 </div>
                 <CiSettings className="text-xl text-gray-400 hover:text-indigo-500 cursor-pointer" />
               </div>
