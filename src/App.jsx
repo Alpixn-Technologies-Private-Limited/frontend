@@ -7,7 +7,6 @@ import {
     Navigate,
 } from "react-router-dom";
 
-import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ChangePasswordPage from "./components/ChangePassword"
@@ -51,7 +50,6 @@ const App = () => {
                 />
 
                 {/* Auth Pages */}
-                <Route path="/signup" element={<SignupPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                 <Route path="/change-password" element={<ChangePasswordPage />} />
