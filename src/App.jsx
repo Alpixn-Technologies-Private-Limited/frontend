@@ -7,7 +7,6 @@ import {
     Navigate,
 } from "react-router-dom";
 
-import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ChangePasswordPage from "./components/ChangePassword"
@@ -24,6 +23,7 @@ import MemberDashBoardPage from "./pages/MemberDashBoardPage";
 import ProjectTaskPage from "./pages/ProjectTaskPage";
 import TaskBoardPage from "./pages/TaskBoardPage";
 import ProjectTaskDetailsPage from "./pages/ProjectTaskDetailsPage";
+import TeamMemberProfilePage from "./pages/TeamMemberProfile";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
     if (!isAuthenticated) {
@@ -42,7 +42,7 @@ const App = () => {
                     path="/"
                     element={
                         isAuthenticated ? (
-                            <Navigate to="/dashboard" replace />
+                            <Navigate to="/dashboard/pm" replace />
                         ) : (
                             <Navigate to="/login" replace />
                         )
@@ -50,7 +50,6 @@ const App = () => {
                 />
 
                 {/* Auth Pages */}
-                <Route path="/signup" element={<SignupPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                 <Route path="/change-password" element={<ChangePasswordPage />} />
@@ -62,9 +61,9 @@ const App = () => {
                 <Route path="/clients/edit-form" element={<ClientEditFormPage />} />
 
                 {/* Dashboard */}
-                <Route path="/dashboard" element={<ProjectManagerDashboard />} />
-                <Route path="/adminDashboard" element={<AdminDashBoardPage />} />
-                <Route path="/memberDashboard" element={<MemberDashBoardPage />} />
+                <Route path="/dashboard/admin" element={<AdminDashBoardPage />} />
+                <Route path="/dashboard/pm" element={<ProjectManagerDashboard />} />
+                <Route path="/dashboard/team" element={<MemberDashBoardPage />} />
 
                 {/* Project Pages */}
                 <Route path="/projects" element={<Project />} />
@@ -75,12 +74,13 @@ const App = () => {
 
                 {/* Team Management Pages */}
                 <Route path="/team-management" element={<TeamMembersPage />} />
+                <Route path="/team-management/memberProfile" element={<TeamMemberProfilePage />} />
                 {/* Catch All Route */}
                 <Route
                     path="*"
                     element={
                         isAuthenticated ? (
-                            <Navigate to="/dashboard" replace />
+                            <Navigate to="/dashboard/admin" replace />
                         ) : (
                             <Navigate to="/login" replace />
                         )
