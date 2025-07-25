@@ -20,6 +20,7 @@ import DashBoard from "./components/dashboard/projectManagement/DashBoard";
 import ProjectManagerDashboard from "./pages/ProjectManagerDashboard";
 import AdminDashBoardPage from "./pages/AdminDashBoardPage";
 import MemberDashBoardPage from "./pages/MemberDashBoardPage";
+import ProjectTaskPage from "./pages/ProjectTaskPage";
 import TeamMemberProfilePage from "./pages/TeamMemberProfile";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
@@ -65,6 +66,7 @@ const App = () => {
                 {/* Project Pages */}
                 <Route path="/projects" element={<Project />} />
                 <Route path="/project/:id" element={<ProjectDetail />} />
+                <Route path="/project/tasks" element={<ProjectTaskPage />} />
 
                 {/* Team Management Pages */}
                 <Route path="/team-management" element={<TeamMembersPage />} />
