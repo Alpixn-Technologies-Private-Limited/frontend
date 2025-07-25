@@ -1,17 +1,30 @@
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { AiFillWarning } from "react-icons/ai";
+import {
+  FaCalendar,
+  FaCaretUp,
+  FaChevronDown,
+  FaCalendarAlt,
+} from "react-icons/fa";
+import { MdGroup, MdTrendingUp, MdOutlineTask } from "react-icons/md";
 import { CiGlobe, CiSettings } from "react-icons/ci";
-import { FaCalendar, FaChevronDown } from "react-icons/fa";
 import { IoTimerOutline } from "react-icons/io5";
-import { MdGroup, MdOutlineTask } from "react-icons/md";
+import BarChart from "../../charts/BarChart";
 import { PiCube } from "react-icons/pi";
 import { TbMoneybag } from "react-icons/tb";
-import BarChart from "../../charts/BarChart";
+import { RxCountdownTimer } from "react-icons/rx";
+import { BsGraphUp } from "react-icons/bs";
+import riskGraph from "../../../assets/graphs/risk-alert.png";
+import deadlineGraph from "../../../assets/graphs/deadline-prediction.png";
+import performanceGraph from "../../../assets/graphs/performance-insight.png";
 import Footer from "../../Footer";
-import { DotLoader } from "react-spinners";
+import { IoMdCloudUpload } from "react-icons/io";
+import { GrGroup } from "react-icons/gr";
+import { FaClipboardList } from "react-icons/fa6";
 
 const AdminDashboard = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -24,9 +37,9 @@ const AdminDashboard = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/dashboard/admin`
+          `${import.meta.env.VITE_BASE_URL}/api/dashboard/admin`
         );
-        if (response.data.response.success) {
+        if (response.data?.response?.success) {
           setDashboardData(response.data.response.data);
         }
       } catch (error) {
@@ -39,21 +52,124 @@ const AdminDashboard = () => {
     fetchDashboardData();
   }, []);
 
-  const visibleActivities = showAll
-    ? dashboardData?.recent_activities || []
-    : dashboardData?.recent_activities?.slice(0, 4) || [];
+  // Stats data combining API and frontend values
+  const stats = [
+    {
+      title: "Active Projects",
+      value: `${
+        dashboardData?.kpi_metrics?.total_active_projects || 0
+      } Projects`,
+      change: "+3 this week", // Frontend value
+      icon: <PiCube />,
+    },
+    {
+      title: "Total Clients",
+      value: `${dashboardData?.kpi_metrics?.total_clients || 0} Clients`,
+      change: "+5 New", // Frontend value
+      icon: <CiGlobe />,
+    },
+    {
+      title: "Team Utilisation",
+      value: `${dashboardData?.kpi_metrics?.team_utilization || 0}%`,
+      change: "Stable", // Frontend value
+      icon: <IoTimerOutline />,
+    },
+    {
+      title: "This month revenue (in Lac)",
+      value: `₹${
+        dashboardData?.kpi_metrics?.monthly_revenue
+          ? (dashboardData.kpi_metrics.monthly_revenue / 100000).toFixed(2)
+          : "0.00"
+      }`,
+      change: "+12% from last month", // Frontend value
+      icon: <TbMoneybag />,
+    },
+  ];
 
+  // AI Insights data combining API and frontend values
+  const aiInsights = [
+    {
+      title: "Risk Alert",
+      detail: dashboardData?.ai_insights?.risk_alerts?.length
+        ? `Project(s) ${dashboardData.ai_insights.risk_alerts.length} at Risk`
+        : "No current risks",
+      change: dashboardData?.ai_insights?.risk_alerts?.length
+        ? `+${dashboardData.ai_insights.risk_alerts.length} risk this week`
+        : "No changes",
+      icon: (
+        <AiFillWarning className="p-[3px] bg-red-500 text-white rounded-md scale-[160%] mr-1" />
+      ),
+      timeGap: "Delayed timeliness likely", // Frontend value
+      img: riskGraph,
+    },
+    {
+      title: "Deadline Prediction",
+      detail: dashboardData?.ai_insights?.deadline_predictions?.length
+        ? `Project(s) ${
+            dashboardData.ai_insights.deadline_predictions[0]?.project_id || "-"
+          } late`
+        : "No deadline predictions",
+      change: dashboardData?.ai_insights?.deadline_predictions?.length
+        ? `-${Math.round(
+            (1 -
+              dashboardData.ai_insights.deadline_predictions[0]?.confidence) *
+              100
+          )}% On Time Confidence`
+        : "No changes",
+      icon: (
+        <RxCountdownTimer className="p-[3px] bg-yellow-500 text-white rounded-md scale-[160%] mr-1" />
+      ),
+      timeGap: "May miss deadline", // Frontend value
+      img: deadlineGraph,
+    },
+    {
+      title: "Performance Insight",
+      detail: "+8% Revenue/Employee", // Frontend value
+      change: "Steady growth trend", // Frontend value
+      icon: (
+        <BsGraphUp className="p-[3px] bg-green-700 text-white rounded-md scale-[160%] mr-1" />
+      ),
+      timeGap: "Based on last 30 days", // Frontend value
+      img: performanceGraph,
+    },
+  ];
+
+  const quickActions = [
+    {
+      title: "Add New Task",
+      desc: "Create and Assign a Task",
+      icon: <FaClipboardList />,
+    },
+    {
+      title: "Add Team Member",
+      desc: "Invite Someone to the team",
+      icon: <GrGroup />,
+    },
+    {
+      title: "Schedule Meeting",
+      desc: "Setup a new meeting",
+      icon: <FaCalendarAlt />,
+    },
+    {
+      title: "Upload File",
+      desc: "Add files to a project",
+      icon: <IoMdCloudUpload />,
+    },
+  ];
+
+  // Bar chart data (frontend values)
   const barData = {
-    labels: ["Healthy", "At Risk", "Critical"],
+    labels: ["Apollo", "Vega", "Orion", "Nova", "Zenith", "Helix", "Lumen"],
     datasets: [
       {
-        label: "Project Health",
-        data: [
-          dashboardData?.project_health?.healthy || 0,
-          dashboardData?.project_health?.at_risk || 0,
-          dashboardData?.project_health?.critical || 0,
-        ],
-        backgroundColor: ["#4ADE80", "#FACC15", "#F87171"],
+        label: "Forcasted Completion",
+        data: [60, 35, 65, 25, 40, 70, 55],
+        backgroundColor: "#D2CFFF", // Light Lavender
+      },
+      {
+        label: "Actual Completion",
+        data: [85, 65, 35, 55, 80, 40, 90],
+        backgroundColor: "#4F46E5", // Indigo
       },
     ],
   };
@@ -76,8 +192,10 @@ const AdminDashboard = () => {
     scales: {
       y: {
         beginAtZero: true,
+        max: 100,
         ticks: {
           stepSize: 10,
+          callback: (value) => `${value}%`,
           color: "#6B7280",
         },
         grid: {
@@ -95,19 +213,47 @@ const AdminDashboard = () => {
     },
   };
 
-  if (loading) {
+  // Recent activities (frontend values)
+  const activities = [dashboardData?.recent_activities[0]] || [
+    {
+      title: "Project Apollo Marked Complete",
+      desc: "Final Milestone Reached Successfully",
+      icon: <MdGroup />,
+    },
+    {
+      title: "Nova Budget Approved",
+      desc: "Finance team confirmed the funding",
+      icon: <MdGroup />,
+    },
+    {
+      title: "Vega Client Feedback Received",
+      desc: "Positive feedback with suggestions",
+      icon: <MdGroup />,
+    },
+    {
+      title: "Zenith Kickoff Meeting Scheduled",
+      desc: "Initial team briefing set",
+      icon: <MdGroup />,
+    },
+    {
+      title: "Orion Phase 2 Started",
+      desc: "Development resumed as planned",
+      icon: <MdGroup />,
+    },
+    {
+      title: "Helix Delayed Report",
+      desc: "Blocked due to external dependency",
+      icon: <MdGroup />,
+    },
+  ];
+
+  const visibleActivities = showAll ? activities : activities.slice(0, 4);
+
+  if (loading || !dashboardData) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-gray-50 bg-opacity-75 z-50">
         <div className="text-center">
-          <DotLoader
-            color="#4F46E5"
-            size={70}
-            speedMultiplier={1.5}
-            cssOverride={{
-              display: "block",
-              margin: "0 auto",
-            }}
-          />
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500 mx-auto"></div>
           <p className="mt-4 text-lg font-medium text-gray-700">
             Loading dashboard data...
           </p>
@@ -141,50 +287,89 @@ const AdminDashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white shadow-sm border border-gray-300 rounded-xl p-5">
-          <div className="flex justify-between items-center text-gray-500">
-            <span className="font-semibold">Active Projects</span>
-            <span className="text-2xl text-[#4F46E5] bg-gray-100 border-gray-300 rounded-full p-2 border">
-              <PiCube />
-            </span>
+        {stats.map((item, index) => (
+          <div
+            key={index}
+            className="bg-white shadow-sm border border-gray-300 rounded-xl p-5 transition-transform hover:-translate-y-1 duration-200"
+          >
+            <div className="flex justify-between items-center text-gray-500">
+              <span className="font-semibold">{item.title}</span>
+              <span className="text-2xl text-[#4F46E5] bg-gray-100 border-gray-300 rounded-full p-2 border">
+                {item.icon}
+              </span>
+            </div>
+            <div className="mt-3 flex items-center gap-2">
+              <span className="text-xl font-bold text-gray-800">
+                {item.value}
+              </span>
+              <FaCaretUp className="text-green-500" />
+              <span className="text-sm text-green-500">{item.change}</span>
+            </div>
           </div>
-          <div className="mt-3 flex items-center gap-2">
-            <span className="text-xl font-bold text-gray-800">
-              {dashboardData?.kpi_metrics?.total_active_projects || 0}
-            </span>
+        ))}
+      </div>
+
+      <div className="flex flex-col justify-between lg:flex-row gap-6 w-full">
+        <div className="w-[49%] bg-white shadow-sm border border-gray-300 h-fit rounded-xl p-5 space-y-5 pt-3">
+          <div className="flex justify-between items-center mt-1">
+            <h5 className="text-2xl font-semibold text-black">AI Insights</h5>
+            <div className="relative inline-block">
+              <select className="appearance-none px-3 pr-6 py-1 rounded-md w-fit outline-none font-medium text-center text-sm">
+                <option>Daily</option>
+                <option>Weekly</option>
+                <option>Monthly</option>
+                <option>Yearly</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500 text-sm">
+                <FaChevronDown />
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-3 -mt-2">
+            {aiInsights.map((item, index) => (
+              <div
+                key={index}
+                className="py-1 px-2 border border-gray-200 flex justify-between items-center rounded-lg hover:bg-gray-50 bg-white transition shadow-sm"
+              >
+                <div>
+                  <div className="flex items-center gap-2 p-1 rounded-lg font-semibold">
+                    {item.icon}
+                    <span>{item.title}</span>
+                  </div>
+                  <div className="text-gray-700 font-semibold text-xl flex gap-1">
+                    {item.detail}
+                    <span className="ml-2 text-green-600 text-xs flex items-center gap-1">
+                      <MdTrendingUp /> {item.change}
+                    </span>
+                  </div>
+                  <div className="text-gray-500 text-xs flex items-center gap-1 mt-1">
+                    {item.timeGap}
+                  </div>
+                </div>
+                <img
+                  src={item.img}
+                  alt="img"
+                  className="w-32 h-20 object-cover rounded-lg"
+                />
+              </div>
+            ))}
           </div>
         </div>
-        <div className="bg-white shadow-sm border border-gray-300 rounded-xl p-5">
-          <div className="flex justify-between items-center text-gray-500">
-            <span className="font-semibold">Total Clients</span>
-            <span className="text-2xl text-[#4F46E5] bg-gray-100 border-gray-300 rounded-full p-2 border">
-              <CiGlobe />
-            </span>
-          </div>
-          <div className="mt-3 text-xl font-bold text-gray-800">
-            {dashboardData?.kpi_metrics?.total_clients || 0}
-          </div>
-        </div>
-        <div className="bg-white shadow-sm border border-gray-300 rounded-xl p-5">
-          <div className="flex justify-between items-center text-gray-500">
-            <span className="font-semibold">Team Utilisation</span>
-            <span className="text-2xl text-[#4F46E5] bg-gray-100 border-gray-300 rounded-full p-2 border">
-              <IoTimerOutline />
-            </span>
-          </div>
-          <div className="mt-3 text-xl font-bold text-gray-800">
-            {dashboardData?.kpi_metrics?.team_utilization || 0}%
-          </div>
-        </div>
-        <div className="bg-white shadow-sm border border-gray-300 rounded-xl p-5">
-          <div className="flex justify-between items-center text-gray-500">
-            <span className="font-semibold">Monthly Revenue</span>
-            <span className="text-2xl text-[#4F46E5] bg-gray-100 border-gray-300 rounded-full p-2 border">
-              <TbMoneybag />
-            </span>
-          </div>
-          <div className="mt-3 text-xl font-bold text-gray-800">
-            ₹{dashboardData?.kpi_metrics?.monthly_revenue || 0}
+
+        <div className="w-[49%] h-[fit] bg-[tranparent] rounded-xl p-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {quickActions.map((task, i) => (
+              <div
+                key={i}
+                className="border border-gray-300 h-[11rem] px-4 rounded-lg bg-white transition shadow-sm flex flex-col items-center justify-center gap-2 hover:shadow-lg cursor-pointer"
+              >
+                <span className="text-[#4F46E5] bg-[#6b64f42c] text-4xl rounded-md mb-1 p-2 border mt-6">
+                  {task.icon}
+                </span>
+                <span className="font-semibold text-lg">{task.title}</span>
+                <p className="text-sm text-gray-600 mb-6">{task.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -195,13 +380,18 @@ const AdminDashboard = () => {
             <h3 className="text-lg font-semibold text-gray-800">
               Project Health Overview
             </h3>
+            <select className="border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-400 outline-none">
+              <option value="">Last 6 Months</option>
+              <option value="">Last Year</option>
+              <option value="">This Quarter</option>
+            </select>
           </div>
           <div className="h-[20rem] w-full flex justify-center items-center">
             <BarChart options={barChartOptions} data={barData} />
           </div>
         </div>
 
-        <div className="w-full flex flex-col justify-between border border-gray-300 shadow-sm rounded-lg bg-white md:w-1/3 p-3 max-w-sm text-left">
+        <div className="w-full flex flex-col border border-gray-300 shadow-sm rounded-lg bg-white md:w-1/3 p-3 max-w-sm text-left">
           <h4 className="text-lg font-semibold text-gray-800 mb-4">
             Recent Activity
           </h4>
@@ -213,22 +403,24 @@ const AdminDashboard = () => {
           >
             {visibleActivities.map((item, index) => (
               <div
-                key={item.id || index}
-                className="flex items-center gap-3 bg-gray-100 py-1.5 px-3 rounded-lg shadow-md border border-gray-300 hover:bg-gray-50 transition"
+                key={index}
+                className="flex w-full items-center gap-3 bg-gray-100 py-1.5 px-3 rounded-lg shadow-md border border-gray-300 hover:bg-gray-50 transition"
               >
-                <div className="text-2xl text-indigo-500 mt-2">
-                  <MdOutlineTask />
-                </div>
+                {item.icon ? (
+                  <span className="text-2xl text-gray-600">{item.icon}</span>
+                ) : (
+                  <MdGroup className="text-2xl text-gray-600" />
+                )}
                 <div className="flex-1">
-                  <h5 className="font-medium text-gray-700">{item.message}</h5>
-                  <p className="text-sm text-gray-500">{item.user}</p>
+                  <h5 className="font-medium text-gray-700">{item.type}</h5>
+                  <p className="text-sm text-gray-500">{item.message}</p>
                 </div>
                 <CiSettings className="text-xl text-gray-400 hover:text-indigo-500 cursor-pointer" />
               </div>
             ))}
           </div>
 
-          {!showAll && dashboardData?.recent_activities?.length > 4 && (
+          {!showAll && activities.length > 4 && (
             <button
               onClick={() => setShowAll(true)}
               className="mt-3 text-indigo-600 text-md font-semibold"
@@ -236,7 +428,7 @@ const AdminDashboard = () => {
               {"Show more >"}
             </button>
           )}
-          {showAll && dashboardData?.recent_activities?.length > 4 && (
+          {showAll && activities.length > 4 && (
             <button
               onClick={() => setShowAll(false)}
               className="mt-3 text-indigo-600 text-md hover:underline font-semibold"
