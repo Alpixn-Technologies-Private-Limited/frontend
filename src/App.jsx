@@ -39,7 +39,7 @@ const App = () => {
                     path="/"
                     element={
                         isAuthenticated ? (
-                            <Navigate to="/dashboard" replace />
+                            <Navigate to="/dashboard/pm" replace />
                         ) : (
                             <Navigate to="/login" replace />
                         )
@@ -58,9 +58,9 @@ const App = () => {
                 <Route path="/clients/edit-form" element={<ClientEditFormPage />} />
 
                 {/* Dashboard */}
-                <Route path="/dashboard" element={<ProjectManagerDashboard />} />
-                <Route path="/adminDashboard" element={<AdminDashBoardPage />} />
-                <Route path="/memberDashboard" element={<MemberDashBoardPage />} />
+                <Route path="/dashboard/admin" element={<AdminDashBoardPage />} />
+                <Route path="/dashboard/pm" element={<ProjectManagerDashboard />} />
+                <Route path="/dashboard/team" element={<MemberDashBoardPage />} />
 
                 {/* Project Pages */}
                 <Route path="/projects" element={<Project />} />
@@ -74,7 +74,7 @@ const App = () => {
                     path="*"
                     element={
                         isAuthenticated ? (
-                            <Navigate to="/dashboard" replace />
+                            <Navigate to="/dashboard/admin" replace />
                         ) : (
                             <Navigate to="/login" replace />
                         )
