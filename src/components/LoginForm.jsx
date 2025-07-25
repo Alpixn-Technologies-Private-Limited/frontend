@@ -12,36 +12,56 @@ const LoginForm = () => {
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
-    const { setUser } = useAuth();
+    const { loadUser } = useAuth();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         if (!email || !password) {
             toast.error("Please fill in all fields.");
             return;
         }
+
         try {
             const loadingToast = toast.loading("Signing you in...");
-            const res = await axios.post("/auth/login", {
-                email,
-                password,
-                remember_me: rememberMe,
-            });
+            const res = await axios.post(
+                "/auth/login",
+                { email, password, remember_me: rememberMe },
+                { withCredentials: true }
+            );
             toast.dismiss(loadingToast);
-            if (res.data?.success) {
+
+            if (res?.data?.success) {
                 toast.success("Login successful!");
-                setUser(res.data.data.user);
-                navigate("/dashboard");
+
+                const { token, refresh_token, user } = res.data.data;
+
+                if (rememberMe) {
+                    localStorage.setItem("token", token);
+                    localStorage.setItem("refresh_token", refresh_token);
+                } else {
+                    sessionStorage.setItem("token", token);
+                    sessionStorage.setItem("refresh_token", refresh_token);
+                }
+
+                await loadUser();
+
+                if (user.role === "admin") {
+                    navigate("/dashboard/admin");
+                } else if (user.role === "pm") {
+                    navigate("/dashboard/pm");
+                } else if (user.role === "team") {
+                    navigate("/dashboard/team");
+                } else {
+                    navigate("/dashboard");
+                }
             } else {
-                toast.error(
-                    res.data.message || "Login failed. Please try again."
-                );
+                toast.error(res.data.message || "Login failed. Please try again.");
             }
         } catch (error) {
+            console.error("Login error:", error);
             toast.dismiss();
-            const message =
-                error.response?.data?.message ||
-                "Login failed. Please try again.";
-            toast.error(message);
+            toast.error(error.response?.data?.message || "Login failed. Please try again.");
         }
     };
 
@@ -86,7 +106,7 @@ const LoginForm = () => {
                                 placeholder="e.g. varun123@gmail.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-white border border-gray-200 rounded-lg  px-3 py-2 text-sm sm:text-base"
+                                className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm sm:text-base"
                             />
                         </div>
                         <div>
@@ -98,23 +118,15 @@ const LoginForm = () => {
                                     type={showPassword ? "text" : "password"}
                                     placeholder="Enter Password"
                                     value={password}
-                                    onChange={(e) =>
-                                        setPassword(e.target.value)
-                                    }
-                                    className="w-full bg-white border border-gray-200 rounded-lg  px-3 py-2 text-sm sm:text-base"
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm sm:text-base"
                                 />
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        setShowPassword(!showPassword)
-                                    }
+                                    onClick={() => setShowPassword(!showPassword)}
                                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
                                 >
-                                    {showPassword ? (
-                                        <FiEye />
-                                    ) : (
-                                        <FiEyeOff />
-                                    )}
+                                    {showPassword ? <FiEye /> : <FiEyeOff />}
                                 </button>
                             </div>
                             <div className="flex justify-between items-center mt-2">
@@ -123,9 +135,7 @@ const LoginForm = () => {
                                         type="checkbox"
                                         className="mr-2"
                                         checked={rememberMe}
-                                        onChange={(e) =>
-                                            setRememberMe(e.target.checked)
-                                        }
+                                        onChange={(e) => setRememberMe(e.target.checked)}
                                     />
                                     Remember Me
                                 </label>
@@ -145,12 +155,6 @@ const LoginForm = () => {
                             Sign In
                         </button>
                     </form>
-                    <Link
-                        to="/signup"
-                        className="block text-center text-sm text-gray-600 hover:underline mt-4"
-                    >
-                        Don't have an account? Sign Up
-                    </Link>
                 </div>
             </div>
 
