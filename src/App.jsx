@@ -21,6 +21,8 @@ import ProjectManagerDashboard from "./pages/ProjectManagerDashboard";
 import AdminDashBoardPage from "./pages/AdminDashBoardPage";
 import MemberDashBoardPage from "./pages/MemberDashBoardPage";
 import ProjectTaskPage from "./pages/ProjectTaskPage";
+import TaskBoardPage from "./pages/TaskBoardPage";
+import ProjectTaskDetailsPage from "./pages/ProjectTaskDetailsPage";
 import TeamMemberProfilePage from "./pages/TeamMemberProfile";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
@@ -67,6 +69,8 @@ const App = () => {
                 <Route path="/projects" element={<Project />} />
                 <Route path="/project/:id" element={<ProjectDetail />} />
                 <Route path="/project/tasks" element={<ProjectTaskPage />} />
+                <Route path="/project/task-board" element={<TaskBoardPage />} />
+                <Route path="/project/task-details" element={<ProjectTaskDetailsPage />} /> 
 
                 {/* Team Management Pages */}
                 <Route path="/team-management" element={<TeamMembersPage />} />
