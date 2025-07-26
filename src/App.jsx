@@ -20,8 +20,12 @@ import DashBoard from "./components/dashboard/projectManagement/DashBoard";
 import ProjectManagerDashboard from "./pages/ProjectManagerDashboard";
 import AdminDashBoardPage from "./pages/AdminDashBoardPage";
 import MemberDashBoardPage from "./pages/MemberDashBoardPage";
+import ProjectTaskPage from "./pages/ProjectTaskPage";
+import TaskBoardPage from "./pages/TaskBoardPage";
+import ProjectTaskDetailsPage from "./pages/ProjectTaskDetailsPage";
 import TeamMemberProfilePage from "./pages/TeamMemberProfile";
 import { TeamWorkloadPage } from "./pages/TeamWorkloadPage";
+import AIConsole from "./pages/AIConsole";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
     if (!isAuthenticated) {
@@ -63,9 +67,15 @@ const App = () => {
                 <Route path="/dashboard/pm" element={<ProjectManagerDashboard />} />
                 <Route path="/dashboard/team" element={<MemberDashBoardPage />} />
 
+                {/* AI Console */}
+                <Route path="/ai-console" element={<AIConsole />} />
+
                 {/* Project Pages */}
                 <Route path="/projects" element={<Project />} />
                 <Route path="/project/:id" element={<ProjectDetail />} />
+                <Route path="/project/tasks" element={<ProjectTaskPage />} />
+                <Route path="/project/task-board" element={<TaskBoardPage />} />
+                <Route path="/project/task-details/*" element={<ProjectTaskDetailsPage />} /> 
 
                 {/* Team Management Pages */}
                 <Route path="/team-management" element={<TeamMembersPage />} />
