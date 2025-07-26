@@ -24,6 +24,7 @@ import ProjectTaskPage from "./pages/ProjectTaskPage";
 import TaskBoardPage from "./pages/TaskBoardPage";
 import ProjectTaskDetailsPage from "./pages/ProjectTaskDetailsPage";
 import TeamMemberProfilePage from "./pages/TeamMemberProfile";
+import { TeamWorkloadPage } from "./pages/TeamWorkloadPage";
 import AIConsole from "./pages/AIConsole";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
@@ -79,6 +80,7 @@ const App = () => {
                 {/* Team Management Pages */}
                 <Route path="/team-management" element={<TeamMembersPage />} />
                 <Route path="/team-management/memberProfile" element={<TeamMemberProfilePage />} />
+                <Route path="/team-management/teamWorkload" element={<TeamWorkloadPage />} />
                 {/* Catch All Route */}
                 <Route
                     path="*"

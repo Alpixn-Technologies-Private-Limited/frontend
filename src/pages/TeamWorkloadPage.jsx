@@ -1,10 +1,10 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import TeamMembers from "../components/team management/TeamMembers";
+import TeamWorkload from "../components/team management/TeamWorkload";
 import Footer from "../components/Footer";
 
-const TeamMembersPage = () => {
+export const TeamWorkloadPage = () => {
     return (
         <div className="h-screen flex flex-col">
             <div className="fixed top-0 left-64 right-0 z-50">
@@ -16,7 +16,7 @@ const TeamMembersPage = () => {
                     <Sidebar />
                 </div>
                 <main className="ml-64 flex-1 overflow-y-auto bg-gray-50 p-4 md:p-6">
-                    <TeamMembers />
+                    <TeamWorkload />
                 </main>
             </div>
             <div className="pb-5 bg-gray-50">
@@ -25,5 +25,3 @@ const TeamMembersPage = () => {
         </div>
     );
 };
-
-export default TeamMembersPage;
