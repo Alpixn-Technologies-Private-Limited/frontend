@@ -1,31 +1,48 @@
-import React from "react";
-import { MdDangerous } from "react-icons/md";
-import { FaArrowAltCircleRight } from "react-icons/fa";
+import { BsGraphUpArrow, BsThreeDots } from "react-icons/bs";
+import { FaClockRotateLeft } from "react-icons/fa6";
 import { FiFilter } from "react-icons/fi";
+import { IoSend, IoWarning } from "react-icons/io5";
+import { MdDangerous, MdGroups2, MdInfoOutline } from "react-icons/md";
 import DoughnutChart from "../charts/DoughnutChart";
 import Table from "../charts/Table";
+import Footer from "../Footer";
 
 const AiConsoleDashboard = () => {
   const insights = [
     {
       title: "Risk Prediction",
-      description: "Project Vega is at high risk of delay due to team overlead.",
+      description:
+        "Project Vega is at high risk of delay due to team overlead.",
       color: "text-red-500",
+      icon: (
+        <IoWarning className="text-white bg-red-500 p-1.5 scale-125 rounded-md" />
+      ),
     },
     {
       title: "Performance Forecast",
-      description: "C3 revenue expected to rise 12% based on current burn rate.",
+      description:
+        "C3 revenue expected to rise 12% based on current burn rate.",
       color: "text-green-500",
+      icon: (
+        <BsGraphUpArrow className="text-white bg-green-500 p-1.5 rounded-md scale-125" />
+      ),
     },
     {
       title: "Resource Recommendation",
       description: "Assign Neha to Project Orion to balance design workload.",
       color: "text-yellow-500",
+      icon: (
+        <MdGroups2 className="text-white bg-yellow-500 p-1.5 rounded-md scale-125" />
+      ),
     },
     {
       title: "Deadline Adjustment",
-      description: "Project Apollo's timeline extended to Aug 5 based on scope.",
+      description:
+        "Project Apollo's timeline extended to Aug 5 based on scope.",
       color: "text-blue-500",
+      icon: (
+        <FaClockRotateLeft className="text-white bg-blue-500 p-1.5 scale-125 rounded-md" />
+      ),
     },
   ];
 
@@ -38,29 +55,25 @@ const AiConsoleDashboard = () => {
 
   const data = {
     labels: [
-      "Risk Prediction",
-      "Performance Forecast",
-      "Resource Recommendation",
       "Deadline Adjustment",
+      "Resource Recommendation",
+      "Performance Forecast",
+      "Risk Prediction",
     ],
     datasets: [
       {
         label: "AI Insights",
-        data: [25, 25, 25, 25],
-        backgroundColor: [
-          "#F04438",
-          "#12B76A",
-          "#FEC84B",
-          "#5E4AE3",
-        ],
-        borderWidth: 2,
+        data: [50, 26, 15, 9],
+        backgroundColor: ["#4f46e5", "#d6a700", "#009300", "#f50f0b"],
+        borderWidth: 3,
+        borderRadius: 50,
         borderColor: "#fff",
       },
     ],
   };
 
   const options = {
-    cutout: "70%",
+    cutout: "80%",
     plugins: {
       legend: {
         display: false,
@@ -81,42 +94,49 @@ const AiConsoleDashboard = () => {
       trigger: "Utilization < 60%",
       action: "Email team lead",
       status: "Disabled",
+      btn: <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />,
     },
     {
       name: "New Client Welcome Flow",
       trigger: "Client Created",
       action: "Send onboarding email",
       status: "Paused",
+      btn: <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />,
     },
     {
       name: "Auto Assign Designer",
       trigger: "Design task created",
       action: "Assign to 'Ravi Kumar'",
       status: "Active",
+      btn: <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />,
     },
     {
       name: "Inactive Project Reminder",
       trigger: "No activity for 10 days",
       action: "Notify project manager",
       status: "Active",
+      btn: <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />,
     },
     {
       name: "Missed Deadline Escalation",
       trigger: "Task due date passed",
       action: "Send escalation email to admin",
       status: "Disabled",
+      btn: <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />,
     },
     {
       name: "Urgent Task Alert",
       trigger: "New task with 'Urgent' priority",
       action: "Push notification to supervisor",
       status: "Active",
+      btn: <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />,
     },
     {
       name: "Reopen Stale Bug",
       trigger: "Bug marked 'Closed' & reopened",
       action: "Notify QA team",
       status: "Paused",
+      btn: <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />,
     },
   ];
 
@@ -153,25 +173,43 @@ const AiConsoleDashboard = () => {
         );
       },
     },
+    {
+      id: "actions",
+      header: "", // optional header
+      accessorFn: (row) => row.btn, // ensures value passes through
+      cell: ({ getValue }) => getValue(), // renders the button
+    },
   ];
 
   return (
-    <div className="p-6 space-y-6 bg-gray-100 min-h-screen">
+    <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* AI Insights Panel */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h3 className="text-xl font-bold mb-4">AI Insights Panel</h3>
           <div className="flex flex-col lg:flex-row gap-4">
-            <div className="w-full lg:w-1/2 flex justify-center items-center">
+            <div className="w-full lg:w-1/2 flex my-auto h-fit justify-center items-center relative">
               <DoughnutChart data={data} options={options} />
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <p className="w-fit text-[#737373] font-medium">Total</p>
+                <span className="font-semibold text-xl w-32">
+                  100% Insights Resolved
+                </span>
+              </div>
             </div>
-            <div className="w-full lg:w-1/2 space-y-3">
+            <div className="w-full lg:w-1/2 space-y-2">
               {insights.map((item, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-2 border p-2 rounded-md shadow-sm"
+                  className="flex items-start gap-2 px-2 py-1 rounded-md"
                 >
-                  <MdDangerous className={`text-xl ${item.color} mt-1`} />
+                  {item.icon ? (
+                    <span className={`text-2xl ${item.color} p-1 rounded-full`}>
+                      {item.icon}
+                    </span>
+                  ) : (
+                    <MdDangerous className="text-red-500 text-2xl p-1.5 rounded-md scale-125" />
+                  )}
                   <div>
                     <h5 className="font-semibold text-sm">{item.title}</h5>
                     <p className="text-sm text-gray-600 leading-snug">
@@ -180,51 +218,57 @@ const AiConsoleDashboard = () => {
                   </div>
                 </div>
               ))}
-              <p className="text-sm text-gray-400 hover:underline cursor-pointer">
-                Get more updates
-              </p>
             </div>
+          </div>
+          <div className="w-fit mr-auto flex items-center hover:underline cursor-pointer gap-1 mt-4">
+            <MdInfoOutline className="text-gray-500" />
+            <p className="text-sm text-gray-500 w-fit mr-auto">
+              Get more updates
+            </p>
           </div>
         </div>
 
-        {/* Chat Help Panel */}
-        <div className="bg-gradient-to-br from-[#e0c3fc] to-[#8ec5fc] text-white p-6 rounded-lg shadow-md relative overflow-hidden">
-          <p className="text-lg mb-2">Hi Varun</p>
-          <h2 className="text-2xl font-bold mb-4">How Can I Help You?</h2>
-          <div className="grid grid-cols-2 gap-2 mb-4">
-            {quickActions.map((action, i) => (
-              <button
-                key={i}
-                className="bg-white text-black py-1 px-2 rounded-md text-sm font-medium shadow hover:bg-gray-100"
-              >
-                {action}
-              </button>
-            ))}
+        <div className="bg-gradient-to-br from-[#4F46E5CC] via-[#D6A700CC] to-[#B700FFCC] text-white p-6 rounded-lg shadow-md relative flex flex-col justify-between items-center overflow-hidden">
+          <div className="mt-8 flex flex-col items-center">
+            <p className="text-[15px] font-normal mb-2">Hi Varun</p>
+            <h2 className="text-[28px] font-semibold mb-4">
+              How Can I Help You?
+            </h2>
+            <div className="grid grid-cols-2 gap-3">
+              {quickActions.map((action, i) => (
+                <button
+                  key={i}
+                  className="bg-[#ffffff3c] text-white py-2 px-4 rounded-lg text-[16px] font-normal shadow"
+                >
+                  {action}
+                </button>
+              ))}
+            </div>
           </div>
-          <div className="relative">
+          <div className="relative w-full">
             <input
               type="text"
               placeholder="Ask something..."
-              className="w-full px-4 py-2 rounded-full text-black focus:outline-none shadow"
+              className="w-full px-6 py-3 rounded-full text-black focus:outline-none shadow bg-[#ffffff5a] border border-white"
             />
-            <FaArrowAltCircleRight className="absolute right-3 top-2 text-indigo-600 text-2xl cursor-pointer" />
+            <IoSend className="absolute right-3 top-3 text-white text-2xl cursor-pointer" />
           </div>
         </div>
       </div>
 
-      {/* Automations List */}
       <div className="bg-white p-6 rounded-lg shadow-md">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-semibold">Automations List</h3>
           <div className="flex items-center gap-3">
             <FiFilter className="w-5 h-5 text-gray-600" />
-            <button className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700">
+            <button className="bg-gradient-to-r from-[#4F46E5] to-[#D6A700] text-white px-4 py-2 rounded-md text-sm font-medium">
               + Create New Rule
             </button>
           </div>
         </div>
         <Table data={automationsData} columns={automationColumns} />
       </div>
+      <Footer />
     </div>
   );
 };
