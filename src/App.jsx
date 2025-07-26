@@ -21,6 +21,7 @@ import ProjectManagerDashboard from "./pages/ProjectManagerDashboard";
 import AdminDashBoardPage from "./pages/AdminDashBoardPage";
 import MemberDashBoardPage from "./pages/MemberDashBoardPage";
 import TeamMemberProfilePage from "./pages/TeamMemberProfile";
+import { TeamWorkloadPage } from "./pages/TeamWorkloadPage";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
     if (!isAuthenticated) {
@@ -69,6 +70,7 @@ const App = () => {
                 {/* Team Management Pages */}
                 <Route path="/team-management" element={<TeamMembersPage />} />
                 <Route path="/team-management/memberProfile" element={<TeamMemberProfilePage />} />
+                <Route path="/team-management/teamWorkload" element={<TeamWorkloadPage />} />
                 {/* Catch All Route */}
                 <Route
                     path="*"
