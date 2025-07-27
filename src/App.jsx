@@ -27,6 +27,8 @@ import TeamMemberProfilePage from "./pages/TeamMemberProfile";
 import { TeamWorkloadPage } from "./pages/TeamWorkloadPage";
 import AIConsole from "./pages/AIConsole";
 import AiSettingPage from "./pages/AiSettingPage";
+import SystemSettingsPage from "./pages/SystemSettingsPage";
+import UserProfileSettingPage from "./pages/UserProfileSettingPage";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
     if (!isAuthenticated) {
@@ -36,7 +38,7 @@ const ProtectedRoute = ({ isAuthenticated, children }) => {
 };
 
 const App = () => {
-    const isAuthenticated = true;
+    const isAuthenticated = false;
 
     return (
         <Router>
@@ -81,8 +83,12 @@ const App = () => {
 
                 {/* Team Management Pages */}
                 <Route path="/team-management" element={<TeamMembersPage />} />
-                <Route path="/team-management/memberProfile" element={<TeamMemberProfilePage />} />
+                <Route path="/team-management/member-profile" element={<TeamMemberProfilePage />} />
                 <Route path="/team-management/teamWorkload" element={<TeamWorkloadPage />} />
+
+                {/* Setting and Configuration */}
+                <Route path="/setting/system" element={<SystemSettingsPage />} />
+                <Route path="/setting/user-profile" element={<UserProfileSettingPage />} />
                 {/* Catch All Route */}
                 <Route
                     path="*"
