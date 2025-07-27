@@ -230,7 +230,7 @@ const AiConsoleSetting = () => {
           </div>
         </div>
         <div className="border border-gray-300 rounded-xl p-4 shadow-sm w-[15%] flex flex-col items-center justify-center cursor-pointer">
-          <button className="px-4 py-2 rounded-lg text-sm font-medium flex flex-col items-center text-[#535353] gap-3 cursor-pointer cursor-pointer">
+          <button className="px-4 py-2 rounded-lg text-sm font-medium flex flex-col items-center text-[#535353] gap-3 cursor-pointer">
             <Plus className="bg-gray-100 text-[2px] p-1 rounded-full border border-gray-200 scale-150 mx-auto text-[#4F46E5]" />
             Customize
           </button>
