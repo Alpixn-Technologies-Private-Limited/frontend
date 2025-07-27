@@ -6,6 +6,7 @@ import { MdDangerous, MdGroups2, MdInfoOutline } from "react-icons/md";
 import DoughnutChart from "../charts/DoughnutChart";
 import Table from "../charts/Table";
 import Footer from "../Footer";
+import { Link } from "react-router-dom";
 
 const AiConsoleDashboard = () => {
   const insights = [
@@ -228,7 +229,7 @@ const AiConsoleDashboard = () => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-[#4F46E5CC] via-[#D6A700CC] to-[#B700FFCC] text-white p-6 rounded-lg shadow-md relative flex flex-col justify-between items-center overflow-hidden">
+        <Link to="/ai-console/setting" className="bg-gradient-to-br from-[#4F46E5CC] via-[#D6A700CC] to-[#B700FFCC] text-white p-6 rounded-lg shadow-md relative flex flex-col justify-between items-center overflow-hidden">
           <div className="mt-8 flex flex-col items-center">
             <p className="text-[15px] font-normal mb-2">Hi Varun</p>
             <h2 className="text-[28px] font-semibold mb-4">
@@ -253,7 +254,7 @@ const AiConsoleDashboard = () => {
             />
             <IoSend className="absolute right-3 top-3 text-white text-2xl cursor-pointer" />
           </div>
-        </div>
+        </Link>
       </div>
 
       <div className="bg-white p-6 rounded-lg shadow-md">

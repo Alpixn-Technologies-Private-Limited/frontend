@@ -25,6 +25,7 @@ import TaskBoardPage from "./pages/TaskBoardPage";
 import ProjectTaskDetailsPage from "./pages/ProjectTaskDetailsPage";
 import TeamMemberProfilePage from "./pages/TeamMemberProfile";
 import AIConsole from "./pages/AIConsole";
+import AiSettingPage from "./pages/AiSettingPage";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
     if (!isAuthenticated) {
@@ -68,6 +69,7 @@ const App = () => {
 
                 {/* AI Console */}
                 <Route path="/ai-console" element={<AIConsole />} />
+                <Route path="/ai-console/setting" element={<AiSettingPage />} />
 
                 {/* Project Pages */}
                 <Route path="/projects" element={<Project />} />
