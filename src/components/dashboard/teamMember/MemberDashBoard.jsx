@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import Table from "../../charts/Table";
-import { CalendarDays } from "lucide-react";
-import { FaArrowRight } from "react-icons/fa";
-import Footer from "../../Footer";
 import axios from "axios";
+import { CalendarDays } from "lucide-react";
+import { useEffect, useState } from "react";
+import { FaArrowRight } from "react-icons/fa";
 import { DotLoader } from "react-spinners";
+import Table from "../../charts/Table";
 
 // Dummy data for fallback
 const dummyProjectData = [
@@ -17,7 +16,7 @@ const dummyProjectData = [
     deadline: "30 June 2025",
     priority: "medium",
     status: "in_progress",
-    estimated_hours: 8
+    estimated_hours: 8,
   },
   {
     id: 2,
@@ -28,7 +27,7 @@ const dummyProjectData = [
     deadline: "5 July 2025",
     priority: "high",
     status: "in_progress",
-    estimated_hours: 12
+    estimated_hours: 12,
   },
   {
     id: 3,
@@ -39,32 +38,32 @@ const dummyProjectData = [
     deadline: "28 June 2025",
     priority: "low",
     status: "completed",
-    estimated_hours: 6
+    estimated_hours: 6,
   },
 ];
 
 const dummyTimelineData = [
-  { 
+  {
     project_id: 1,
     project_name: "Website Redesign",
     current_phase: "Design",
     next_milestone: "Client Review",
-    milestone_date: "2024-07-10"
+    milestone_date: "2024-07-10",
   },
-  { 
+  {
     project_id: 2,
     project_name: "App Migration",
     current_phase: "Development",
     next_milestone: "QA Testing",
-    milestone_date: "2024-07-15"
+    milestone_date: "2024-07-15",
   },
   {
     project_id: 3,
     project_name: "Q3 Campaign Launch",
     current_phase: "Final Review",
     next_milestone: "Launch",
-    milestone_date: "2024-07-20"
-  }
+    milestone_date: "2024-07-20",
+  },
 ];
 
 const dummyCollaborationData = [
@@ -94,7 +93,7 @@ const dummyCollaborationData = [
 const dummyProductivityMetrics = {
   tasks_completed_today: 5,
   hours_logged: 7.5,
-  streak_days: 8
+  streak_days: 8,
 };
 
 const getProgressColor = (value) => {
@@ -105,17 +104,25 @@ const getProgressColor = (value) => {
 
 const getPriorityColor = (priority) => {
   switch (priority) {
-    case "high": return "bg-red-100 text-red-800";
-    case "medium": return "bg-yellow-100 text-yellow-800";
-    case "low": return "bg-green-100 text-green-800";
-    default: return "bg-gray-100 text-gray-800";
+    case "high":
+      return "bg-red-100 text-red-800";
+    case "medium":
+      return "bg-yellow-100 text-yellow-800";
+    case "low":
+      return "bg-green-100 text-green-800";
+    default:
+      return "bg-gray-100 text-gray-800";
   }
 };
 
 const formatDate = (dateString) => {
   if (!dateString) return "";
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+  return date.toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 };
 
 const formatTimeAgo = (dateString) => {
@@ -156,12 +163,15 @@ const overviewColumns = [
     accessorKey: "status",
     cell: ({ getValue }) => {
       const value = getValue();
-      const progress = value === "completed" ? 100 : value === "in_progress" ? 50 : 0;
+      const progress =
+        value === "completed" ? 100 : value === "in_progress" ? 50 : 0;
       const color = getProgressColor(progress);
       const label =
-        value === "completed" ? "Completed" : 
-        value === "in_progress" ? "In Progress" : 
-        "Not Started";
+        value === "completed"
+          ? "Completed"
+          : value === "in_progress"
+          ? "In Progress"
+          : "Not Started";
       return (
         <span
           className={`px-2 py-1.5 rounded-full text-sm font-semibold ${color} bg-opacity-10`}
@@ -208,10 +218,10 @@ const MemberDashBoard = () => {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-gray-50 bg-opacity-75 z-50">
         <div className="text-center">
-          <DotLoader 
-            color="#4F46E5" 
-            size={70} 
-            speedMultiplier={1.5} 
+          <DotLoader
+            color="#4F46E5"
+            size={70}
+            speedMultiplier={1.5}
             cssOverride={{
               display: "block",
               margin: "0 auto",
@@ -226,13 +236,15 @@ const MemberDashBoard = () => {
   }
 
   // Use API data or fallback to dummy data
-  const projectData = dashboardData?.my_tasks_today?.length > 0 
-    ? dashboardData.my_tasks_today 
-    : dummyProjectData;
+  const projectData =
+    dashboardData?.my_tasks_today?.length > 0
+      ? dashboardData.my_tasks_today
+      : dummyProjectData;
 
-  const timelineData = dashboardData?.project_timeline?.length > 0
-    ? dashboardData.project_timeline
-    : dummyTimelineData;
+  const timelineData =
+    dashboardData?.project_timeline?.length > 0
+      ? dashboardData.project_timeline
+      : dummyTimelineData;
 
   const collaborationData = dummyCollaborationData; // Always use dummy since not in API
 
@@ -263,12 +275,18 @@ const MemberDashBoard = () => {
                 className="flex justify-between py-2 border-b border-gray-300 last:border-0"
               >
                 <span className="px-3">
-                  <p className="font-medium text-gray-800">{item.current_phase}</p>
+                  <p className="font-medium text-gray-800">
+                    {item.current_phase}
+                  </p>
                   <p className="text-gray-500 text-sm">{item.project_name}</p>
                 </span>
                 <div className="px-3 text-right">
-                  <p className="text-black mt-1 text-sm">{item.next_milestone}</p>
-                  <p className="text-gray-500 text-xs">{formatDate(item.milestone_date)}</p>
+                  <p className="text-black mt-1 text-sm">
+                    {item.next_milestone}
+                  </p>
+                  <p className="text-gray-500 text-xs">
+                    {formatDate(item.milestone_date)}
+                  </p>
                 </div>
               </span>
             ))}
@@ -294,7 +312,10 @@ const MemberDashBoard = () => {
               </thead>
               <tbody>
                 {collaborationData.map((item) => (
-                  <tr key={item.id} className="border-b hover:bg-gray-50 last:border-0 border-gray-300 text-gray-600">
+                  <tr
+                    key={item.id}
+                    className="border-b hover:bg-gray-50 last:border-0 border-gray-300 text-gray-600"
+                  >
                     <td className="py-3 pl-3">{item.comment}</td>
                     <td className="py-3">{item.from}</td>
                     <td className="py-3">{item.link}</td>
@@ -333,7 +354,6 @@ const MemberDashBoard = () => {
           </button>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
