@@ -19,7 +19,7 @@ const TeamMembersPage = () => {
                     <TeamMembers />
                 </main>
             </div>
-            <div className="pb-5">
+            <div className="pb-5 bg-gray-50">
                 <Footer />
             </div>
         </div>

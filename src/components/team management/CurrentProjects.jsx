@@ -35,7 +35,7 @@ const CurrentProjects = () => {
 
     return (
         <div className="flex flex-col gap-8 m-3 ml-10 mt-8">
-            <h2 className="text-xl font-bold text-gray-900">
+            <h2 className="text-[32px] font-bold text-gray-900">
                 Current Projects
             </h2>
             {projects.map((project) => (
