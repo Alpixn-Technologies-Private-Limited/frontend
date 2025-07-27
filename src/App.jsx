@@ -87,19 +87,11 @@ const App = () => {
                 <Route path="/team-management/teamWorkload" element={<TeamWorkloadPage />} />
 
                 {/* Setting and Configuration */}
-                <Route path="/setting/system" element={<SystemSettingsPage />} />
-                <Route path="/setting/user-profile" element={<UserProfileSettingPage />} />
+                <Route path="/settings/system" element={<SystemSettingsPage />} />
+                <Route path="/settings/user" element={<UserProfileSettingPage />} />
+                
                 {/* Catch All Route */}
-                <Route
-                    path="*"
-                    element={
-                        isAuthenticated ? (
-                            <Navigate to="/dashboard/admin" replace />
-                        ) : (
-                            <Navigate to="/login" replace />
-                        )
-                    }
-                />
+                <Route path="*" element={<Navigate to="/login" replace />}/>
             </Routes>
         </Router>
     );

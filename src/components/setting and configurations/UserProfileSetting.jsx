@@ -22,17 +22,17 @@ const UserProfileSetting = () => {
                     <div className="flex-1 space-y-3">
                         <div className="flex justify-between items-center bg-[#FFFFFF] border border-[#DDDDDD] rounded-lg px-4 py-2">
                             <span>Full Name</span>
-                            <span className="text-[#535353]">Designer abc</span>
+                            <span className="text-[#535353] text-sm">Designer abc</span>
                         </div>
                         <div className="flex justify-between items-center bg-[#FFFFFF] border border-[#DDDDDD] rounded-lg px-4 py-2">
                             <span>Contact Details</span>
-                            <span className="text-[#535353]">
+                            <span className="text-[#535353] text-sm">
                                 +91 96XXXXXXXX
                             </span>
                         </div>
                         <div className="flex justify-between items-center bg-[#FFFFFF] border border-[#DDDDDD] rounded-lg px-4 py-2">
                             <span>Preferences</span>
-                            <span className="text-[#535353]">
+                            <span className="text-[#535353] text-sm">
                                 GMT+5:30 — IST &nbsp;&nbsp;| DD/MM/YYYY
                             </span>
                         </div>
@@ -108,7 +108,7 @@ const UserProfileSetting = () => {
                 </h2>
                 <div className="flex justify-between items-center bg-[#FFFFFF] border border-[#DDDDDD] rounded-lg px-4 py-1">
                     <span>Change Password</span>
-                    <div className="space-x-2">
+                    <div className="space-x-2 text-sm">
                         <button className="text-gray-700 py-1  rounded">
                             Pin {"|"}
                         </button>
@@ -125,11 +125,11 @@ const UserProfileSetting = () => {
                 </div>
                 <div className="flex justify-between items-center bg-[#FFFFFF] border border-[#DDDDDD] rounded-lg px-4 py-1 my-3">
                     <span>Session Management</span>
-                    <div className="space-x-2">
+                    <div className="space-x-2 text-sm">
                         <button className="text-gray-700 py-1  rounded">
                             Safari on Iphone {"|"}
                         </button>
-                        <button className="text-gray-700 py-1  rounded">
+                        <button className="text-gray-700 py-1 rounded">
                             Chrome on Windows
                         </button>
                     </div>
