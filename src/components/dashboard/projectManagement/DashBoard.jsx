@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { HandCoins, TrendingUpDown, TriangleAlert } from "lucide-react";
-import { FaBell, FaPhone, FaRupeeSign } from "react-icons/fa";
-import BarChart from "../../charts/BarChart";
-import Footer from "../../Footer";
-import Table from "../../charts/Table";
 import axios from "axios";
+import { HandCoins, TrendingUpDown, TriangleAlert } from "lucide-react";
+import { useEffect, useState } from "react";
+import { FaBell, FaPhone, FaRupeeSign } from "react-icons/fa";
 import { DotLoader } from "react-spinners";
+import BarChart from "../../charts/BarChart";
+import Table from "../../charts/Table";
 
 // Dummy data for fallback
 const dummyProjectData = [
   {
-    project: "Website Redesign",
+    name: "Website Redesign",
     client: "Acme Retail Pvt. Ltd.",
     progress: 75,
     deadline: "30 June 2025",
@@ -18,7 +17,7 @@ const dummyProjectData = [
     health: "healthy",
   },
   {
-    project: "App Migration",
+    name: "App Migration",
     client: "Nova FinServe Ltd.",
     progress: 40,
     deadline: "5 July 2025",
@@ -26,7 +25,7 @@ const dummyProjectData = [
     health: "at_risk",
   },
   {
-    project: "Q3 Campaign Launch",
+    name: "Q3 Campaign Launch",
     client: "Sparks Events Agency",
     progress: 90,
     deadline: "28 June 2025",
@@ -38,21 +37,21 @@ const dummyProjectData = [
 const dummyDeadlineData = [
   {
     icon: <FaBell />,
-    event: "Website Redesign - Beta Release",
-    date: "27 June 2025",
-    time: "--:--",
+    milestone: "Website Redesign - Beta Release",
+    deadline: "27 June 2025",
+    days_remaining: "2",
   },
   {
     icon: <FaPhone />,
-    event: "App Migration - Client Review",
-    date: "28 June 2025",
-    time: "3:00 PM",
+    milestone: "App Migration - Client Review",
+    deadline: "28 June 2025",
+    days_remaining: "3",
   },
   {
     icon: <FaRupeeSign />,
-    event: "Q3 Campaign Launch - Final Delivery",
-    date: "30 June 2025",
-    time: "11:00 AM",
+    milestone: "Q3 Campaign Launch - Final Delivery",
+    deadline: "30 June 2025",
+    days_remaining: "11",
   },
 ];
 
@@ -284,31 +283,50 @@ const DashBoard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/dashboard/pm`
-        );
-        if (response.data?.response?.success) {
-          setDashboardData(response.data.response.data);
-        }
-      } catch (error) {
-        console.error("Error fetching dashboard data:", error);
-      } finally {
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
-      }
-    };
+useEffect(() => {
+  let isMounted = true;
+  let dataFetched = false;
 
-    fetchDashboardData();
-  }, []);
+  const fallbackData = {
+    my_projects: dummyProjectData,
+    upcoming_deadlines: dummyDeadlineData,
+    team_performance: dummyTeamPerformance,
+  };
+
+  const fetchDashboardData = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/api/dashboard/pm`
+      );
+      if (response.data?.response?.success && isMounted) {
+        setDashboardData(response.data.response.data);
+        dataFetched = true;
+      }
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+    }
+  };
+
+  fetchDashboardData();
+
+  const timeoutId = setTimeout(() => {
+    if (!dataFetched && isMounted) {
+      console.warn("API timeout: Using dummy fallback data.");
+      setDashboardData(fallbackData);
+    }
+    setLoading(false);
+  }, 5000); // 2 seconds
+
+  return () => {
+    isMounted = false;
+    clearTimeout(timeoutId);
+  };
+}, []);
+
 
   if (loading) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-gray-50 bg-opacity-75 z-50">
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-100 ml-64">
         <div className="text-center">
           <DotLoader
             color="#4F46E5"

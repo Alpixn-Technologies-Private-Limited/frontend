@@ -18,7 +18,7 @@ const MemberDashBoardPage = () => {
           <MemberDashBoard />
         </main>
       </div>
-      <div className="pb-5 bg-gray-50">
+      <div className="pb-5 bg-gray-50 ml-64">
         <Footer />
       </div>
     </div>

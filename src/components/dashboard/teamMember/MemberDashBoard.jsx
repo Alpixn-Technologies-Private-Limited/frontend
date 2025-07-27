@@ -2,7 +2,7 @@ import axios from "axios";
 import { CalendarDays } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
-import { DotLoader } from "react-spinners";
+import { HashLoader } from "react-spinners";
 import Table from "../../charts/Table";
 
 // Dummy data for fallback
@@ -216,9 +216,9 @@ const MemberDashBoard = () => {
 
   if (loading) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-gray-50 bg-opacity-75 z-50">
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-50 ml-64">
         <div className="text-center">
-          <DotLoader
+          <HashLoader
             color="#4F46E5"
             size={70}
             speedMultiplier={1.5}

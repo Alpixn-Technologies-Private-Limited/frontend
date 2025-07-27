@@ -7,7 +7,7 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { Link, useLocation } from "react-router-dom";
 
 const menuItems = [
-  { label: "Dashboard", icon: <IoMdHome />, path: "/dashboard" },
+  { label: "Dashboard", icon: <IoMdHome />, path: "/dashboard/admin" },
   { label: "Clients", icon: <FaGlobeAmericas />, path: "/clients" },
   { label: "Projects", icon: <GrProjects />, path: "/projects" },
   { label: "Team Management", icon: <MdGroups />, path: "/team-management" },
