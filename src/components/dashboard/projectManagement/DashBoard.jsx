@@ -15,7 +15,7 @@ const dummyProjectData = [
     progress: 75,
     deadline: "30 June 2025",
     status: "in_progress",
-    health: "healthy"
+    health: "healthy",
   },
   {
     project: "App Migration",
@@ -23,7 +23,7 @@ const dummyProjectData = [
     progress: 40,
     deadline: "5 July 2025",
     status: "in_progress",
-    health: "at_risk"
+    health: "at_risk",
   },
   {
     project: "Q3 Campaign Launch",
@@ -31,7 +31,7 @@ const dummyProjectData = [
     progress: 90,
     deadline: "28 June 2025",
     status: "in_progress",
-    health: "healthy"
+    health: "healthy",
   },
 ];
 
@@ -60,7 +60,7 @@ const dummyTeamPerformance = {
   total_tasks_completed: 58,
   average_completion_time: 3.5,
   team_satisfaction: 4.5,
-  active_members: "6 out of 7"
+  active_members: "6 out of 7",
 };
 
 const getProgressColor = (value) => {
@@ -71,17 +71,25 @@ const getProgressColor = (value) => {
 
 const getHealthColor = (health) => {
   switch (health) {
-    case "healthy": return "bg-green-500";
-    case "at_risk": return "bg-yellow-500";
-    case "critical": return "bg-red-500";
-    default: return "bg-gray-500";
+    case "healthy":
+      return "bg-green-500";
+    case "at_risk":
+      return "bg-yellow-500";
+    case "critical":
+      return "bg-red-500";
+    default:
+      return "bg-gray-500";
   }
 };
 
 const formatDate = (dateString) => {
   if (!dateString) return "";
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+  return date.toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 };
 
 const overviewColumns = [
@@ -99,14 +107,20 @@ const overviewColumns = [
     cell: ({ getValue }) => {
       const value = getValue();
       return (
-        <span className={`px-2 py-1 rounded-full text-xs ${
-          value === "completed" ? "bg-green-100 text-green-800" :
-          value === "in_progress" ? "bg-blue-100 text-blue-800" :
-          "bg-gray-100 text-gray-800"
-        }`}>
-          {value === "completed" ? "Completed" : 
-           value === "in_progress" ? "In Progress" : 
-           "Not Started"}
+        <span
+          className={`px-2 py-1 rounded-full text-xs ${
+            value === "completed"
+              ? "bg-green-100 text-green-800"
+              : value === "in_progress"
+              ? "bg-blue-100 text-blue-800"
+              : "bg-gray-100 text-gray-800"
+          }`}
+        >
+          {value === "completed"
+            ? "Completed"
+            : value === "in_progress"
+            ? "In Progress"
+            : "Not Started"}
         </span>
       );
     },
@@ -138,7 +152,9 @@ const overviewColumns = [
       return (
         <div className="flex items-center gap-2">
           <div className={`w-3 h-3 rounded-full ${color}`}></div>
-          <span className="capitalize">{value?.replace('_', ' ') || 'N/A'}</span>
+          <span className="capitalize">
+            {value?.replace("_", " ") || "N/A"}
+          </span>
         </div>
       );
     },
@@ -156,8 +172,13 @@ const deadlineColumns = [
     accessorKey: "milestone",
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
-        {row.index === 0 ? <FaBell /> : 
-         row.index === 1 ? <FaPhone /> : <FaRupeeSign />}
+        {row.index === 0 ? (
+          <FaBell />
+        ) : row.index === 1 ? (
+          <FaPhone />
+        ) : (
+          <FaRupeeSign />
+        )}
         {row.original.project_name} - {row.original.milestone}
       </div>
     ),
@@ -233,13 +254,15 @@ const suggestions = [
   {
     icon: <TriangleAlert className="text-xl" />,
     title: "Resource Allocation",
-    message: "You have 3 underutilized team members. Consider redistributing tasks.",
+    message:
+      "You have 3 underutilized team members. Consider redistributing tasks.",
     button: "Relocate Now",
   },
   {
     icon: <TrendingUpDown className="text-xl" />,
     title: "Forecasted Delay",
-    message: "Testing team bandwidth is low between 2-4 July. Reschedule milestone accordingly.",
+    message:
+      "Testing team bandwidth is low between 2-4 July. Reschedule milestone accordingly.",
     button: "Reschedule Milestone",
   },
   {
@@ -251,7 +274,8 @@ const suggestions = [
   {
     icon: <TriangleAlert className="text-xl" />,
     title: "Missed Tasks Follow-up Alerts",
-    message: "5 tasks haven't been updated in over 3 days. Follow up to avoid bottlenecks.",
+    message:
+      "5 tasks haven't been updated in over 3 days. Follow up to avoid bottlenecks.",
     button: "Follow Up Now",
   },
 ];
@@ -286,10 +310,10 @@ const DashBoard = () => {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-gray-50 bg-opacity-75 z-50">
         <div className="text-center">
-          <DotLoader 
-            color="#4F46E5" 
-            size={70} 
-            speedMultiplier={1.5} 
+          <DotLoader
+            color="#4F46E5"
+            size={70}
+            speedMultiplier={1.5}
             cssOverride={{
               display: "block",
               margin: "0 auto",
@@ -304,13 +328,15 @@ const DashBoard = () => {
   }
 
   // Use API data or fallback to dummy data
-  const projectData = dashboardData?.my_projects?.length > 0 
-    ? dashboardData.my_projects 
-    : dummyProjectData;
+  const projectData =
+    dashboardData?.my_projects?.length > 0
+      ? dashboardData.my_projects
+      : dummyProjectData;
 
-  const deadlineData = dashboardData?.upcoming_deadlines?.length > 0
-    ? dashboardData.upcoming_deadlines
-    : dummyDeadlineData;
+  const deadlineData =
+    dashboardData?.upcoming_deadlines?.length > 0
+      ? dashboardData.upcoming_deadlines
+      : dummyDeadlineData;
 
   const teamPerformance = dashboardData?.team_performance
     ? dashboardData.team_performance
@@ -341,7 +367,8 @@ const DashBoard = () => {
               <div className="px-4 py-6 border rounded-md border-slate-300">
                 <p className="font-medium">Avg. Task Completion Time:</p>
                 <p className="font-semibold text-xl text-center text-black mt-2">
-                  {teamPerformance.average_completion_time} <span className="font-medium text-lg">Days</span>
+                  {teamPerformance.average_completion_time}{" "}
+                  <span className="font-medium text-lg">Days</span>
                 </p>
               </div>
               <div className="px-4 py-6 border rounded-md border-slate-300">
@@ -403,8 +430,6 @@ const DashBoard = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

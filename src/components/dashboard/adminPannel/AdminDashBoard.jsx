@@ -1,30 +1,29 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { AiFillWarning } from "react-icons/ai";
+import { BsGraphUp } from "react-icons/bs";
+import { CiGlobe, CiSettings } from "react-icons/ci";
 import {
   FaCalendar,
+  FaCalendarAlt,
   FaCaretUp,
   FaChevronDown,
-  FaCalendarAlt,
 } from "react-icons/fa";
-import { MdGroup, MdTrendingUp, MdOutlineTask } from "react-icons/md";
-import { CiGlobe, CiSettings } from "react-icons/ci";
+import { FaClipboardList } from "react-icons/fa6";
+import { GrGroup } from "react-icons/gr";
+import { IoMdCloudUpload } from "react-icons/io";
 import { IoTimerOutline } from "react-icons/io5";
-import BarChart from "../../charts/BarChart";
+import { MdGroup, MdTrendingUp } from "react-icons/md";
 import { PiCube } from "react-icons/pi";
-import { TbMoneybag } from "react-icons/tb";
 import { RxCountdownTimer } from "react-icons/rx";
-import { BsGraphUp } from "react-icons/bs";
-import riskGraph from "../../../assets/graphs/risk-alert.png";
+import { TbMoneybag } from "react-icons/tb";
 import deadlineGraph from "../../../assets/graphs/deadline-prediction.png";
 import performanceGraph from "../../../assets/graphs/performance-insight.png";
-import Footer from "../../Footer";
-import { IoMdCloudUpload } from "react-icons/io";
-import { GrGroup } from "react-icons/gr";
-import { FaClipboardList } from "react-icons/fa6";
+import riskGraph from "../../../assets/graphs/risk-alert.png";
+import BarChart from "../../charts/BarChart";
 
 const AdminDashboard = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -438,7 +437,6 @@ const AdminDashboard = () => {
           )}
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

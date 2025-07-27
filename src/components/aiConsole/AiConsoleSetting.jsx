@@ -1,18 +1,16 @@
-import React from "react";
-import { Bar } from "react-chartjs-2";
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
   BarElement,
-  Tooltip,
+  CategoryScale,
+  Chart as ChartJS,
   Legend,
+  LinearScale,
+  Tooltip,
 } from "chart.js";
-import { BoxIcon, CircleFadingPlus, InfoIcon, Plus } from "lucide-react";
-import { FaFileExport, FaSquareArrowUpRight } from "react-icons/fa6";
-import Table from "../charts/Table";
+import { BoxIcon, InfoIcon, Plus } from "lucide-react";
+import { Bar } from "react-chartjs-2";
 import { BsThreeDots } from "react-icons/bs";
-import Footer from "../Footer";
+import { FaSquareArrowUpRight } from "react-icons/fa6";
+import Table from "../charts/Table";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
@@ -264,7 +262,7 @@ const AiConsoleSetting = () => {
             Connected Data Sources
           </h2>
           <button className="bg-gradient-to-r from-[#4F46E5] to-[#D6A700] text-white px-4 py-2 rounded-md text-sm font-medium flex items-center gap-1 cursor-pointer">
-            <FaSquareArrowUpRight className="bg-transparent text-white text-2xl p-1"/>
+            <FaSquareArrowUpRight className="bg-transparent text-white text-2xl p-1" />
             Export Settings
           </button>
         </div>
@@ -272,7 +270,6 @@ const AiConsoleSetting = () => {
           <Table data={TableData} columns={tableColumns} />
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
