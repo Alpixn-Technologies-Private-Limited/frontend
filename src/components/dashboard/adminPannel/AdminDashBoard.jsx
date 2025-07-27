@@ -32,24 +32,60 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/dashboard/admin`
-        );
-        if (response.data?.response?.success) {
-          setDashboardData(response.data.response.data);
-        }
-      } catch (error) {
-        console.error("Error fetching dashboard data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  let isMounted = true;
+  let dataFetched = false;
 
-    fetchDashboardData();
-  }, []);
+  const dummyData = {
+    kpi_metrics: {
+      total_active_projects: 5,
+      total_clients: 8,
+      team_utilization: 78,
+      monthly_revenue: 4200000,
+    },
+    ai_insights: {
+      risk_alerts: [{}, {}],
+      deadline_predictions: [{ project_id: "Apollo", confidence: 0.7 }],
+    },
+    recent_activities: [
+      {
+        type: "Dummy Project Initiated",
+        message: "Demo data used as fallback.",
+        icon: <MdGroup />,
+      },
+    ],
+  };
+
+  const fetchDashboardData = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/api/dashboard/admin`
+      );
+
+      if (response.data?.response?.success && isMounted) {
+        setDashboardData(response.data.response.data);
+        dataFetched = true;
+      }
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+    }
+  };
+
+  fetchDashboardData();
+
+  const timeoutId = setTimeout(() => {
+    if (!dataFetched && isMounted) {
+      console.warn("API timeout: Using fallback dummy data.");
+      setDashboardData(dummyData);
+    }
+    setLoading(false);
+  }, 2000); // 2 seconds
+
+  return () => {
+    isMounted = false;
+    clearTimeout(timeoutId);
+  };
+}, []);
+
 
   // Stats data combining API and frontend values
   const stats = [
@@ -250,10 +286,10 @@ const AdminDashboard = () => {
 
   if (loading || !dashboardData) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-gray-50 bg-opacity-75 z-50">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500 mx-auto"></div>
-          <p className="mt-4 text-lg font-medium text-gray-700">
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-100 ml-64">
+        <div className=" mx-auto w-fit">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-indigo-500 mx-auto"></div>
+          <p className="mt-4 text-lg font-medium text-gray-700 animate-pulse">
             Loading dashboard data...
           </p>
         </div>

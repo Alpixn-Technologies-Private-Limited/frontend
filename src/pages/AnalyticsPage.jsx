@@ -1,10 +1,10 @@
 import React from "react";
-import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
-import AdminDashBoard from "../components/dashboard/adminPannel/AdminDashBoard";
+import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
+import Analytics from "../components/analytics/Analytics";
 
-const AdminDashBoardPage = () => {
+const AnalyticsPage = () => {
   return (
     <div className="h-screen flex flex-col">
       <div className="fixed top-0 left-64 right-0 z-50">
@@ -16,7 +16,7 @@ const AdminDashBoardPage = () => {
           <Sidebar />
         </div>
         <main className="ml-64 flex-1 overflow-y-auto bg-gray-50 p-4 md:p-6">
-          <AdminDashBoard />
+          <Analytics />
         </main>
       </div>
       <div className="pb-5 bg-gray-50 ml-64">
@@ -26,4 +26,4 @@ const AdminDashBoardPage = () => {
   );
 };
 
-export default AdminDashBoardPage;
+export default AnalyticsPage;

@@ -29,6 +29,7 @@ import AIConsole from "./pages/AIConsole";
 import AiSettingPage from "./pages/AiSettingPage";
 import SystemSettingsPage from "./pages/SystemSettingsPage";
 import UserProfileSettingPage from "./pages/UserProfileSettingPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
     if (!isAuthenticated) {
@@ -73,6 +74,9 @@ const App = () => {
                 {/* AI Console */}
                 <Route path="/ai-console" element={<AIConsole />} />
                 <Route path="/ai-console/setting" element={<AiSettingPage />} />
+
+                {/* Analytics Pages */}
+                <Route path="/analytics" element={<AnalyticsPage />} />
 
                 {/* Project Pages */}
                 <Route path="/projects" element={<Project />} />
