@@ -3,9 +3,9 @@ import { FaClockRotateLeft } from "react-icons/fa6";
 import { FiFilter } from "react-icons/fi";
 import { IoSend, IoWarning } from "react-icons/io5";
 import { MdDangerous, MdGroups2, MdInfoOutline } from "react-icons/md";
+import { Link } from "react-router-dom";
 import DoughnutChart from "../charts/DoughnutChart";
 import Table from "../charts/Table";
-import Footer from "../Footer";
 
 const AiConsoleDashboard = () => {
   const insights = [
@@ -94,49 +94,63 @@ const AiConsoleDashboard = () => {
       trigger: "Utilization < 60%",
       action: "Email team lead",
       status: "Disabled",
-      btn: <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />,
+      btn: (
+        <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />
+      ),
     },
     {
       name: "New Client Welcome Flow",
       trigger: "Client Created",
       action: "Send onboarding email",
       status: "Paused",
-      btn: <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />,
+      btn: (
+        <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />
+      ),
     },
     {
       name: "Auto Assign Designer",
       trigger: "Design task created",
       action: "Assign to 'Ravi Kumar'",
       status: "Active",
-      btn: <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />,
+      btn: (
+        <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />
+      ),
     },
     {
       name: "Inactive Project Reminder",
       trigger: "No activity for 10 days",
       action: "Notify project manager",
       status: "Active",
-      btn: <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />,
+      btn: (
+        <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />
+      ),
     },
     {
       name: "Missed Deadline Escalation",
       trigger: "Task due date passed",
       action: "Send escalation email to admin",
       status: "Disabled",
-      btn: <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />,
+      btn: (
+        <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />
+      ),
     },
     {
       name: "Urgent Task Alert",
       trigger: "New task with 'Urgent' priority",
       action: "Push notification to supervisor",
       status: "Active",
-      btn: <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />,
+      btn: (
+        <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />
+      ),
     },
     {
       name: "Reopen Stale Bug",
       trigger: "Bug marked 'Closed' & reopened",
       action: "Notify QA team",
       status: "Paused",
-      btn: <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />,
+      btn: (
+        <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />
+      ),
     },
   ];
 
@@ -228,7 +242,10 @@ const AiConsoleDashboard = () => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-[#4F46E5CC] via-[#D6A700CC] to-[#B700FFCC] text-white p-6 rounded-lg shadow-md relative flex flex-col justify-between items-center overflow-hidden">
+        <Link
+          to="/ai-console/setting"
+          className="bg-gradient-to-br from-[#4F46E5CC] via-[#D6A700CC] to-[#B700FFCC] text-white p-6 rounded-lg shadow-md relative flex flex-col justify-between items-center overflow-hidden"
+        >
           <div className="mt-8 flex flex-col items-center">
             <p className="text-[15px] font-normal mb-2">Hi Varun</p>
             <h2 className="text-[28px] font-semibold mb-4">
@@ -253,7 +270,7 @@ const AiConsoleDashboard = () => {
             />
             <IoSend className="absolute right-3 top-3 text-white text-2xl cursor-pointer" />
           </div>
-        </div>
+        </Link>
       </div>
 
       <div className="bg-white p-6 rounded-lg shadow-md">
@@ -268,7 +285,6 @@ const AiConsoleDashboard = () => {
         </div>
         <Table data={automationsData} columns={automationColumns} />
       </div>
-      <Footer />
     </div>
   );
 };

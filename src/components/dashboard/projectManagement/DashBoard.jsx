@@ -1,58 +1,57 @@
-import React, { useEffect, useState } from "react";
-import { HandCoins, TrendingUpDown, TriangleAlert } from "lucide-react";
-import { FaBell, FaPhone, FaRupeeSign } from "react-icons/fa";
-import BarChart from "../../charts/BarChart";
-import Footer from "../../Footer";
-import Table from "../../charts/Table";
 import axios from "axios";
+import { HandCoins, TrendingUpDown, TriangleAlert } from "lucide-react";
+import { useEffect, useState } from "react";
+import { FaBell, FaPhone, FaRupeeSign } from "react-icons/fa";
 import { DotLoader } from "react-spinners";
+import BarChart from "../../charts/BarChart";
+import Table from "../../charts/Table";
 
 // Dummy data for fallback
 const dummyProjectData = [
   {
-    project: "Website Redesign",
+    name: "Website Redesign",
     client: "Acme Retail Pvt. Ltd.",
     progress: 75,
     deadline: "30 June 2025",
     status: "in_progress",
-    health: "healthy"
+    health: "healthy",
   },
   {
-    project: "App Migration",
+    name: "App Migration",
     client: "Nova FinServe Ltd.",
     progress: 40,
     deadline: "5 July 2025",
     status: "in_progress",
-    health: "at_risk"
+    health: "at_risk",
   },
   {
-    project: "Q3 Campaign Launch",
+    name: "Q3 Campaign Launch",
     client: "Sparks Events Agency",
     progress: 90,
     deadline: "28 June 2025",
     status: "in_progress",
-    health: "healthy"
+    health: "healthy",
   },
 ];
 
 const dummyDeadlineData = [
   {
     icon: <FaBell />,
-    event: "Website Redesign - Beta Release",
-    date: "27 June 2025",
-    time: "--:--",
+    milestone: "Website Redesign - Beta Release",
+    deadline: "27 June 2025",
+    days_remaining: "2",
   },
   {
     icon: <FaPhone />,
-    event: "App Migration - Client Review",
-    date: "28 June 2025",
-    time: "3:00 PM",
+    milestone: "App Migration - Client Review",
+    deadline: "28 June 2025",
+    days_remaining: "3",
   },
   {
     icon: <FaRupeeSign />,
-    event: "Q3 Campaign Launch - Final Delivery",
-    date: "30 June 2025",
-    time: "11:00 AM",
+    milestone: "Q3 Campaign Launch - Final Delivery",
+    deadline: "30 June 2025",
+    days_remaining: "11",
   },
 ];
 
@@ -60,7 +59,7 @@ const dummyTeamPerformance = {
   total_tasks_completed: 58,
   average_completion_time: 3.5,
   team_satisfaction: 4.5,
-  active_members: "6 out of 7"
+  active_members: "6 out of 7",
 };
 
 const getProgressColor = (value) => {
@@ -71,17 +70,25 @@ const getProgressColor = (value) => {
 
 const getHealthColor = (health) => {
   switch (health) {
-    case "healthy": return "bg-green-500";
-    case "at_risk": return "bg-yellow-500";
-    case "critical": return "bg-red-500";
-    default: return "bg-gray-500";
+    case "healthy":
+      return "bg-green-500";
+    case "at_risk":
+      return "bg-yellow-500";
+    case "critical":
+      return "bg-red-500";
+    default:
+      return "bg-gray-500";
   }
 };
 
 const formatDate = (dateString) => {
   if (!dateString) return "";
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+  return date.toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 };
 
 const overviewColumns = [
@@ -99,14 +106,20 @@ const overviewColumns = [
     cell: ({ getValue }) => {
       const value = getValue();
       return (
-        <span className={`px-2 py-1 rounded-full text-xs ${
-          value === "completed" ? "bg-green-100 text-green-800" :
-          value === "in_progress" ? "bg-blue-100 text-blue-800" :
-          "bg-gray-100 text-gray-800"
-        }`}>
-          {value === "completed" ? "Completed" : 
-           value === "in_progress" ? "In Progress" : 
-           "Not Started"}
+        <span
+          className={`px-2 py-1 rounded-full text-xs ${
+            value === "completed"
+              ? "bg-green-100 text-green-800"
+              : value === "in_progress"
+              ? "bg-blue-100 text-blue-800"
+              : "bg-gray-100 text-gray-800"
+          }`}
+        >
+          {value === "completed"
+            ? "Completed"
+            : value === "in_progress"
+            ? "In Progress"
+            : "Not Started"}
         </span>
       );
     },
@@ -138,7 +151,9 @@ const overviewColumns = [
       return (
         <div className="flex items-center gap-2">
           <div className={`w-3 h-3 rounded-full ${color}`}></div>
-          <span className="capitalize">{value?.replace('_', ' ') || 'N/A'}</span>
+          <span className="capitalize">
+            {value?.replace("_", " ") || "N/A"}
+          </span>
         </div>
       );
     },
@@ -156,8 +171,13 @@ const deadlineColumns = [
     accessorKey: "milestone",
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
-        {row.index === 0 ? <FaBell /> : 
-         row.index === 1 ? <FaPhone /> : <FaRupeeSign />}
+        {row.index === 0 ? (
+          <FaBell />
+        ) : row.index === 1 ? (
+          <FaPhone />
+        ) : (
+          <FaRupeeSign />
+        )}
         {row.original.project_name} - {row.original.milestone}
       </div>
     ),
@@ -233,13 +253,15 @@ const suggestions = [
   {
     icon: <TriangleAlert className="text-xl" />,
     title: "Resource Allocation",
-    message: "You have 3 underutilized team members. Consider redistributing tasks.",
+    message:
+      "You have 3 underutilized team members. Consider redistributing tasks.",
     button: "Relocate Now",
   },
   {
     icon: <TrendingUpDown className="text-xl" />,
     title: "Forecasted Delay",
-    message: "Testing team bandwidth is low between 2-4 July. Reschedule milestone accordingly.",
+    message:
+      "Testing team bandwidth is low between 2-4 July. Reschedule milestone accordingly.",
     button: "Reschedule Milestone",
   },
   {
@@ -251,7 +273,8 @@ const suggestions = [
   {
     icon: <TriangleAlert className="text-xl" />,
     title: "Missed Tasks Follow-up Alerts",
-    message: "5 tasks haven't been updated in over 3 days. Follow up to avoid bottlenecks.",
+    message:
+      "5 tasks haven't been updated in over 3 days. Follow up to avoid bottlenecks.",
     button: "Follow Up Now",
   },
 ];
@@ -260,36 +283,55 @@ const DashBoard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/dashboard/pm`
-        );
-        if (response.data?.response?.success) {
-          setDashboardData(response.data.response.data);
-        }
-      } catch (error) {
-        console.error("Error fetching dashboard data:", error);
-      } finally {
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
-      }
-    };
+useEffect(() => {
+  let isMounted = true;
+  let dataFetched = false;
 
-    fetchDashboardData();
-  }, []);
+  const fallbackData = {
+    my_projects: dummyProjectData,
+    upcoming_deadlines: dummyDeadlineData,
+    team_performance: dummyTeamPerformance,
+  };
+
+  const fetchDashboardData = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/api/dashboard/pm`
+      );
+      if (response.data?.response?.success && isMounted) {
+        setDashboardData(response.data.response.data);
+        dataFetched = true;
+      }
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+    }
+  };
+
+  fetchDashboardData();
+
+  const timeoutId = setTimeout(() => {
+    if (!dataFetched && isMounted) {
+      console.warn("API timeout: Using dummy fallback data.");
+      setDashboardData(fallbackData);
+    }
+    setLoading(false);
+  }, 5000); // 2 seconds
+
+  return () => {
+    isMounted = false;
+    clearTimeout(timeoutId);
+  };
+}, []);
+
 
   if (loading) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-gray-50 bg-opacity-75 z-50">
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-100 ml-64">
         <div className="text-center">
-          <DotLoader 
-            color="#4F46E5" 
-            size={70} 
-            speedMultiplier={1.5} 
+          <DotLoader
+            color="#4F46E5"
+            size={70}
+            speedMultiplier={1.5}
             cssOverride={{
               display: "block",
               margin: "0 auto",
@@ -304,13 +346,15 @@ const DashBoard = () => {
   }
 
   // Use API data or fallback to dummy data
-  const projectData = dashboardData?.my_projects?.length > 0 
-    ? dashboardData.my_projects 
-    : dummyProjectData;
+  const projectData =
+    dashboardData?.my_projects?.length > 0
+      ? dashboardData.my_projects
+      : dummyProjectData;
 
-  const deadlineData = dashboardData?.upcoming_deadlines?.length > 0
-    ? dashboardData.upcoming_deadlines
-    : dummyDeadlineData;
+  const deadlineData =
+    dashboardData?.upcoming_deadlines?.length > 0
+      ? dashboardData.upcoming_deadlines
+      : dummyDeadlineData;
 
   const teamPerformance = dashboardData?.team_performance
     ? dashboardData.team_performance
@@ -341,7 +385,8 @@ const DashBoard = () => {
               <div className="px-4 py-6 border rounded-md border-slate-300">
                 <p className="font-medium">Avg. Task Completion Time:</p>
                 <p className="font-semibold text-xl text-center text-black mt-2">
-                  {teamPerformance.average_completion_time} <span className="font-medium text-lg">Days</span>
+                  {teamPerformance.average_completion_time}{" "}
+                  <span className="font-medium text-lg">Days</span>
                 </p>
               </div>
               <div className="px-4 py-6 border rounded-md border-slate-300">
@@ -403,8 +448,6 @@ const DashBoard = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };
