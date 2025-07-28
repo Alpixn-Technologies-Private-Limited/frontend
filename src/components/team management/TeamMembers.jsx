@@ -201,7 +201,7 @@ const TeamMembers = () => {
                                             />
                                             <Link
                                                 to={
-                                                    "/team-management/memberProfile"
+                                                    "/team-management/member-profile"
                                                 }
                                             >
                                                 {" "}
