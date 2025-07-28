@@ -13,7 +13,7 @@ const menuItems = [
   { label: "Team Management", icon: <MdGroups />, path: "/team-management" },
   { label: "Analytics", icon: <MdAnalytics />, path: "/analytics" },
   { label: "AI Console", icon: <MdAutoAwesome />, path: "/ai-console" },
-  { label: "Settings", icon: <IoMdSettings />, path: "/settings" },
+  { label: "Settings", icon: <IoMdSettings />, path: "/settings/system" },
 ];
 
 
@@ -45,9 +45,9 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className="mt-8 cursor-pointer hover:bg-gray-800 flex items-center justify-start gap-1 font-semibold p-2 rounded-md transition duration-200 text-red-400">
+      <div className="mt-8 cursor-pointer hover:bg-gray-200 flex items-center justify-start gap-1 font-semibold p-2 rounded-md transition duration-200">
         <span><AiOutlineLogout /></span>
-        <span>Log Out</span>
+       <Link to={"/login"}><span>Log Out</span></Link> 
       </div>
     </div>
   );
