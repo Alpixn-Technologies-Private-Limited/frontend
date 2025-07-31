@@ -15,11 +15,11 @@ export default function Project() {
     <div className="bg-gray-50 flex h-screen">
       <Sidebar />
       <div className="flex-1 flex flex-col">
-        <div className="sticky top-0 z-50 bg-white shadow">
+        <div className="sticky top-0 z-50 bg-white shadow ml-64 max-sm:ml-0">
           <Navbar />
         </div>
 
-        <div className="p-6 space-y-6 overflow-y-auto">
+        <div className="p-6 space-y-6 overflow-y-auto ml-64 max-sm:ml-0">
           <ProjectHeader onViewChange={setView} view={view} />
           <ProjectDashboard />
 
