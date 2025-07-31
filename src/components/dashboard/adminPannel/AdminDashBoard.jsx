@@ -211,7 +211,7 @@ const AdminDashboard = () => {
 
   const barChartOptions = {
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
     aspectRatio: 2.3,
     plugins: {
       legend: {
@@ -286,7 +286,7 @@ const AdminDashboard = () => {
 
   if (loading || !dashboardData) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-gray-100 ml-64">
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-100 ml-64 max-sm:ml-0">
         <div className=" mx-auto w-fit">
           <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-indigo-500 mx-auto"></div>
           <p className="mt-4 text-lg font-medium text-gray-700 animate-pulse">
@@ -297,11 +297,12 @@ const AdminDashboard = () => {
     );
   }
 
+
   return (
-    <div className="px-6 space-y-4 bg-gray-50 min-h-screen">
+    <div className="px-6 py-3 rounded-md space-y-4 bg-gray-50 dark:bg-gray-200 min-h-screen h-fit max-sm:px-3 max-sm:w-full">
       {/* Header */}
-      <div className="flex justify-between items-center flex-wrap gap-4">
-        <div className="flex items-center gap-2 relative text-white bg-[#4F46E5] py-2 w-fit rounded-lg shadow-sm">
+      <div className="flex justify-between items-center flex-wrap gap-4 max-sm:pt-2">
+        <div className="flex items-center gap-2 relative text-white bg-[#4F46E5] py-2 w-fit rounded-lg shadow-sm max-sm:mx-auto max-sm:w-[90%]">
           <FaCalendar className="absolute left-4 top-3" />
           <DatePicker
             selected={selectedDate}
@@ -311,25 +312,25 @@ const AdminDashboard = () => {
           />
           <FaChevronDown className="absolute top-3 right-3" />
         </div>
-        <div className="flex gap-4">
-          <button className="bg-gradient-to-r from-indigo-600 to-yellow-600 text-white px-4 py-1.5 flex gap-1 items-center justify-center rounded-lg shadow hover:opacity-90">
+        <div className="flex gap-4 max-sm:mx-auto">
+          <button className="bg-gradient-to-r from-indigo-600 to-yellow-600 text-white px-4 py-1.5 flex gap-1 items-center justify-center rounded-lg shadow hover:opacity-90 max-sm:px-2 max-sm:py-1">
             <div className="font-semibold scale-125">+</div> New Project
           </button>
-          <button className="flex items-center gap-2 border text-lg border-gray-300 bg-white text-black px-4 py-2 rounded-lg shadow hover:bg-gray-50">
+          <button className="flex items-center gap-2 border text-lg border-gray-300 bg-white text-black px-4 py-2 rounded-lg shadow hover:bg-gray-50 max-sm:px-2 max-sm:py-1">
             <MdGroup className="scale-110" /> New Client
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-sm:gap-3">
         {stats.map((item, index) => (
           <div
             key={index}
-            className="bg-white shadow-sm border border-gray-300 rounded-xl p-5 transition-transform hover:-translate-y-1 duration-200"
+            className="bg-white shadow-sm border border-gray-300 rounded-xl p-5 transition-transform hover:-translate-y-1 duration-200 max-sm:p-3"
           >
             <div className="flex justify-between items-center text-gray-500">
               <span className="font-semibold">{item.title}</span>
-              <span className="text-2xl text-[#4F46E5] bg-gray-100 border-gray-300 rounded-full p-2 border">
+              <span className="text-2xl text-[#4F46E5] bg-gray-100 border-gray-300 rounded-full p-2 border max-sm:scale-110 max-sm:p-1.5">
                 {item.icon}
               </span>
             </div>
@@ -345,7 +346,7 @@ const AdminDashboard = () => {
       </div>
 
       <div className="flex flex-col justify-between lg:flex-row gap-6 w-full">
-        <div className="w-[49%] bg-white shadow-sm border border-gray-300 h-fit rounded-xl p-5 space-y-5 pt-3">
+        <div className="w-[49%] bg-white shadow-sm border border-gray-300 h-fit rounded-xl p-5 space-y-5 pt-3 max-sm:w-full">
           <div className="flex justify-between items-center mt-1">
             <h5 className="text-2xl font-semibold text-black">AI Insights</h5>
             <div className="relative inline-block">
@@ -371,7 +372,7 @@ const AdminDashboard = () => {
                     {item.icon}
                     <span>{item.title}</span>
                   </div>
-                  <div className="text-gray-700 font-semibold text-xl flex gap-1">
+                  <div className="text-gray-700 font-semibold text-xl flex gap-1 max-sm:font-medium max-sm:text-lg max-sm:leading-6">
                     {item.detail}
                     <span className="ml-2 text-green-600 text-xs flex items-center gap-1">
                       <MdTrendingUp /> {item.change}
@@ -384,15 +385,15 @@ const AdminDashboard = () => {
                 <img
                   src={item.img}
                   alt="img"
-                  className="w-32 h-20 object-cover rounded-lg"
+                  className="w-32 h-20 object-cover rounded-lg max-sm:hidden"
                 />
               </div>
             ))}
           </div>
         </div>
 
-        <div className="w-[49%] h-[fit] bg-[tranparent] rounded-xl p-0">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="w-[49%] h-[fit] bg-[tranparent] rounded-xl p-0 max-sm:w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-sm:gap-2">
             {quickActions.map((task, i) => (
               <div
                 key={i}
@@ -409,19 +410,19 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <div className="h-[24rem] mt-8 flex justify-between flex-col md:flex-row text-gray-500 gap-6">
-        <div className="w-full bg-white md:w-2/3 border border-gray-300 p-4 rounded-lg shadow-sm">
+      <div className="h-[24rem] mt-8 flex justify-between flex-col md:flex-row text-gray-500 gap-6 max-sm:h-fit max-sm:gap-2">
+        <div className="w-full bg-white md:w-2/3 border border-gray-300 p-4 max-sm:p-2 rounded-lg shadow-sm">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-semibold text-gray-800">
               Project Health Overview
             </h3>
-            <select className="border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-400 outline-none">
+            <select className="border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-400 outline-none max-sm:px-1">
               <option value="">Last 6 Months</option>
               <option value="">Last Year</option>
               <option value="">This Quarter</option>
             </select>
           </div>
-          <div className="h-[20rem] w-full flex justify-center items-center">
+          <div className="h-[20rem] w-full flex justify-center items-center max-sm:h-[15rem] max-sm:p-0 overflow-x-auto">
             <BarChart options={barChartOptions} data={barData} />
           </div>
         </div>
@@ -432,14 +433,14 @@ const AdminDashboard = () => {
           </h4>
 
           <div
-            className={`space-y-3 ${
+            className={`space-y-3 max-sm:min-h-40 ${
               showAll ? "max-h-80 overflow-y-auto pr-1" : ""
             }`}
           >
             {visibleActivities.map((item, index) => (
               <div
                 key={index}
-                className="flex w-full items-center gap-3 bg-gray-100 py-1.5 px-3 rounded-lg shadow-md border border-gray-300 hover:bg-gray-50 transition"
+                className="flex w-full items-center gap-3 bg-gray-100 py-1.5 px-3 rounded-lg shadow-md border border-gray-300 hover:bg-gray-50 transition max-sm:gap-1.5 max-sm:px-1 max-sm:tracking-tight"
               >
                 {item.icon ? (
                   <span className="text-2xl text-gray-600">{item.icon}</span>
