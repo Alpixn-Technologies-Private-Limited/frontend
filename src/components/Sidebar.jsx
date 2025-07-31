@@ -1,10 +1,11 @@
-import React from "react";
-import { IoMdHome, IoMdSettings } from "react-icons/io";
+import { ArrowLeft } from "lucide-react";
+import { AiOutlineLogout } from "react-icons/ai";
 import { FaGlobeAmericas } from "react-icons/fa";
 import { GrProjects } from "react-icons/gr";
-import { MdGroups, MdAnalytics, MdAutoAwesome } from "react-icons/md";
-import { AiOutlineLogout } from "react-icons/ai";
+import { IoMdHome, IoMdSettings } from "react-icons/io";
+import { MdAnalytics, MdAutoAwesome, MdGroups } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
+import { useSidebar } from "../context/SidebarContext";
 
 const menuItems = [
   { label: "Dashboard", icon: <IoMdHome />, path: "/dashboard/admin" },
@@ -16,16 +17,27 @@ const menuItems = [
   { label: "Settings", icon: <IoMdSettings />, path: "/settings/system" },
 ];
 
-
 const Sidebar = () => {
   const location = useLocation();
+  const { isSidebarOpen, closeSidebar } = useSidebar();
 
   return (
-    <div className="h-screen w-64 bg-white border-r shadow border-gray-300 py-6 flex flex-col justify-between font-[Segoe UI]">
+    <div
+      className={`
+    fixed top-0 left-0 h-screen w-64 max-sm:w-56 bg-white border-r shadow border-gray-300 py-6
+    flex flex-col justify-between font-[Segoe UI] z-50
+    transition-transform duration-300 ease-in-out
+    ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
+    sm:translate-x-0 max-sm:h-full max-sm:rounded-r-xl maxsm:shadow-lg max-sm:border-r-2
+  `}
+    >
       <div>
-        <h3 className="text-2xl text-center mx-auto font-bold mb-10 bg-clip-text text-transparent w-fit bg-gradient-to-r from-[#4F46E5] via-[#D6A700] to-[#B700FF]">
-          Project Pilot
-        </h3>
+        <div className="flex items-center justify-between px-4 mb-10 max-sm:px-2">
+          <h3 className="text-2xl text-center mx-auto font-bold bg-clip-text text-transparent w-fit bg-gradient-to-r from-[#4F46E5] via-[#D6A700] to-[#B700FF]">
+            Project Pilot
+          </h3>
+          <ArrowLeft className="cursor-pointer sm:hidden my-auto mr-3" onClick={closeSidebar} />
+        </div>
 
         <div className="space-y-2">
           {menuItems.map((item, index) => (
@@ -46,8 +58,12 @@ const Sidebar = () => {
       </div>
 
       <div className="mt-8 cursor-pointer hover:bg-gray-200 flex items-center justify-start gap-1 font-semibold p-2 rounded-md transition duration-200">
-        <span><AiOutlineLogout /></span>
-       <Link to={"/login"}><span>Log Out</span></Link> 
+        <span>
+          <AiOutlineLogout />
+        </span>
+        <Link to={"/login"}>
+          <span>Log Out</span>
+        </Link>
       </div>
     </div>
   );
