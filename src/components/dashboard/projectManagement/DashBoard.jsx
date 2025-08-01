@@ -213,7 +213,7 @@ const chartData = {
 
 const chartOptions = {
   responsive: true,
-  maintainAspectRatio: true,
+  maintainAspectRatio: false,
   aspectRatio: 3,
   plugins: {
     legend: {
@@ -283,50 +283,49 @@ const DashBoard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  let isMounted = true;
-  let dataFetched = false;
+  useEffect(() => {
+    let isMounted = true;
+    let dataFetched = false;
 
-  const fallbackData = {
-    my_projects: dummyProjectData,
-    upcoming_deadlines: dummyDeadlineData,
-    team_performance: dummyTeamPerformance,
-  };
+    const fallbackData = {
+      my_projects: dummyProjectData,
+      upcoming_deadlines: dummyDeadlineData,
+      team_performance: dummyTeamPerformance,
+    };
 
-  const fetchDashboardData = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/api/dashboard/pm`
-      );
-      if (response.data?.response?.success && isMounted) {
-        setDashboardData(response.data.response.data);
-        dataFetched = true;
+    const fetchDashboardData = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/dashboard/pm`
+        );
+        if (response.data?.response?.success && isMounted) {
+          setDashboardData(response.data.response.data);
+          dataFetched = true;
+        }
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
       }
-    } catch (error) {
-      console.error("Error fetching dashboard data:", error);
-    }
-  };
+    };
 
-  fetchDashboardData();
+    fetchDashboardData();
 
-  const timeoutId = setTimeout(() => {
-    if (!dataFetched && isMounted) {
-      console.warn("API timeout: Using dummy fallback data.");
-      setDashboardData(fallbackData);
-    }
-    setLoading(false);
-  }, 5000); // 2 seconds
+    const timeoutId = setTimeout(() => {
+      if (!dataFetched && isMounted) {
+        console.warn("API timeout: Using dummy fallback data.");
+        setDashboardData(fallbackData);
+      }
+      setLoading(false);
+    }, 5000); // 2 seconds
 
-  return () => {
-    isMounted = false;
-    clearTimeout(timeoutId);
-  };
-}, []);
-
+    return () => {
+      isMounted = false;
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   if (loading) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-gray-100 ml-64">
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-100 ml-64 max-sm:ml-0">
         <div className="text-center">
           <DotLoader
             color="#4F46E5"
@@ -370,40 +369,42 @@ useEffect(() => {
 
       <div className="flex flex-col lg:flex-row gap-6 h-full">
         <div className="w-full lg:w-[70%] space-y-6">
-          <div className="border border-gray-300 p-4 bg-white rounded-lg shadow-sm">
+          <div className="border border-gray-300 p-4 bg-white rounded-lg shadow-sm max-sm:p-3">
             <h3 className="text-xl font-semibold text-gray-800 mb-2">
               My Project Overview
             </h3>
             <Table data={projectData} columns={overviewColumns} />
           </div>
 
-          <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white">
+          <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white max-sm:p-3">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">
               Team Performance Metrics
             </h3>
-            <div className="flex gap-6 mb-4 text-sm text-gray-600 justify-between">
-              <div className="px-4 py-6 border rounded-md border-slate-300">
+            <div className="flex gap-6 mb-4 text-sm text-gray-600 justify-between max-sm:flex-wrap max-sm:gap-2 max-sm:items-center">
+              <div className="px-4 py-6 border rounded-md border-slate-300 max-sm:px-2 max-sm:py-3 max-sm:w-[48%] max-sm:text-center">
                 <p className="font-medium">Avg. Task Completion Time:</p>
                 <p className="font-semibold text-xl text-center text-black mt-2">
                   {teamPerformance.average_completion_time}{" "}
                   <span className="font-medium text-lg">Days</span>
                 </p>
               </div>
-              <div className="px-4 py-6 border rounded-md border-slate-300">
+              <div className="px-4 py-6 border rounded-md border-slate-300 max-sm:px-2 max-sm:py-3 max-sm:w-[48%] max-sm:text-center">
                 <p className="font-medium">Tasks Completed This Week:</p>
                 <p className="font-semibold text-xl text-center text-black mt-2">
                   {teamPerformance.total_tasks_completed}
                 </p>
               </div>
-              <div className="px-4 py-6 border rounded-md border-slate-300">
+              <div className="px-4 py-6 border rounded-md border-slate-300 max-sm:px-2 max-sm:py-3 max-sm:w-[48%] max-sm:text-center max-sm:mx-auto">
                 <p className="font-medium">Active Members This Week:</p>
                 <p className="font-semibold text-xl text-center text-black mt-2">
                   {teamPerformance.active_members || "6 out of 7"}
                 </p>
               </div>
             </div>
-            <div className="w-full h-[300px]">
-              <BarChart data={chartData} options={chartOptions} />
+            <div className="w-full overflow-x-auto max-sm:mt-3">
+              <div className="min-w-[500px] h-[300px] max-sm:h-[250px]">
+                <BarChart data={chartData} options={chartOptions} />
+              </div>
             </div>
           </div>
 
