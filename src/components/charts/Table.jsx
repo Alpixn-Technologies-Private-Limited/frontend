@@ -29,7 +29,7 @@ const Table = ({ data, columns }) => {
             </tr>
           ))}
         </thead>
-        <tbody className="divide-y divide-gray-200">
+        <tbody className="divide-y divide-gray-200 max-sm:text-nowrap">
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id} className="hover:bg-gray-50 transition">
               {row.getVisibleCells().map((cell) => (
