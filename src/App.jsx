@@ -92,7 +92,7 @@ const App = () => {
                 {/* Team Management Pages */}
                 <Route path="/team-management" element={<TeamMembersPage />} />
                 <Route path="/team-management/member-profile" element={<TeamMemberProfilePage />} />
-                <Route path="/team-management/teamWorkload" element={<TeamWorkloadPage />} />
+                <Route path="/team-management/team-workload" element={<TeamWorkloadPage />} />
 
                 {/* Setting and Configuration */}
                 <Route path="/settings/system" element={<SystemSettingsPage />} />

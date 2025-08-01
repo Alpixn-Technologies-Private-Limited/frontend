@@ -1,11 +1,9 @@
-import React from "react";
-import { FaRegEdit } from "react-icons/fa";
-import { FaPhoneAlt } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
+import React, { useState } from "react";
+import { FaRegEdit, FaPhoneAlt } from "react-icons/fa";
+import { MdEmail, MdKeyboardArrowDown } from "react-icons/md";
 import { IoLocationSharp } from "react-icons/io5";
-import { MdKeyboardArrowDown } from "react-icons/md";
-import { HiOutlineClipboardCopy } from "react-icons/hi";
 import { PiDotsThreeBold } from "react-icons/pi";
+import { Link } from "react-router-dom";
 const clientData = {
     name: "Green Tech Solution Pvt. Ltd.",
     status: "Active",
@@ -57,6 +55,7 @@ const tabs = [
     "Documents",
     "Communication History",
 ];
+
 const colorClassMap = {
     green: "bg-green-500",
     blue: "bg-blue-500",
@@ -65,20 +64,28 @@ const colorClassMap = {
 };
 
 const ClientDetails = () => {
+    const [showAllActivities, setShowAllActivities] = useState(false);
+
     return (
-        <div className="p-1 w-full bg-gray-50 min-h-screen">
-            <div className="text-sm text-gray-500 mb-1 mt-0">
-                Dashboard&gt;Clients&gt;Clients Details
+        <div className="p-2 w-full bg-gray-50 min-h-screen">
+            <div className="text-sm text-gray-500 mb-2">
+                <Link to={"/dashboard/pm"}> Dashboard </Link> &gt;
+                <Link to={"/clients"}> Clients </Link>&gt;{" "}
+                <span className="text-blue-800">Client Details</span>
             </div>
-            <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2">
+                <h2 className="text-2xl font-semibold text-gray-800">
                     Client Details
                 </h2>
-                <button className="border flex items-center gap-2 border-gray-300 rounded-lg py-1 px-3 text-xs hover:bg-gray-100 cursor-pointer">
-                    Edit Details <FaRegEdit />
-                </button>
+                <Link to="/clients/edit-form">
+                    <button className="cursor-pointer flex items-center gap-2 border border-gray-300 rounded-lg py-1 px-3 text-xs hover:bg-gray-100 w-fit">
+                        Edit Details <FaRegEdit />
+                    </button>
+                </Link>
             </div>
-            <div className="bg-white p-6 rounded-2xl border border-gray-300">
+
+            <div className="bg-white p-6 rounded-2xl border border-gray-300 mb-4">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div className="flex items-center gap-4">
                         <img
@@ -86,16 +93,17 @@ const ClientDetails = () => {
                             alt="Logo"
                             className="rounded-full w-10 h-10 object-cover"
                         />
-                        <div className="flex gap-3">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                             <h3 className="text-lg font-semibold text-gray-800">
                                 {clientData.name}
                             </h3>
-                            <div className="text-green-600 border border-green-600 text-xs px-2 py-0.5 rounded-full inline-block mt-1">
+                            <span className="text-green-600 border w-fit border-green-600 text-xs px-2 py-0.5 rounded-full">
                                 {clientData.status}
-                            </div>
+                            </span>
                         </div>
                     </div>
-                    <div className="text-sm text-gray-600 md:text-right flex flex-col justify-center items-start">
+
+                    <div className="text-sm text-gray-600 flex flex-col gap-1 md:items-end">
                         <div>
                             <FaPhoneAlt className="inline mr-1" />{" "}
                             {clientData.phone}
@@ -111,11 +119,12 @@ const ClientDetails = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-wrap justify-around gap-2 my-4">
+
+            <div className="flex flex-wrap justify-start sm:justify-around gap-2 mb-4">
                 {tabs.map((tab) => (
                     <button
                         key={tab}
-                        className={`px-4 py-2 rounded-full cursor-pointer border text-xs ${
+                        className={`px-4 py-2 rounded-full text-xs border ${
                             tab === "Overview"
                                 ? "bg-purple-600 text-white"
                                 : "border-gray-300 text-gray-600 hover:bg-gray-100"
@@ -125,89 +134,91 @@ const ClientDetails = () => {
                     </button>
                 ))}
             </div>
-            <div className="bg-transparent py-1 px-3 my-2">
-                <div className="mt-2 pb-2 grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="md:col-span-2 border bg-white p-3 border-gray-300 rounded-lg">
-                        <h4 className="text-lg font-semibold text-gray-700 mb-2">
-                            {clientData.name}
-                        </h4>
-                        <p className="text-gray-600 text-sm mb-4">
-                            GreenTech Solutions specializes in providing
-                            eco-friendly energy management software for
-                            commercial buildings, helping businesses reduce
-                            carbon footprints and energy costs.
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
+                <div className="md:col-span-2 bg-white p-4 rounded-xl border border-gray-300">
+                    <h4 className="text-lg font-semibold text-gray-700 mb-2">
+                        {clientData.name}
+                    </h4>
+                    <p className="text-sm text-gray-600 mb-4">
+                        GreenTech Solutions specializes in providing
+                        eco-friendly energy management software for commercial
+                        buildings, helping businesses reduce carbon footprints
+                        and energy costs.
+                    </p>
+                    <div className="text-sm text-gray-600 space-y-2">
+                        <p>
+                            <span className="font-medium">Industry:</span>{" "}
+                            {clientData.industry}
                         </p>
-                        <div className="text-sm text-gray-600 space-y-1">
-                            <p>
-                                <div className="font-medium pb-1">
-                                    Industry:
-                                </div>{" "}
-                                {clientData.industry}
-                            </p>
-                            <p>
-                                <div className="font-medium pb-1">Founded:</div>{" "}
-                                {clientData.founded}
-                            </p>
-                            <p>
-                                <div className="font-medium pb-1">
-                                    Headquarters:
-                                </div>{" "}
-                                {clientData.headquarters}
-                            </p>
-                        </div>
+                        <p>
+                            <span className="font-medium">Founded:</span>{" "}
+                            {clientData.founded}
+                        </p>
+                        <p>
+                            <span className="font-medium">Headquarters:</span>{" "}
+                            {clientData.headquarters}
+                        </p>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="p-4 rounded-sm text-left border border-gray-300 flex flex-col justify-between">
-                            <p className="text-sm text-gray-600">
-                                Total Projects
-                            </p>
-                            <p className="text-3xl font-semibold text-purple-700">
-                                {clientData.stats.total}
-                            </p>
-                        </div>
-                        <div className=" p-4 rounded-sm text-left border border-gray-300 flex flex-col justify-between">
-                            <p className="text-sm text-gray-600">
-                                Active Projects
-                            </p>
-                            <p className="text-3xl font-semibold text-green-700">
-                                {clientData.stats.active}
-                            </p>
-                        </div>
-                        <div className=" p-4 rounded-sm text-left border border-gray-300 flex flex-col justify-between">
-                            <p className="text-sm text-gray-600">
-                                Completed Projects
-                            </p>
-                            <p className="text-3xl font-semibold text-blue-700">
-                                {clientData.stats.completed}
-                            </p>
-                        </div>
-                        <div className=" p-4 border border-gray-300 rounded-sm text-left flex flex-col justify-between">
-                            <p className="text-sm text-gray-600">
-                                Pending Projects
-                            </p>
-                            <p className="text-3xl font-semibold text-yellow-700">
-                                {clientData.stats.pending}
-                            </p>
-                        </div>
-                    </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                    {Object.entries(clientData.stats).map(([key, value]) => {
+                        const label =
+                            key.charAt(0).toUpperCase() +
+                            key.slice(1) +
+                            " Projects";
+                        const color =
+                            key === "active"
+                                ? "text-green-700"
+                                : key === "completed"
+                                ? "text-blue-700"
+                                : key === "pending"
+                                ? "text-yellow-700"
+                                : "text-purple-700";
+
+                        return (
+                            <div
+                                key={key}
+                                className="p-4 border border-gray-300 rounded-lg"
+                            >
+                                <p className="text-sm text-gray-600">{label}</p>
+                                <p
+                                    className={`text-3xl font-semibold ${color}`}
+                                >
+                                    {value}
+                                </p>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
 
-            <div className="bg-white py-2 rounded-2xl shadow">
-                <div className="flex justify-between items-center mb-4 px-4">
+            <div className="bg-white py-4 rounded-2xl shadow px-4">
+                <div className="flex justify-between items-center mb-2">
                     <h4 className="text-md font-bold text-gray-700">
                         Recent Activity
                     </h4>
-                    <button className="text-sm cursor-pointer">
-                        View All{" "}
+                    <button
+                        onClick={() => setShowAllActivities(!showAllActivities)}
+                        className="text-sm text-blue-600 hover:underline flex items-center gap-1"
+                    >
+                        {showAllActivities ? "Collapse" : "View All"}{" "}
                         <MdKeyboardArrowDown className="inline text-xl" />
                     </button>
                 </div>
-                <div className="space-y-1 border border-gray-300 rounded-lg mx-4">
+
+                <div
+                    className={`transition-all duration-300 space-y-1 border border-gray-300 rounded-lg ${
+                        showAllActivities
+                            ? "max-h-64 overflow-y-auto"
+                            : "max-h-32 overflow-hidden"
+                    }`}
+                >
                     {clientData.recentActivity.map((item, index) => (
                         <div
                             key={index}
-                            className="flex justify-between items-center p-3 rounded-lg hover:bg-gray-50"
+                            className="flex justify-between items-center p-3 hover:bg-gray-50"
                         >
                             <div className="flex items-center gap-3">
                                 <div
@@ -220,16 +231,12 @@ const ClientDetails = () => {
                                     <p className="text-sm font-medium text-gray-700">
                                         {item.text}
                                     </p>
-
                                     <p className="text-xs text-gray-500">
                                         {item.sub}
                                     </p>
                                 </div>
-                                <div className="text-2xl cursor-pointer">
-                                    <PiDotsThreeBold />
-                                </div>
                             </div>
-                            <div className="text-xs text-gray-400">
+                            <div className="text-xs text-gray-400 whitespace-nowrap">
                                 {item.date}
                             </div>
                         </div>
