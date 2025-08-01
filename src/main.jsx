@@ -4,13 +4,17 @@ import App from "./App.jsx";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
+import "./App.css";
+import { SidebarProvider } from "./context/SidebarContext.jsx";
 createRoot(document.getElementById("root")).render(
-    <StrictMode>
+  <StrictMode>
+    <AuthProvider>
+      <SidebarProvider>
         <ThemeProvider>
-            <AuthProvider>
-                <App />
-                <Toaster />
-            </AuthProvider>
+          <App />
+          <Toaster />
         </ThemeProvider>
-    </StrictMode>
+      </SidebarProvider>
+    </AuthProvider>
+  </StrictMode>
 );

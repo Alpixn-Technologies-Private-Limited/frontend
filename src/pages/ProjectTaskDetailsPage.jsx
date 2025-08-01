@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
@@ -28,7 +28,7 @@ const ProjectTaskDetailsPage = () => {
           {/* ---------- Nested Routing Setup ---------- */}
           <Routes>
             <Route path="/" element={<ProjectSetupForm />}>
-              <Route index element={<BasicInformation />} />
+              <Route index element={<Navigate to="basic-info" replace />} />
               <Route path="basic-info" element={<BasicInformation />} />
               <Route path="client-selection" element={<ClientSelection />} />
               <Route path="team-assignment" element={<TeamAssignment />} />

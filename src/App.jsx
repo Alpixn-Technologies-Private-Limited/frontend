@@ -30,6 +30,7 @@ import AiSettingPage from "./pages/AiSettingPage";
 import SystemSettingsPage from "./pages/SystemSettingsPage";
 import UserProfileSettingPage from "./pages/UserProfileSettingPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import Access from "./components/clientPortal/Access";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
     if (!isAuthenticated) {
@@ -65,6 +66,9 @@ const App = () => {
                 <Route path="/clients" element={<ClientsListPage />} />
                 <Route path="/clients/client-detail" element={<ClientDetailPage />} />
                 <Route path="/clients/edit-form" element={<ClientEditFormPage />} />
+
+                {/* Client Portal Pages */}
+                <Route path="/access" element={<Access/>}/>
 
                 {/* Dashboard */}
                 <Route path="/dashboard/admin" element={<AdminDashBoardPage />} />
