@@ -75,8 +75,8 @@ const TeamMembers = () => {
     });
 
     return (
-        <div className="min-h-screen flex items-start justify-center bg-gray-50 m-5">
-            <div className="w-full px-15 bg-white p-8 rounded-xl shadow">
+        <div className="min-h-screen flex justify-center bg-gray-50 px-4 sm:px-6 lg:px-8 py-6">
+            <div className="w-full max-w-7xl bg-white p-6 sm:p-8 rounded-xl shadow">
                 <div className="mb-6">
                     <h1 className="text-2xl font-bold text-gray-800">
                         Team Members
@@ -85,8 +85,9 @@ const TeamMembers = () => {
                         Manage your team members and their roles
                     </p>
                 </div>
+
                 <div className="my-6 flex items-center border border-gray-300 rounded-2xl bg-[#F0F2F5]">
-                    <div className="w-12 px-3 text-2xl text-gray-600 flex items-center justify-center">
+                    <div className="w-10 sm:w-12 px-2 sm:px-3 text-2xl text-gray-600 flex items-center justify-center">
                         <CiSearch />
                     </div>
                     <input
@@ -94,14 +95,14 @@ const TeamMembers = () => {
                         placeholder="Search team members"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="flex-1 h-10 bg-[#F0F2F5] outline-none rounded-r-2xl px-2"
+                        className="flex-1 h-10 bg-[#F0F2F5] outline-none rounded-r-2xl px-2 text-sm"
                     />
                 </div>
-                <div className="flex flex-wrap gap-6 mb-6 text-sm">
+                <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 mb-6 text-sm">
                     <select
                         value={roleFilter}
                         onChange={(e) => setRoleFilter(e.target.value)}
-                        className="w-20 h-8 px-2 py-1 border border-gray-300 rounded-2xl bg-[#F0F2F5] outline-0"
+                        className="sm:w-32 w-full px-2 py-2 border border-gray-300 rounded-2xl bg-[#F0F2F5] outline-none"
                     >
                         <option value="Role" disabled hidden>
                             Role
@@ -117,7 +118,7 @@ const TeamMembers = () => {
                     <select
                         value={skillsFilter}
                         onChange={(e) => setSkillsFilter(e.target.value)}
-                        className="px-2 w-20 py-1 h-8 border border-gray-300 rounded-2xl bg-[#F0F2F5] focus:outline-none focus:ring focus:border-blue-300"
+                        className="sm:w-32 w-full px-2 py-2 border border-gray-300 rounded-2xl bg-[#F0F2F5] outline-none"
                     >
                         <option value="Skills" disabled hidden>
                             Skills
@@ -133,7 +134,7 @@ const TeamMembers = () => {
                     <select
                         value={statusFilter}
                         onChange={(e) => setStatusFilter(e.target.value)}
-                        className="px-2 py-1 h-8 border border-gray-300 rounded-2xl bg-[#F0F2F5] focus:outline-none focus:ring focus:border-blue-300"
+                        className="sm:w-32 w-full px-2 py-2 border border-gray-300 rounded-2xl bg-[#F0F2F5] outline-none"
                     >
                         <option value="Status" disabled hidden>
                             Status
@@ -146,10 +147,10 @@ const TeamMembers = () => {
                         ))}
                     </select>
                 </div>
-                <div>
+                <div className="mb-5">
                     <button
                         type="button"
-                        class="text-white hover:bg-blue-800 font-medium rounded-full text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 cursor-pointer mb-5  "
+                        className="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-full text-sm px-5 py-2.5"
                     >
                         Add Team Member
                     </button>
@@ -199,12 +200,7 @@ const TeamMembers = () => {
                                                 className="w-10 h-10 rounded-full"
                                                 src="https://cdn-icons-png.freepik.com/512/6997/6997668.png?ga=GA1.1.530808846.1751615351"
                                             />
-                                            <Link
-                                                to={
-                                                    "/team-management/member-profile"
-                                                }
-                                            >
-                                                {" "}
+                                            <Link to="/team-management/member-profile">
                                                 <span className="font-semibold text-gray-800">
                                                     {member.name}
                                                 </span>
@@ -230,7 +226,7 @@ const TeamMembers = () => {
                                             {member.performance}
                                         </td>
                                         <td className="p-4 flex items-center gap-2">
-                                            <span className="py-1 bg-gray-100 w-fit  rounded-2xl px-6 text-sm text-gray-700">
+                                            <span className="py-1 bg-gray-100 rounded-2xl px-4 text-sm text-gray-700">
                                                 {member.rating}
                                             </span>
                                             <span>{member.status}</span>
