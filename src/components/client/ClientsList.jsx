@@ -116,7 +116,8 @@ const ClientsList = () => {
         <div className="min-h-screen bg-gray-50 p-4 sm:p-4">
             <div className="mb-4 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div className="text-sm text-gray-600">
-                    Dashboard &gt; Client List
+                    <Link to={"/dashboard/pm"}> Dashboard </Link> &gt;
+                    <span className="text-blue-800"> Client List </span>
                 </div>
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
                     <div className="flex flex-wrap items-center gap-4">
@@ -208,7 +209,9 @@ const ClientsList = () => {
                                         className="border-b border-gray-100 hover:bg-gray-50"
                                     >
                                         <td className="py-3 px-4 text-gray-900 break-words">
-                                            {client.client}
+                                            <Link to="/clients/client-detail">
+                                                {client.client}
+                                            </Link>
                                         </td>
                                         <td className="py-3 px-4 text-gray-700 break-words">
                                             {client.contactPerson}
