@@ -9,9 +9,9 @@ const Overview = () => {
   const tabs = ["Overview", "Tasks", "Timelines", "Teams", "Files", "Communications", "Analytics"];
 
   return (
-    <div className="bg-gray-50 p-6">
-      {/* Tabs with only Overview active */}
-      <div className="flex justify-center gap-6 pb-2 mb-6">
+    <div className="bg-gray-50 p-4 md:p-6">
+      {/* Tabs */}
+      <div className="flex flex-wrap justify-center gap-3 md:gap-6 pb-4 mb-6">
         {tabs.map((tab, idx) => (
           <button
             key={idx}
@@ -27,8 +27,9 @@ const Overview = () => {
       </div>
 
       {/* Project Card */}
-      <div className="bg-white p-4 rounded-lg shadow-sm flex items-center justify-between mb-3">
-        <div className="flex items-center gap-4 w-1/4">
+      <div className="bg-white p-4 rounded-lg shadow-sm flex flex-wrap gap-4 md:gap-6 justify-between items-start mb-3">
+        {/* Logo & Name */}
+        <div className="flex items-center gap-4 flex-1 min-w-[200px]">
           <div className="w-10 h-10 bg-indigo-600 text-white rounded-md flex items-center justify-center text-xl font-bold">
             {project.name.charAt(0)}
           </div>
@@ -38,9 +39,13 @@ const Overview = () => {
           </div>
         </div>
 
-        <div className="text-sm text-indigo-500 w-[120px]">Due {project.dueDate}</div>
+        {/* Due Date */}
+        <div className="text-sm text-indigo-500 min-w-[120px]">
+          Due {project.dueDate}
+        </div>
 
-        <div className="flex items-center gap-2 w-1/4">
+        {/* Progress */}
+        <div className="flex items-center gap-2 flex-1 min-w-[200px]">
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div
               className={`${project.progressColor} h-2 rounded-full`}
@@ -50,31 +55,39 @@ const Overview = () => {
           <span className="text-sm text-green-600">{project.progress}%</span>
         </div>
 
-        <div>
-          <p className="text-sm text-gray-500 font-medium mb-1">Team</p>
-          <div className="flex items-center gap-1">
-            {project.team.map((user, idx) => (
-              <img
-                key={idx}
-                src={user}
-                alt="team"
-                className="w-6 h-6 rounded-full"
-              />
-            ))}
-            <div className="bg-purple-600 text-white text-xs rounded-md px-2 py-0.5">
-              +{project.extra}
+        {/* Team + Status in one row */}
+        <div className="flex flex-wrap gap-4 w-full sm:w-auto">
+          {/* Team */}
+          <div className="min-w-[150px]">
+            <p className="text-sm text-gray-500 font-medium mb-1">Team</p>
+            <div className="flex flex-wrap items-center gap-1">
+              {project.team.map((user, idx) => (
+                <img
+                  key={idx}
+                  src={user}
+                  alt="team"
+                  className="w-6 h-6 rounded-full"
+                />
+              ))}
+              <div className="bg-purple-600 text-white text-xs rounded-md px-2 py-0.5">
+                +{project.extra}
+              </div>
             </div>
+          </div>
+
+          {/* Status */}
+          <div className="min-w-[80px] sm:min-w-[100px] shrink text-wrap">
+            <p className="text-sm text-gray-500 font-medium mb-1">Status</p>
+            <p className="text-sm text-blue-600 font-medium truncate">{project.status}</p>
           </div>
         </div>
 
-        <div>
-          <p className="text-sm text-gray-500 font-medium mb-1">Status</p>
-          <p className="text-sm text-blue-600 font-medium">{project.status}</p>
-        </div>
-
-        <div>
+        {/* AI Health moved last */}
+        <div className="min-w-[150px] w-full sm:w-auto">
           <p className="text-sm text-gray-500 font-medium mb-1">AI Health Indicator</p>
-          <span className={`text-xs px-3 py-1 rounded-md ${project.healthColor}`}>
+          <span
+            className={`text-xs px-3 py-1 rounded-md ${project.healthColor}`}
+          >
             ✅ {project.healthLabel}
           </span>
         </div>
