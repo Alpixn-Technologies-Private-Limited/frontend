@@ -196,11 +196,11 @@ const AiConsoleDashboard = () => {
   ];
 
   return (
-    <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="p-6 space-y-6 bg-gray-50 min-h-screen max-sm:p-3 max-sm:space-y-3">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-sm:gap-3">
         {/* AI Insights Panel */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl font-bold mb-4">AI Insights Panel</h3>
+        <div className="bg-white p-6 rounded-lg shadow-md max-sm:p-3">
+          <h3 className="text-xl font-bold mb-4 max-sm:text-center">AI Insights Panel</h3>
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="w-full lg:w-1/2 flex my-auto h-fit justify-center items-center relative">
               <DoughnutChart data={data} options={options} />
@@ -215,7 +215,7 @@ const AiConsoleDashboard = () => {
               {insights.map((item, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-2 px-2 py-1 rounded-md"
+                  className="flex items-start gap-2 px-2 py-1 rounded-md max-sm:px-1"
                 >
                   {item.icon ? (
                     <span className={`text-2xl ${item.color} p-1 rounded-full`}>
@@ -246,23 +246,23 @@ const AiConsoleDashboard = () => {
           to="/ai-console/setting"
           className="bg-gradient-to-br from-[#4F46E5CC] via-[#D6A700CC] to-[#B700FFCC] text-white p-6 rounded-lg shadow-md relative flex flex-col justify-between items-center overflow-hidden"
         >
-          <div className="mt-8 flex flex-col items-center">
-            <p className="text-[15px] font-normal mb-2">Hi Varun</p>
-            <h2 className="text-[28px] font-semibold mb-4">
+          <div className="mt-8 flex flex-col items-center max-sm:mt-3">
+            <p className="text-[15px] font-normal mb-2 max-sm:font-medium">Hi Varun</p>
+            <h2 className="text-[28px] font-semibold mb-4 max-sm:tracking-tight max-sm:text-2xl">
               How Can I Help You?
             </h2>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3 max-sm:gap-2">
               {quickActions.map((action, i) => (
                 <button
                   key={i}
-                  className="bg-[#ffffff3c] text-white py-2 px-4 rounded-lg text-[16px] font-normal shadow"
+                  className="bg-[#ffffff3c] text-white py-2 px-4 rounded-lg text-[16px] font-normal shadow max-sm:min-h-[100px]"
                 >
                   {action}
                 </button>
               ))}
             </div>
           </div>
-          <div className="relative w-full">
+          <div className="relative w-full max-sm:mt-3 max-sm:-mb-3">
             <input
               type="text"
               placeholder="Ask something..."
@@ -273,10 +273,10 @@ const AiConsoleDashboard = () => {
         </Link>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-semibold">Automations List</h3>
-          <div className="flex items-center gap-3">
+      <div className="bg-white p-6 rounded-lg shadow-md max-sm:p-3">
+        <div className="flex justify-between items-center mb-4 max-sm:flex-col max-sm:items-start">
+          <h3 className="text-xl font-semibold max-sm:mb-3 max-sm:ml-3">Automations List</h3>
+          <div className="flex items-center gap-3 max-sm:ml-auto">
             <FiFilter className="w-5 h-5 text-gray-600" />
             <button className="bg-gradient-to-r from-[#4F46E5] to-[#D6A700] text-white px-4 py-2 rounded-md text-sm font-medium">
               + Create New Rule
