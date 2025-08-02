@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
 const ClientEditForm = () => {
     const [formData, setFormData] = useState({});
     const handleChange = (e) => {
@@ -12,7 +13,9 @@ const ClientEditForm = () => {
     return (
         <div className="max-w-screen p-6">
             <div className="flex items-center text-sm text-gray-600 mb-4">
-                Dashboard&gt;Clients&gt;Add/Edit Clients Details
+                <Link to={"/dashboard/pm"}> Dashboard </Link> &gt;
+                <Link to={"/clients"}> Clients </Link> &gt;{" "}
+                <span className="text-blue-800"> Add/Edit Clients Details</span>
             </div>
             <div className="text-xl flex items-center gap-2 font-semibold text-blue-600 mb-4">
                 <FaEdit className="text-2xl" /> Add/Edit Details
