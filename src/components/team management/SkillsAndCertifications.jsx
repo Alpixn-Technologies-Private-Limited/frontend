@@ -1,14 +1,19 @@
 import React from "react";
 
 const SkillsAndCertifications = () => {
-  const skills = ["Design", "Tech", "Management", "UI Design (3)", "UX Research (2)", "Interaction Design (1)", "Wireframing (4)", "Prototyping (2)", "User Testing (1)", "Design Thinking (3)", "Design Systems (2)", "Accessibility (1)", "Visual Design (3)"];
+  const skills = [
+    "Design", "Tech", "Management", "UI Design (3)", "UX Research (2)", "Interaction Design (1)",
+    "Wireframing (4)", "Prototyping (2)", "User Testing (1)", "Design Thinking (3)",
+    "Design Systems (2)", "Accessibility (1)", "Visual Design (3)",
+  ];
+  
   const certifications = [
     { title: "Certified Professional in User Experience (CPUX)", expiry: "12/31/2024" },
     { title: "Certified Usability Analyst (CUA)", expiry: "06/30/2025" },
   ];
 
   return (
-    <div className="flex flex-col gap-6 m-3 ml-10 mt-8">
+    <div className="flex flex-col gap-6 m-3 ml-5 md:ml-10 mt-8">
       <h2 className="text-xl font-bold text-gray-900">Skills</h2>
       <div className="flex flex-wrap gap-3">
         {skills.map((skill, index) => (
@@ -20,12 +25,13 @@ const SkillsAndCertifications = () => {
           </div>
         ))}
       </div>
+
       <h2 className="text-xl font-bold text-gray-900">Certifications</h2>
       <div className="flex flex-col gap-4 bg-[#F7FAFC] rounded-lg">
         {certifications.map((cert, index) => (
           <div
             key={index}
-            className="flex items-center justify-between p-4 rounded-md"
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 p-4 rounded-md"
           >
             <div className="flex items-center gap-3">
               <div className="bg-gray-100 p-2 rounded-md">
@@ -52,6 +58,7 @@ const SkillsAndCertifications = () => {
           </div>
         ))}
       </div>
+
       <button className="mt-4 px-4 py-2 bg-gray-100 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-200 transition w-max">
         Upload Certification
       </button>

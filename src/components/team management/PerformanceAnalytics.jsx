@@ -17,7 +17,7 @@ const PerformanceAnalytics = () => {
                     <p className="text-sm text-[#4A739C] mb-4">
                         Last 3 Months <span className="text-[#088738]">+5%</span>
                     </p>
-                    <div className="flex justify-start gap-10 items-end h-24 mt-30 ml-5">
+                    <div className="flex justify-start gap-10 items-center h-24 mt-30 ml-5">
                         {['Jul', 'Aug', 'Sep'].map((month, idx) => (
                             <div key={idx} className="flex flex-col items-center">
                                 <img src={line_graph} alt="Line Graph" className="w-6" />
@@ -55,7 +55,7 @@ const PerformanceAnalytics = () => {
                     </div>
                 </div>
             </div>
-            <div className="bg-white border border-gray-300 rounded-xl p-6 shadow-sm h-[324px] mt-6 w-full">
+            <div className="bg-white border border-gray-300 rounded-xl p-6 shadow-sm h-[380px] mt-6 w-full">
                 <h3 className="text-sm text-gray-500 mb-1">Comparison to Team Average</h3>
                 <p className="text-4xl font-bold text-gray-900 mb-1">10% above</p>
                 <p className="text-sm text-[#4A739C] mb-4">
