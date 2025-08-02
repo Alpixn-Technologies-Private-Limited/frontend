@@ -1,5 +1,10 @@
 import React from "react";
-import { BsCheckCircle, BsPersonPlus, BsLink45Deg, BsPencilSquare } from "react-icons/bs";
+import {
+  BsCheckCircle,
+  BsPersonPlus,
+  BsLink45Deg,
+  BsPencilSquare,
+} from "react-icons/bs";
 
 const activities = [
   {
@@ -30,15 +35,19 @@ const activities = [
 
 const RecentActivity = () => {
   return (
-    <div className="bg-white p-4 rounded-lg shadow w-full md:w-[380px]">
-      <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
+    <div className="w-full md:max-w-sm bg-white p-4 rounded-lg shadow-sm">
+      <h2 className="text-base md:text-lg font-semibold mb-4">
+        Recent Activity
+      </h2>
       <div className="space-y-3">
         {activities.map((activity, index) => (
           <div
             key={index}
             className="flex items-start gap-3 bg-gray-50 p-3 shadow-sm rounded-lg hover:bg-gray-100 transition"
           >
-            <div className={`p-2 rounded-full ${activity.bg}`}>{activity.icon}</div>
+            <div className={`p-2 rounded-full ${activity.bg}`}>
+              {activity.icon}
+            </div>
             <div>
               <p className="text-sm font-medium">{activity.title}</p>
               <p className="text-xs text-gray-500">{activity.desc}</p>

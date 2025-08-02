@@ -11,16 +11,16 @@ const teamMembers = [
 
 const TeamMembers = () => {
   return (
-    <div className="bg-white p-4 rounded-lg shadow w-full md:w-[380px]">
-      <h2 className="text-md font-semibold mb-4">Team Members</h2>
+    <div className="bg-white p-6 rounded-lg shadow w-full max-w-md">
+      <h2 className="text-md font-semibold mb-4 text-gray-800">Team Members</h2>
       <div className="space-y-3">
         {teamMembers.map((member, idx) => (
           <div key={idx} className="flex items-center gap-3">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${member.color}`}>
-              <FaUser className={`${member.iconColor} text-sm`} />
+            <div className={`w-9 h-9 rounded-full flex items-center justify-center ${member.color}`}>
+              <FaUser className={`${member.iconColor} text-base`} />
             </div>
             <div>
-              <p className="text-sm font-medium">{member.name}</p>
+              <p className="text-sm font-medium text-black">{member.name}</p>
               <p className="text-xs text-gray-500">{member.role}</p>
             </div>
           </div>

@@ -7,7 +7,7 @@ const milestones = [
   { text: "LLM Development", completed: false },
   { text: "UI Component Making", completed: false },
   { text: "LLM Development", completed: false },
-    { text: "UX Research", completed: false },
+  { text: "UX Research", completed: false },
   { text: "Field Research Phase 2", completed: false },
   { text: "LLM Development", completed: false },
   { text: "UI Component Making", completed: false },
@@ -22,17 +22,17 @@ const MilestoneChecklist = () => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow mt-6">
-      <h2 className="text-lg font-semibold mb-4">Milestone Progress Checklist</h2>
+      <h2 className="text-lg font-semibold mb-4 text-gray-800">Milestone Progress Checklist</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {/* Left Column */}
         <ul className="space-y-3">
           {left.map((item, idx) => (
             <li key={idx} className="flex items-center gap-2">
               {item.completed ? (
-                <MdCheckBox className="text-indigo-600" />
+                <MdCheckBox className="text-indigo-600 text-xl" />
               ) : (
-                <MdCheckBoxOutlineBlank className="text-gray-400" />
+                <MdCheckBoxOutlineBlank className="text-gray-400 text-xl" />
               )}
               <span
                 className={`text-sm ${
@@ -50,13 +50,13 @@ const MilestoneChecklist = () => {
           {right.map((item, idx) => (
             <li key={idx} className="flex items-center gap-2">
               {item.completed ? (
-                <MdCheckBox className="text-indigo-600" />
+                <MdCheckBox className="text-indigo-600 text-xl" />
               ) : (
-                <MdCheckBoxOutlineBlank className="text-gray-400" />
+                <MdCheckBoxOutlineBlank className="text-gray-400 text-xl" />
               )}
               <span
                 className={`text-sm ${
-                  item.completed ? "line-through text-gray-400" : "text-black"
+                  item.completed ? "line-through text-indigo-600" : "text-black"
                 }`}
               >
                 {item.text}

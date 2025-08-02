@@ -14,7 +14,8 @@ const AIInsights = () => {
     <div className="bg-white p-6 rounded-lg shadow space-y-4 mt-4">
       <h2 className="text-lg font-semibold text-gray-800 mb-4">AI Insights</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {/* Always 2 columns, even on smallest screens */}
+      <div className="grid grid-cols-2 gap-4">
         {/* Risk Alert */}
         <div className="border border-gray-200 shadow rounded-lg p-4">
           <div className="flex items-center gap-2 text-red-600 font-semibold text-sm mb-1">
@@ -22,7 +23,11 @@ const AIInsights = () => {
           </div>
           <p className="text-sm font-bold text-black">3 Projects at Risk</p>
           <p className="text-xs text-gray-500 mt-1">Delayed timelines likely</p>
-          <img src={riskGraph} alt="Risk Chart" className="w-full h-16 object-contain mt-2" />
+          <img
+            src={riskGraph}
+            alt="Risk Chart"
+            className="w-full h-16 object-contain mt-2"
+          />
         </div>
 
         {/* Deadline Prediction */}
@@ -32,7 +37,11 @@ const AIInsights = () => {
           </div>
           <p className="text-sm font-bold text-black">Delta Project Late</p>
           <p className="text-xs text-gray-500 mt-1">May miss July 15 deadline</p>
-          <img src={deadlineGraph} alt="Deadline Chart" className="w-full h-16 object-contain mt-2" />
+          <img
+            src={deadlineGraph}
+            alt="Deadline Chart"
+            className="w-full h-16 object-contain mt-2"
+          />
         </div>
 
         {/* Performance Insight */}
@@ -42,7 +51,11 @@ const AIInsights = () => {
           </div>
           <p className="text-sm font-bold text-black">+8% Revenue/Employee</p>
           <p className="text-xs text-gray-500 mt-1">Based on past 30 days</p>
-          <img src={performanceGraph} alt="Performance Chart" className="w-full h-16 object-contain mt-2" />
+          <img
+            src={performanceGraph}
+            alt="Performance Chart"
+            className="w-full h-16 object-contain mt-2"
+          />
         </div>
 
         {/* Milestone Progress */}
@@ -52,7 +65,11 @@ const AIInsights = () => {
           </div>
           <p className="text-sm font-bold text-black">Beta Launch</p>
           <p className="text-xs text-gray-500 mt-1">May miss July 15 deadline</p>
-          <img src={milestoneGraph} alt="Milestone Chart" className="w-full h-16 object-contain mt-2" />
+          <img
+            src={milestoneGraph}
+            alt="Milestone Chart"
+            className="w-full h-16 object-contain mt-2"
+          />
         </div>
       </div>
     </div>
