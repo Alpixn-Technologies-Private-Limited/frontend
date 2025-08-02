@@ -402,7 +402,7 @@ const DashBoard = () => {
               </div>
             </div>
             <div className="w-full overflow-x-auto max-sm:mt-3">
-              <div className="min-w-[500px] h-[300px] max-sm:h-[250px]">
+              <div className="min-w-[500px] h-[300px] max-sm:h-[250px] max-sm:overflow-x-auto">
                 <BarChart data={chartData} options={chartOptions} />
               </div>
             </div>
