@@ -13,33 +13,44 @@ import ProjectTemplate from '../components/project-task-detail/tabs/ProjectTempl
 import TeamAssignment from '../components/project-task-detail/tabs/TeamAssignment';
 import TImelineMilestone from '../components/project-task-detail/tabs/TImelineMilestone';
 
-
 const ProjectTaskDetailsPage = () => {
   return (
-    <div className="flex h-screen overflow-hidden">
-      <Sidebar />
-      <div className="flex flex-col flex-1 overflow-hidden bg-gray-50">
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      {/* Navbar */}
+      <div className="sticky top-0 z-40">
         <Navbar />
+      </div>
 
-        {/* ---------- Main Content ---------- */}
-        <div className="flex-grow overflow-y-auto p-6 space-y-6">
-          <TaskHeader />
+      <div className="flex flex-1">
+        {/* Sidebar for large screens */}
+        <aside className="hidden lg:block lg:w-64 border-r bg-white">
+          <Sidebar />
+        </aside>
 
-          {/* ---------- Nested Routing Setup ---------- */}
-          <Routes>
-            <Route path="/" element={<ProjectSetupForm />}>
-              <Route index element={<Navigate to="basic-info" replace />} />
-              <Route path="basic-info" element={<BasicInformation />} />
-              <Route path="client-selection" element={<ClientSelection />} />
-              <Route path="team-assignment" element={<TeamAssignment />} />
-              <Route path="timeline-milestones" element={<TImelineMilestone />} />
-              <Route path="project-template" element={<ProjectTemplate />} />
-              <Route path="ai-configuration" element={<AIConfiguration />} />
-            </Route>
-          </Routes>
-        </div>
+        {/* Main Content Area */}
+        <main className="flex-1 flex flex-col overflow-hidden">
+          {/* Task Header */}
+          <div className="p-4 sm:p-6">
+            <TaskHeader />
+          </div>
 
-        <Footer />
+          {/* Nested Routes Content */}
+          <div className="flex-grow overflow-y-auto p-2 sm:p-4 md:p-6">
+            <Routes>
+              <Route path="/" element={<ProjectSetupForm />}>
+                <Route path="basic-info" element={<BasicInformation />} />
+                <Route path="client-selection" element={<ClientSelection />} />
+                <Route path="team-assignment" element={<TeamAssignment />} />
+                <Route path="timeline-milestones" element={<TImelineMilestone />} />
+                <Route path="project-template" element={<ProjectTemplate />} />
+                <Route path="ai-configuration" element={<AIConfiguration />} />
+              </Route>
+            </Routes>
+          </div>
+
+          {/* Footer */}
+          <Footer />
+        </main>
       </div>
     </div>
   );
