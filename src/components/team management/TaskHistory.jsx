@@ -47,13 +47,7 @@ const TaskHistory = () => {
     ];
 
     const handleExportCSV = () => {
-        const headers = [
-            "Task",
-            "Project",
-            "Status",
-            "Assigned By",
-            "Completed At",
-        ];
+        const headers = ["Task", "Project", "Status", "Assigned By", "Completed At"];
         const rows = tasks.map((task) => [
             task.task,
             task.project,
@@ -82,13 +76,7 @@ const TaskHistory = () => {
         doc.setFontSize(18);
         doc.text("Task History", 14, 22);
 
-        const tableColumn = [
-            "Task",
-            "Project",
-            "Status",
-            "Assigned By",
-            "Completed At",
-        ];
+        const tableColumn = ["Task", "Project", "Status", "Assigned By", "Completed At"];
         const tableRows = tasks.map((task) => [
             task.task,
             task.project,
@@ -107,67 +95,54 @@ const TaskHistory = () => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto px-6 py-8">
-            <h2 className="text-[32px] font-bold text-[#111827] mb-1">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#111827] mb-1">
                 Task History
             </h2>
             <p className="text-sm text-[#4A739C] mb-6">
                 View and manage the task history for Sarah Miller.
             </p>
-            <h2 className="text-[22px] font-bold text-[#111827] mb-1">
-                Task History
-            </h2>
-            <div className="flex flex-col gap-5 mb-6 max-w-md mt-5">
+
+            <div className="flex flex-col gap-4 sm:gap-5 mb-6 sm:max-w-xl">
                 <input
                     type="text"
-                    className="h-8 border bg-[#F7FAFC] border-gray-300 rounded-md px-3 focus:outline-none focus:ring-1 focus:ring-gray-200"
+                    // placeholder="Search by task"
+                    className="h-10 border bg-[#F7FAFC] border-gray-300 rounded-md px-3 text-sm focus:outline-none focus:ring-1 focus:ring-gray-200"
                 />
                 <input
                     type="text"
-                    className="h-8 border bg-[#F7FAFC] border-gray-300 rounded-md px-3 focus:outline-none focus:ring-1 focus:ring-gray-200"
+                    // placeholder="Search by project"
+                    className="h-10 border bg-[#F7FAFC] border-gray-300 rounded-md px-3 text-sm focus:outline-none focus:ring-1 focus:ring-gray-200"
                 />
                 <input
                     type="text"
-                    className="h-8 border bg-[#F7FAFC] border-gray-300 rounded-md px-3 focus:outline-none focus:ring-1 focus:ring-gray-200"
+                    // placeholder="Search by status"
+                    className="h-10 border bg-[#F7FAFC] border-gray-300 rounded-md px-3 text-sm focus:outline-none focus:ring-1 focus:ring-gray-200"
                 />
             </div>
-            <div className="overflow-x-auto bg-[#F7FAFC] rounded-lg border border-gray-200">
-                <table className="min-w-full">
-                    <thead className="bg-[#F9FAFB] text-[#111827] text-sm">
+
+            <div className="overflow-x-auto border border-gray-200 rounded-lg bg-[#F7FAFC]">
+                <table className="min-w-[600px] w-full text-sm">
+                    <thead className="bg-[#F9FAFB] text-[#111827]">
                         <tr>
-                            <th className="px-4 py-3 font-medium text-left">
-                                Task
-                            </th>
-                            <th className="px-4 py-3 font-medium text-left">
-                                Project
-                            </th>
-                            <th className="px-4 py-3 font-medium text-left">
-                                Status
-                            </th>
-                            <th className="px-4 py-3 font-medium text-left">
-                                Assigned By
-                            </th>
-                            <th className="px-4 py-3 font-medium text-left">
-                                Completed At
-                            </th>
+                            <th className="px-4 py-3 text-left font-medium">Task</th>
+                            <th className="px-4 py-3 text-left font-medium">Project</th>
+                            <th className="px-4 py-3 text-left font-medium">Status</th>
+                            <th className="px-4 py-3 text-left font-medium">Assigned By</th>
+                            <th className="px-4 py-3 text-left font-medium">Completed At</th>
                         </tr>
                     </thead>
-                    <tbody className="text-sm text-[#111827]">
+                    <tbody className="text-[#111827]">
                         {tasks.map((task) => (
-                            <tr
-                                key={task.id}
-                                className="border-t border-gray-200"
-                            >
-                                <td className="px-4 py-3 text-[14px] w-[145px] text-[#0D141C]">
-                                    {task.task}
-                                </td>
+                            <tr key={task.id} className="border-t border-gray-200">
+                                <td className="px-4 py-3 text-[#0D141C]">{task.task}</td>
                                 <td className="px-4 py-3">
                                     <span className="text-[#4A739C] cursor-pointer">
                                         {task.project}
                                     </span>
                                 </td>
                                 <td className="px-4 py-3">
-                                    <span className="px-8 py-2 rounded-lg text-xs font-medium bg-[#E8EDF5]">
+                                    <span className="px-4 py-1 rounded-full text-xs font-medium bg-[#E8EDF5] inline-block">
                                         {task.status}
                                     </span>
                                 </td>
@@ -185,16 +160,16 @@ const TaskHistory = () => {
                 </table>
             </div>
 
-            <div className="flex justify-end gap-3 mt-4">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 mt-6">
                 <button
                     onClick={handleExportCSV}
-                    className="px-4 py-2 rounded-md text-sm font-medium bg-[#E8EDF5] text-[#111827] hover:bg-gray-300 transition cursor-pointer"
+                    className="px-4 py-2 rounded-md text-sm font-medium bg-[#E8EDF5] text-[#111827] hover:bg-gray-300 transition"
                 >
                     Export CSV
                 </button>
                 <button
                     onClick={handleExportPDF}
-                    className="px-4 py-2 rounded-md text-sm font-medium bg-[#0D80F2] text-white hover:bg-[#1E4DB7] transition cursor-pointer"
+                    className="px-4 py-2 rounded-md text-sm font-medium bg-[#0D80F2] text-white hover:bg-[#1E4DB7] transition"
                 >
                     Export PDF
                 </button>
