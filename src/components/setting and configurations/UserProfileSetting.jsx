@@ -1,151 +1,164 @@
 import React from "react";
 import { FiEdit } from "react-icons/fi";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+
 const UserProfileSetting = () => {
     return (
-        <div className="bg-gray-50 min-h-screen p-6 space-y-8">
+        <div className="bg-gray-50 min-h-screen p-4 sm:p-6 space-y-8">
+            {/* User Profile */}
             <section>
-                <div className="text-3xl font-semibold mb-4 flex items-center">
-                    User Profile{" "}
-                    <MdOutlineKeyboardArrowRight className=" text-4xl" />
+                <div className="text-2xl sm:text-3xl font-semibold mb-4 flex items-center">
+                    User Profile
+                    <MdOutlineKeyboardArrowRight className="text-3xl sm:text-4xl ml-2" />
                 </div>
-                <div className="flex items-start space-x-4">
+                <div className="flex flex-col sm:flex-row items-start gap-6">
+                    {/* Profile Image */}
                     <div className="relative">
-                        <div className="w-24 h-24 rounded-full">
-                            <img src="https://cdn-icons-png.freepik.com/512/6997/6997668.png?ga=GA1.1.530808846.1751615351" />
+                        <div className="w-24 h-24 rounded-full overflow-hidden">
+                            <img
+                                className="object-cover w-full h-full"
+                                src="https://cdn-icons-png.freepik.com/512/6997/6997668.png?ga=GA1.1.530808846.1751615351"
+                                alt="Profile"
+                            />
                         </div>
-                        <button className="absolute bottom-0 left-1/2 -translate-x-1/2 bg-gray-100 text-sm px-2 py-0.5 rounded-full flex items-center border cursor-pointer">
-                            Edit{" "}
-                            <FiEdit className="ml-1 text-blue-700" size={14} />
+                        <button className="absolute bottom-0 left-1/2 -translate-x-1/2 bg-gray-100 text-xs px-3 py-1 rounded-full flex items-center border cursor-pointer mt-2">
+                            Edit <FiEdit className="ml-1 text-blue-700" size={14} />
                         </button>
                     </div>
-                    <div className="flex-1 space-y-3">
-                        <div className="flex justify-between items-center bg-[#FFFFFF] border border-[#DDDDDD] rounded-lg px-4 py-2">
-                            <span>Full Name</span>
-                            <span className="text-[#535353] text-sm">Designer abc</span>
-                        </div>
-                        <div className="flex justify-between items-center bg-[#FFFFFF] border border-[#DDDDDD] rounded-lg px-4 py-2">
-                            <span>Contact Details</span>
-                            <span className="text-[#535353] text-sm">
-                                +91 96XXXXXXXX
-                            </span>
-                        </div>
-                        <div className="flex justify-between items-center bg-[#FFFFFF] border border-[#DDDDDD] rounded-lg px-4 py-2">
-                            <span>Preferences</span>
-                            <span className="text-[#535353] text-sm">
-                                GMT+5:30 — IST &nbsp;&nbsp;| DD/MM/YYYY
-                            </span>
-                        </div>
+
+                    {/* Profile Details */}
+                    <div className="flex-1 space-y-3 w-full">
+                        {[
+                            { label: "Full Name", value: "Designer abc" },
+                            { label: "Contact Details", value: "+91 96XXXXXXXX" },
+                            {
+                                label: "Preferences",
+                                value: "GMT+5:30 — IST | DD/MM/YYYY",
+                            },
+                        ].map((item, idx) => (
+                            <div
+                                key={idx}
+                                className="flex justify-between items-center bg-white border border-gray-300 rounded-lg px-4 py-2 text-sm"
+                            >
+                                <span>{item.label}</span>
+                                <span className="text-gray-600">{item.value}</span>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
+
+            {/* Notifications */}
             <section>
-                <h2 className="text-3xl font-semibold mb-4 flex">
-                    Notifications{" "}
-                    <MdOutlineKeyboardArrowRight className=" text-4xl" />
+                <h2 className="text-2xl sm:text-3xl font-semibold mb-4 flex items-center">
+                    Notifications
+                    <MdOutlineKeyboardArrowRight className="text-3xl sm:text-4xl ml-2" />
                 </h2>
 
-               
-                <div className="rounded mb-6">
-                    <div className="flex justify-between items-center px-4 py-2 border bg-[#FFFFFF] border-[#DDDDDD] rounded-lg">
-                        <h3 className="font-medium">Email Preferences</h3>
-                        <Toggle />
+                {/** Email, Push, AI Settings */}
+                {[
+                    {
+                        title: "Email Preferences",
+                        items: [
+                            "New Project Assignment",
+                            "Task Deadline Reminder",
+                            "Weekly digest",
+                        ],
+                        allowed: [true, true, false],
+                    },
+                    {
+                        title: "Push Notifications",
+                        items: [
+                            "Mentions in comments",
+                            "New file uploaded to your task",
+                            "Project archived",
+                        ],
+                        allowed: [true, true, false],
+                    },
+                    {
+                        title: "AI Task Suggestions",
+                        items: [
+                            "Risk Predictions",
+                            "AI task suggestions",
+                            "Auto-priority changes",
+                        ],
+                        allowed: [true, true, false],
+                    },
+                ].map((section, idx) => (
+                    <div key={idx} className="rounded-lg mb-6 bg-white border border-gray-300">
+                        <div className="flex justify-between items-center px-4 py-2">
+                            <h3 className="font-medium">{section.title}</h3>
+                            <Toggle />
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm font-semibold px-4 py-2 border-t border-gray-200">
+                            {section.items.map((item, i) => (
+                                <span key={i}>{item}</span>
+                            ))}
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs px-4 pb-4 mt-2">
+                            {section.allowed.map((allowed, i) => (
+                                <span
+                                    key={i}
+                                    className={allowed ? "text-indigo-600" : "text-gray-400"}
+                                >
+                                    {allowed ? "Allowed" : "Not Allowed"}
+                                </span>
+                            ))}
+                        </div>
                     </div>
-                    <div className="grid grid-cols-3 text-sm  px-4 py-2 border-b-1 border-[#535353] font-semibold">
-                        <span>New Project Assignment</span>
-                        <span>Task Deadline Reminder</span>
-                        <span>Weekly digest</span>
-                    </div>
-                    <div className="grid grid-cols-3 text-xs text-[#4F46E5] px-4 pb-3 mt-3">
-                        <span>Allowed</span>
-                        <span>Allowed</span>
-                        <span className="text-gray-400">Not Allowed</span>
-                    </div>
-                </div>
-
-                {/* Push Notifications */}
-                <div className="rounded-lg mb-6">
-                    <div className="flex justify-between items-center px-4 py-2 border bg-[#FFFFFF] border-[#DDDDDD] rounded-lg">
-                        <h3 className="font-medium">Push Notifications</h3>
-                        <Toggle />
-                    </div>
-                    <div className="grid grid-cols-3 text-sm  px-4 py-2 border-b-1 font-semibold">
-                        <span>Mentions in comments</span>
-                        <span>New file uploaded to your task</span>
-                        <span>Project archived</span>
-                    </div>
-                    <div className="grid grid-cols-3 text-xs text-[#4F46E5] px-4 pb-3 mt-3">
-                        <span>Allowed</span>
-                        <span>Allowed</span>
-                        <span className="text-gray-400">Not Allowed</span>
-                    </div>
-                </div>
-
-                {/* AI Task Suggestions */}
-                <div className="rounded-lg">
-                    <div className="flex justify-between items-center px-4 py-2 border bg-[#FFFFFF] border-[#DDDDDD] rounded-lg">
-                        <h3 className="font-medium">AI Task Suggestions</h3>
-                        <Toggle />
-                    </div>
-                    <div  className="grid grid-cols-3 text-sm  px-4 py-2 border-b-1 font-semibold">
-                        <span>Risk Predictions</span>
-                        <span>AI task suggestions</span>
-                        <span>Auto-priority changes</span>
-                    </div>
-                    <div className="grid grid-cols-3 text-xs text-[#4F46E5] px-4 pb-3 mt-3">
-                        <span>Allowed</span>
-                        <span>Allowed</span>
-                        <span className="text-gray-400">Not Allowed</span>
-                    </div>
-                </div>
+                ))}
             </section>
 
             {/* Security Settings */}
             <section>
-                <h2 className="text-3xl font-semibold mb-4 flex">
+                <h2 className="text-2xl sm:text-3xl font-semibold mb-4 flex items-center">
                     Security Settings
-                    <MdOutlineKeyboardArrowRight className=" text-4xl" />
+                    <MdOutlineKeyboardArrowRight className="text-3xl sm:text-4xl ml-2" />
                 </h2>
-                <div className="flex justify-between items-center bg-[#FFFFFF] border border-[#DDDDDD] rounded-lg px-4 py-1">
-                    <span>Change Password</span>
-                    <div className="space-x-2 text-sm">
-                        <button className="text-gray-700 py-1  rounded">
-                            Pin {"|"}
-                        </button>
-                        <button className="text-gray-700 py-1  rounded">
-                            Password
-                        </button>
+
+                {[
+                    {
+                        label: "Change Password",
+                        actions: (
+                            <div className="space-x-2 text-sm text-gray-700">
+                                <button className="hover:underline">Pin |</button>
+                                <button className="hover:underline">Password</button>
+                            </div>
+                        ),
+                    },
+                    {
+                        label: "Two Factor Authentication",
+                        actions: <Toggle />,
+                    },
+                    {
+                        label: "Session Management",
+                        actions: (
+                            <div className="space-x-2 text-sm text-gray-700">
+                                <button className="hover:underline">Safari on iPhone |</button>
+                                <button className="hover:underline">Chrome on Windows</button>
+                            </div>
+                        ),
+                    },
+                ].map((item, idx) => (
+                    <div
+                        key={idx}
+                        className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white border border-gray-300 rounded-lg px-4 py-2 my-2 text-sm"
+                    >
+                        <span className="mb-2 sm:mb-0">{item.label}</span>
+                        <div>{item.actions}</div>
                     </div>
-                </div>
-                <div className="flex justify-between items-center bg-[#FFFFFF] border border-[#DDDDDD] rounded-lg px-4 py-1 my-3">
-                    <span>Two Factor Authentication</span>
-                    <div className="space-x-2">
-                        <Toggle/>
-                    </div>
-                </div>
-                <div className="flex justify-between items-center bg-[#FFFFFF] border border-[#DDDDDD] rounded-lg px-4 py-1 my-3">
-                    <span>Session Management</span>
-                    <div className="space-x-2 text-sm">
-                        <button className="text-gray-700 py-1  rounded">
-                            Safari on Iphone {"|"}
-                        </button>
-                        <button className="text-gray-700 py-1 rounded">
-                            Chrome on Windows
-                        </button>
-                    </div>
-                </div>
+                ))}
             </section>
         </div>
     );
 };
 
 const Toggle = () => (
-  <label className="relative inline-flex items-center cursor-pointer">
-    <input type="checkbox" className="sr-only peer" defaultChecked />
-    <div className="w-11 h-6 bg-gray-300 rounded-full peer peer-checked:bg-blue-600 transition-colors duration-300" />
-    <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transform peer-checked:translate-x-5 transition-transform duration-300" />
-  </label>
+    <label className="relative inline-flex items-center cursor-pointer">
+        <input type="checkbox" className="sr-only peer" defaultChecked />
+        <div className="w-11 h-6 bg-gray-300 rounded-full peer peer-checked:bg-blue-600 transition-colors duration-300" />
+        <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transform peer-checked:translate-x-5 transition-transform duration-300" />
+    </label>
 );
-
 
 export default UserProfileSetting;
