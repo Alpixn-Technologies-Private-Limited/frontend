@@ -41,76 +41,70 @@ const ProtectedRoute = ({ isAuthenticated, children }) => {
 };
 
 const App = () => {
-  const isAuthenticated = false;
+    const isAuthenticated = false;
 
-  return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            isAuthenticated ? (
-              <Navigate to="/dashboard/pm" replace />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
+    return (
+        <Router>
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        isAuthenticated ? (
+                            <Navigate to="/dashboard/pm" replace />
+                        ) : (
+                            <Navigate to="/login" replace />
+                        )
+                    }
+                />
 
-        {/* Auth Pages */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/change-password" element={<ChangePasswordPage />} />
+                {/* Auth Pages */}
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                <Route path="/change-password" element={<ChangePasswordPage />} />
 
 
-        {/* Client Pages */}
-        <Route path="/clients" element={<ClientsListPage />} />
-        <Route path="/clients/client-detail" element={<ClientDetailPage />} />
-        <Route path="/clients/edit-form" element={<ClientEditFormPage />} />
+                {/* Client Pages */}
+                <Route path="/clients" element={<ClientsListPage />} />
+                <Route path="/clients/:id" element={<ClientDetailPage />} />
+                <Route path="/clients/:id/edit-form" element={<ClientEditFormPage />} />
 
-        {/* Client Portal Pages */}
-        <Route path="/access" element={<Access/>}/>
-        <Route path="/client-portal" element={<ClientPortalPage/>}/>
+                {/* Client Portal Pages */}
+                <Route path="/access" element={<Access/>}/>
+                <Route path="/client-portal" element={<ClientPortalPage/>}/>
 
-        {/* Dashboard */}
-        <Route path="/dashboard/admin" element={<AdminDashBoardPage />} />
-        <Route path="/dashboard/pm" element={<ProjectManagerDashboard />} />
-        <Route path="/dashboard/team" element={<MemberDashBoardPage />} />
+                {/* Dashboard */}
+                <Route path="/dashboard/admin" element={<AdminDashBoardPage />} />
+                <Route path="/dashboard/pm" element={<ProjectManagerDashboard />} />
+                <Route path="/dashboard/team" element={<MemberDashBoardPage />} />
 
-        {/* AI Console */}
-        <Route path="/ai-console" element={<AIConsole />} />
-        <Route path="/ai-console/setting" element={<AiSettingPage />} />
+                {/* AI Console */}
+                <Route path="/ai-console" element={<AIConsole />} />
+                <Route path="/ai-console/setting" element={<AiSettingPage />} />
 
-        {/* Analytics Pages */}
-        <Route path="/analytics" element={<AnalyticsPage />} />
+                {/* Analytics Pages */}
+                <Route path="/analytics" element={<AnalyticsPage />} />
 
-        {/* Project Pages */}
-        <Route path="/projects" element={<Project />} />
-        <Route path="/project/:id" element={<ProjectDetail />} />
-        <Route path="/project/tasks" element={<ProjectTaskPage />} />
-        <Route path="/project/task-board" element={<TaskBoardPage />} />
-        <Route path="/project/task-details/*" element={<ProjectTaskDetailsPage />} />
+                {/* Project Pages */}
+                <Route path="/projects" element={<Project />} />
+                <Route path="/project/:id" element={<ProjectDetail />} />
+                <Route path="/project/tasks" element={<ProjectTaskPage />} />
+                <Route path="/project/task-board" element={<TaskBoardPage />} />
+                <Route path="/project/task-details/*" element={<ProjectTaskDetailsPage />} /> 
 
-        {/* Team Management Pages */}
-        <Route path="/team-management" element={<TeamMembersPage />} />
-        <Route
-          path="/team-management/member-profile"
-          element={<TeamMemberProfilePage />}
-        />
-        <Route
-          path="/team-management/teamWorkload"
-          element={<TeamWorkloadPage />}
-        />
+                {/* Team Management Pages */}
+                <Route path="/team-management" element={<TeamMembersPage />} />
+                <Route path="/team-management/member-profile" element={<TeamMemberProfilePage />} />
+                <Route path="/team-management/teamWorkload" element={<TeamWorkloadPage />} />
 
-        {/* Setting and Configuration */}
-        <Route path="/settings/system" element={<SystemSettingsPage />} />
-        <Route path="/settings/user" element={<UserProfileSettingPage />} />
-
-        {/* Catch All Route */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
-    </Router>
-  );
-};
+                {/* Setting and Configuration */}
+                <Route path="/settings/system" element={<SystemSettingsPage />} />
+                <Route path="/settings/user" element={<UserProfileSettingPage />} />
+                
+                {/* Catch All Route */}
+                <Route path="*" element={<Navigate to="/login" replace />}/>
+            </Routes>
+        </Router>
+    );
+}
 
 export default App;

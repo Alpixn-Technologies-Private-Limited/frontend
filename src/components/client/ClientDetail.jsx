@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import axios from "../../utils/axios";
 import { FaRegEdit, FaPhoneAlt } from "react-icons/fa";
 import { MdEmail, MdKeyboardArrowDown } from "react-icons/md";
 import { IoLocationSharp } from "react-icons/io5";
-import { PiDotsThreeBold } from "react-icons/pi";
-import { Link } from "react-router-dom";
-const clientData = {
+import { HashLoader } from "react-spinners";
+
+const fallbackData = {
     name: "Green Tech Solution Pvt. Ltd.",
     status: "Active",
     logo: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTymudOtuSRp49R_iW-5XtMrDKAPes61aSK2vgqxkYA2ILZ7WmI",
@@ -64,13 +66,59 @@ const colorClassMap = {
 };
 
 const ClientDetails = () => {
+    const { id } = useParams();
+    const [client, setClient] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [showAllActivities, setShowAllActivities] = useState(false);
 
+    useEffect(() => {
+        const fetchClientData = async () => {
+            try {
+                const res = await axios.get(`/api/clients/${id}`);
+                const data = res.data?.response?.data;
+                if (data) {
+                    setClient(data.client);
+                }
+            } catch (error) {
+                console.error("Error fetching client data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchClientData();
+    }, [id]);
+
+    const clientData = {
+        name: client?.name || fallbackData.name,
+        status: client?.status || fallbackData.status,
+        logo: client?.logo || fallbackData.logo,
+        phone: client?.phone || fallbackData.phone,
+        email: client?.email || fallbackData.email,
+        location:
+            (client?.address?.city && client?.address?.state
+                ? `${client.address.city}, ${client.address.state}`
+                : null) || fallbackData.location,
+        industry: client?.industry || fallbackData.industry,
+        founded: client?.created_at?.slice(0, 4) || fallbackData.founded,
+        headquarters:
+            (client?.address?.city && client?.address?.country
+                ? `${client.address.city}, ${client.address.country}`
+                : null) || fallbackData.headquarters,
+        stats: fallbackData.stats,
+        recentActivity: fallbackData.recentActivity,
+    };
+    if (loading)
+        return (
+            <div className="flex justify-center items-center py-10">
+                <HashLoader size={40} color="#6366F1" />
+            </div>
+        );
     return (
         <div className="p-2 w-full bg-gray-50 min-h-screen">
             <div className="text-sm text-gray-500 mb-2">
-                <Link to={"/dashboard/pm"}> Dashboard </Link> &gt;
-                <Link to={"/clients"}> Clients </Link>&gt;{" "}
+                <Link to={"/dashboard/pm"}>Dashboard</Link> &gt;{" "}
+                <Link to={"/clients"}>Clients</Link> &gt;{" "}
                 <span className="text-blue-800">Client Details</span>
             </div>
 
@@ -105,15 +153,15 @@ const ClientDetails = () => {
 
                     <div className="text-sm text-gray-600 flex flex-col gap-1 md:items-end">
                         <div>
-                            <FaPhoneAlt className="inline mr-1" />{" "}
+                            <FaPhoneAlt className="inline mr-1" />
                             {clientData.phone}
                         </div>
                         <div>
-                            <MdEmail className="inline mr-1" />{" "}
+                            <MdEmail className="inline mr-1" />
                             {clientData.email}
                         </div>
                         <div>
-                            <IoLocationSharp className="inline mr-1" />{" "}
+                            <IoLocationSharp className="inline mr-1" />
                             {clientData.location}
                         </div>
                     </div>
