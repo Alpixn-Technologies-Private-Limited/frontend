@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const ProjectRowCard = ({ project }) => {
   return (
     <Link to={`/project/${project.id}`}>
-      <div className="bg-white p-4 rounded-lg shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-3 hover:shadow-md transition">
+      <div className="bg-white p-4 mt-5 border border-gray-300 rounded-lg shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-3 hover:shadow-md transition">
 
         {/* Project Name */}
         <div className="flex items-center gap-4 sm:w-1/4">

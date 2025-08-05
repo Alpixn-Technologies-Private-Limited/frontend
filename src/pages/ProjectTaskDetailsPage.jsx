@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
@@ -15,27 +15,28 @@ import TImelineMilestone from '../components/project-task-detail/tabs/TImelineMi
 
 const ProjectTaskDetailsPage = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Navbar */}
-      <div className="sticky top-0 z-40">
-        <Navbar />
+       <div className="fixed top-0 left-64 right-0 z-40 max-sm:left-0">
+          <Navbar />
       </div>
 
-      <div className="flex flex-1">
-        {/* Sidebar for large screens */}
-        <aside className="hidden lg:block lg:w-64 border-r bg-white">
+      {/* Content Wrapper */}
+      <div className="flex flex-1 pt-16">
+        {/* Sidebar for large screens only */}
+        <div className="fixed top-0 left-0 bottom-0 w-64 max-sm:w-0 z-50 border-r bg-white">
           <Sidebar />
-        </aside>
+        </div>
 
-        {/* Main Content Area */}
-        <main className="flex-1 flex flex-col overflow-hidden">
+        {/* Main content */}
+        <main className="flex-1 flex flex-col w-full lg:ml-64">
           {/* Task Header */}
-          <div className="p-4 sm:p-6">
+          <div className="px-4 sm:px-6 md:px-8 pt-6">
             <TaskHeader />
           </div>
 
-          {/* Nested Routes Content */}
-          <div className="flex-grow overflow-y-auto p-2 sm:p-4 md:p-6">
+          {/* Tabs Area */}
+          <div className="flex-grow overflow-y-auto px-4 sm:px-6 md:px-8 py-6">
             <Routes>
               <Route path="/" element={<ProjectSetupForm />}>
                 <Route path="basic-info" element={<BasicInformation />} />
@@ -49,7 +50,9 @@ const ProjectTaskDetailsPage = () => {
           </div>
 
           {/* Footer */}
-          <Footer />
+          <div className="px-4 sm:px-6 md:px-8 pb-6">
+            <Footer />
+          </div>
         </main>
       </div>
     </div>

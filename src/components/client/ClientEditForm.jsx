@@ -1,33 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import axios from "../../utils/axios";
+import { toast } from "react-hot-toast";
+
 const ClientEditForm = () => {
     const [formData, setFormData] = useState({});
+    const { id } = useParams();
+    const navigate = useNavigate();
+
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
-    const handleSubmit = (e) => {
+
+    const fetchClient = async () => {
+        try {
+            const res = await axios.get(`/api/clients/${id}`);
+            if (res.data.success) {
+                const client = res.data.data.client;
+                setFormData(client);
+            }
+        } catch (error) {
+            toast.error("Failed to load client data.");
+        }
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
+        try {
+            const res = await axios.put(`/api/clients/${id}`, {
+                name: formData.clientName,
+                email: formData.email,
+                phone: formData.phone,
+                website: formData.website,
+                industry: formData.industry,
+                status: formData.status || "active", // default to active if not set
+            });
+            if (res.data.success) {
+                toast.success("Client updated successfully!");
+                navigate(`/clients/${id}`);
+            }
+        } catch (error) {
+            toast.error("Failed to update client.");
+        }
     };
+
+    useEffect(() => {
+        fetchClient();
+    }, [id]);
+
     return (
         <div className="max-w-screen p-6">
             <div className="flex items-center text-sm text-gray-600 mb-4">
                 <Link to={"/dashboard/pm"}> Dashboard </Link> &gt;
                 <Link to={"/clients"}> Clients </Link> &gt;{" "}
-                <span className="text-blue-800"> Add/Edit Clients Details</span>
+                <span className="text-blue-800"> Edit Client Details</span>
             </div>
             <div className="text-xl flex items-center gap-2 font-semibold text-blue-600 mb-4">
-                <FaEdit className="text-2xl" /> Add/Edit Details
+                <FaEdit className="text-2xl" /> Edit Details
             </div>
             <div className="flex flex-col items-center mb-5 p-6 border border-gray-300 rounded-lg shadow bg-white">
                 <img
-                    src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTymudOtuSRp49R_iW-5XtMrDKAPes61aSK2vgqxkYA2ILZ7WmI"
+                    src={formData.logo || "https://via.placeholder.com/100"}
                     alt="Client Logo"
                     className="rounded-full mb-2 w-20 h-20"
                 />
                 <p className="text-center text-xl font-semibold">
-                    Green Tech Solution Pvt. Ltd.
+                    {formData.clientName || "Client Name"}
                 </p>
                 <button className="text-blue-600 text-sm mt-1 flex items-center gap-2 cursor-pointer">
                     Edit
@@ -36,234 +76,133 @@ const ClientEditForm = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Contact Details */}
                 <div className="border rounded-lg p-4 space-y-4 bg-white border-gray-300 shadow">
                     <h3 className="font-medium">Contact Details</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="flex flex-col">
-                            <label
-                                htmlFor="clientName"
-                                className="text-sm font-medium text-gray-700 mb-1"
-                            >
-                                Client Name
-                            </label>
-                            <input
-                                type="text"
-                                name="clientName"
-                                id="clientName"
-                                onChange={handleChange}
-                                className="border border-gray-300 p-3 rounded bg-gray-100"
-                            />
-                        </div>
-                        <div className="flex flex-col">
-                            <label
-                                htmlFor="email"
-                                className="text-sm font-medium text-gray-700 mb-1"
-                            >
-                                Email Address
-                            </label>
-                            <input
-                                type="email"
-                                name="email"
-                                id="email"
-                                onChange={handleChange}
-                                className="border p-3 rounded border-gray-300 bg-gray-100"
-                            />
-                        </div>
-                        <div className="flex flex-col">
-                            <label
-                                htmlFor="phone"
-                                className="text-sm font-medium text-gray-700 mb-1"
-                            >
-                                Phone Number
-                            </label>
-                            <input
-                                type="text"
-                                name="phone"
-                                id="phone"
-                                onChange={handleChange}
-                                className="border p-3 rounded border-gray-300 bg-gray-100"
-                            />
-                        </div>
-                        <div className="flex flex-col">
-                            <label
-                                htmlFor="website"
-                                className="text-sm font-medium text-gray-700 mb-1"
-                            >
-                                Website URL
-                            </label>
-                            <input
-                                type="text"
-                                name="website"
-                                id="website"
-                                onChange={handleChange}
-                                className="border p-3 rounded border-gray-300 bg-gray-100"
-                            />
-                        </div>
+                        <InputField
+                            label="Client Name"
+                            name="clientName"
+                            value={formData.clientName || ""}
+                            onChange={handleChange}
+                        />
+                        <InputField
+                            label="Email Address"
+                            name="email"
+                            type="email"
+                            value={formData.email || ""}
+                            onChange={handleChange}
+                        />
+                        <InputField
+                            label="Phone Number"
+                            name="phone"
+                            value={formData.phone || ""}
+                            onChange={handleChange}
+                        />
+                        <InputField
+                            label="Website URL"
+                            name="website"
+                            value={formData.website || ""}
+                            onChange={handleChange}
+                        />
                     </div>
                 </div>
+
+                {/* Business Info */}
                 <div className="border rounded-lg p-4 space-y-4 bg-white border-gray-300 shadow">
                     <h3 className="font-medium">Business Information</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="flex flex-col">
-                            <label className="text-sm font-medium mb-1">
-                                Company Name
-                            </label>
-                            <input
-                                type="text"
-                                name="companyName"
-                                onChange={handleChange}
-                                className="bg-gray-100 border border-gray-300 p-3 rounded"
-                            />
-                        </div>
-                        <div className="flex flex-col">
-                            <label className="text-sm font-medium mb-1">
-                                Industry
-                            </label>
-                            <select
-                                name="industry"
-                                onChange={handleChange}
-                                className="bg-gray-100 border border-gray-300 p-3 rounded"
-                            >
-                                <option value="">Select Industry</option>
-                                <option>IT</option>
-                                <option>Healthcare</option>
-                                <option>Finance</option>
-                            </select>
-                        </div>
-                        <div className="flex flex-col">
-                            <label className="text-sm font-medium mb-1">
-                                Number of Employees
-                            </label>
-                            <input
-                                type="number"
-                                name="employees"
-                                onChange={handleChange}
-                                className="bg-gray-100 border border-gray-300 p-3 rounded"
-                            />
-                        </div>
-                        <div className="flex flex-col">
-                            <label className="text-sm font-medium mb-1">
-                                Founded Year
-                            </label>
-                            <input
-                                type="text"
-                                name="foundedYear"
-                                onChange={handleChange}
-                                className="bg-gray-100 border border-gray-300 p-3 rounded"
-                            />
-                        </div>
-                        <div className="flex flex-col md:col-span-2">
-                            <label className="text-sm font-medium mb-1">
-                                Address
-                            </label>
-                            <input
-                                type="text"
-                                name="address"
-                                onChange={handleChange}
-                                className="bg-gray-100 border border-gray-300 p-3 rounded"
-                            />
-                        </div>
+                        <InputField
+                            label="Company Name"
+                            name="companyName"
+                            value={formData.companyName || ""}
+                            onChange={handleChange}
+                        />
+                        <SelectField
+                            label="Industry"
+                            name="industry"
+                            options={["IT", "Healthcare", "Finance"]}
+                            value={formData.industry || ""}
+                            onChange={handleChange}
+                        />
+                        <InputField
+                            label="Number of Employees"
+                            name="employees"
+                            type="number"
+                            value={formData.employees || ""}
+                            onChange={handleChange}
+                        />
+                        <InputField
+                            label="Founded Year"
+                            name="foundedYear"
+                            value={formData.foundedYear || ""}
+                            onChange={handleChange}
+                        />
+                        <InputField
+                            label="Address"
+                            name="address"
+                            value={formData.address || ""}
+                            onChange={handleChange}
+                            fullWidth
+                        />
                     </div>
                 </div>
+
+                {/* Preferences */}
                 <div className="border rounded-lg p-4 space-y-4 bg-white border-gray-300 shadow">
                     <h3 className="font-medium">Preferences</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="flex flex-col">
-                            <label className="text-sm font-medium mb-1">
-                                Language
-                            </label>
-                            <select
-                                name="language"
-                                onChange={handleChange}
-                                className="bg-gray-100 border border-gray-300 p-3 rounded"
-                            >
-                                <option value="">Select Language</option>
-                                <option>English</option>
-                                <option>Hindi</option>
-                            </select>
-                        </div>
-                        <div className="flex flex-col">
-                            <label className="text-sm font-medium mb-1">
-                                Currency
-                            </label>
-                            <select
-                                name="currency"
-                                onChange={handleChange}
-                                className="bg-gray-100 border border-gray-300 p-3 rounded"
-                            >
-                                <option value="">Select Currency</option>
-                                <option>INR</option>
-                                <option>USD</option>
-                            </select>
-                        </div>
-                        <div className="flex flex-col">
-                            <label className="text-sm font-medium mb-1">
-                                Communication Channel
-                            </label>
-                            <select
-                                name="communicationChannel"
-                                onChange={handleChange}
-                                className="bg-gray-100 border border-gray-300 p-3 rounded"
-                            >
-                                <option value="">
-                                    Select Communication Channel
-                                </option>
-                                <option>Email</option>
-                                <option>Phone</option>
-                            </select>
-                        </div>
-                        <div className="flex flex-col">
-                            <label className="text-sm font-medium mb-1">
-                                Founded Year
-                            </label>
-                            <input
-                                type="text"
-                                name="preferenceFoundedYear"
-                                onChange={handleChange}
-                                className="bg-gray-100 border border-gray-300 p-3 rounded"
-                            />
-                        </div>
+                        <SelectField
+                            label="Language"
+                            name="language"
+                            options={["English", "Hindi"]}
+                            value={formData.language || ""}
+                            onChange={handleChange}
+                        />
+                        <SelectField
+                            label="Currency"
+                            name="currency"
+                            options={["INR", "USD"]}
+                            value={formData.currency || ""}
+                            onChange={handleChange}
+                        />
+                        <SelectField
+                            label="Communication Channel"
+                            name="communicationChannel"
+                            options={["Email", "Phone"]}
+                            value={formData.communicationChannel || ""}
+                            onChange={handleChange}
+                        />
+                        <InputField
+                            label="Founded Year"
+                            name="preferenceFoundedYear"
+                            value={formData.preferenceFoundedYear || ""}
+                            onChange={handleChange}
+                        />
                     </div>
                 </div>
+
+                {/* Custom Fields */}
                 <div className="border rounded-lg p-4 space-y-4 bg-white border-gray-300 shadow">
                     <h3 className="font-medium">Custom Fields</h3>
                     <div className="w-full lg:w-[50%]">
-                        <div className="flex flex-col">
-                            <label className="text-sm font-medium mb-1">
-                                Client Tier
-                            </label>
-                            <select
-                                name="clientTier"
-                                onChange={handleChange}
-                                className="bg-gray-100 border border-gray-300 p-3 rounded mb-4"
-                            >
-                                <option value="">Select Client Tier</option>
-                                <option>Gold</option>
-                                <option>Silver</option>
-                                <option>Bronze</option>
-                            </select>
-                        </div>
-                        <div className="flex flex-col">
-                            <label className="text-sm font-medium mb-1">
-                                Preferred Contact Time
-                            </label>
-                            <input
-                                type="text"
-                                name="preferredContactTime"
-                                onChange={handleChange}
-                                className="bg-gray-100 border border-gray-300 p-3 rounded mb-4"
-                            />
-                        </div>
-                        <div className="md:col-span-2">
-                            <button
-                                type="button"
-                                className="w-full border border-gray-300 p-3 rounded text-blue-600 hover:bg-gray-50 transition"
-                            >
-                                + Add Custom Fields
-                            </button>
-                        </div>
+                        <SelectField
+                            label="Client Tier"
+                            name="clientTier"
+                            options={["Gold", "Silver", "Bronze"]}
+                            value={formData.clientTier || ""}
+                            onChange={handleChange}
+                        />
+                        <InputField
+                            label="Preferred Contact Time"
+                            name="preferredContactTime"
+                            value={formData.preferredContactTime || ""}
+                            onChange={handleChange}
+                        />
                     </div>
                 </div>
+
+                {/* Buttons */}
                 <div className="flex justify-end gap-4">
                     <button
                         type="submit"
@@ -273,7 +212,8 @@ const ClientEditForm = () => {
                     </button>
                     <button
                         type="button"
-                        className="border border-blue-800 px-10  hover:bg-gray-100 transition rounded-lg"
+                        onClick={() => navigate("/clients")}
+                        className="border border-blue-800 px-10 hover:bg-gray-100 transition rounded-lg"
                     >
                         Cancel
                     </button>
@@ -282,5 +222,43 @@ const ClientEditForm = () => {
         </div>
     );
 };
+
+const InputField = ({ label, name, value, onChange, type = "text", fullWidth = false }) => (
+    <div className={`flex flex-col ${fullWidth ? "md:col-span-2" : ""}`}>
+        <label htmlFor={name} className="text-sm font-medium text-gray-700 mb-1">
+            {label}
+        </label>
+        <input
+            type={type}
+            name={name}
+            id={name}
+            value={value}
+            onChange={onChange}
+            className="bg-gray-100 border border-gray-300 p-3 rounded"
+        />
+    </div>
+);
+
+const SelectField = ({ label, name, options, value, onChange }) => (
+    <div className="flex flex-col">
+        <label htmlFor={name} className="text-sm font-medium text-gray-700 mb-1">
+            {label}
+        </label>
+        <select
+            name={name}
+            id={name}
+            value={value}
+            onChange={onChange}
+            className="bg-gray-100 border border-gray-300 p-3 rounded"
+        >
+            <option value="">Select {label}</option>
+            {options.map((opt) => (
+                <option key={opt} value={opt}>
+                    {opt}
+                </option>
+            ))}
+        </select>
+    </div>
+);
 
 export default ClientEditForm;
