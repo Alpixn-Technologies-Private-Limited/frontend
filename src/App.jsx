@@ -1,10 +1,10 @@
 import React from "react";
 import './App.css';
 import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    Navigate,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
 } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
@@ -34,10 +34,10 @@ import Access from "./components/clientPortal/Access";
 import ClientPortalPage from "./pages/ClientPortalPage";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
-    if (!isAuthenticated) {
-        return <Navigate to="/login" replace />;
-    }
-    return children;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
 };
 
 const App = () => {
@@ -105,6 +105,6 @@ const App = () => {
             </Routes>
         </Router>
     );
-};
+}
 
 export default App;
