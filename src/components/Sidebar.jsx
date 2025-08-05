@@ -8,9 +8,9 @@ import { Link, useLocation } from "react-router-dom";
 import { useSidebar } from "../context/SidebarContext";
 
 const menuItems = [
-  { label: "Dashboard", icon: <IoMdHome />, path: "/dashboard/admin" },
+  { label: "Dashboard", icon: <IoMdHome />, path: "/dashboard" },
   { label: "Clients", icon: <FaGlobeAmericas />, path: "/clients" },
-  { label: "Projects", icon: <GrProjects />, path: "/projects" },
+  { label: "Projects", icon: <GrProjects />, path: "/project" },
   { label: "Team Management", icon: <MdGroups />, path: "/team-management" },
   { label: "Analytics", icon: <MdAnalytics />, path: "/analytics" },
   { label: "AI Console", icon: <MdAutoAwesome />, path: "/ai-console" },
