@@ -53,7 +53,7 @@ const LoginForm = () => {
                 } else if (user.role === "team") {
                     navigate("/dashboard/team");
                 } else {
-                    navigate("/dashboard");
+                    navigate("/login");
                 }
             } else {
                 toast.error(res.data.message || "Login failed. Please try again.");
