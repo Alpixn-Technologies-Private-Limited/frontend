@@ -2,7 +2,7 @@ import axios from "axios";
 import { HandCoins, TrendingUpDown, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FaBell, FaPhone, FaRupeeSign } from "react-icons/fa";
-import { DotLoader } from "react-spinners";
+import { HashLoader } from "react-spinners";
 import BarChart from "../../charts/BarChart";
 import Table from "../../charts/Table";
 
@@ -325,9 +325,9 @@ const DashBoard = () => {
 
   if (loading) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-gray-100 ml-64 max-sm:ml-0">
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-50 ml-64 max-sm:ml-0">
         <div className="text-center">
-          <DotLoader
+          <HashLoader
             color="#4F46E5"
             size={70}
             speedMultiplier={1.5}
@@ -337,7 +337,7 @@ const DashBoard = () => {
             }}
           />
           <p className="mt-4 text-lg font-medium text-gray-700">
-            Loading dashboard data...
+            Loading your dashboard...
           </p>
         </div>
       </div>

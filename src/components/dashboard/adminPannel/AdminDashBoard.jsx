@@ -15,6 +15,7 @@ import {
 import { FaClipboardList } from "react-icons/fa6";
 import { GrGroup } from "react-icons/gr";
 import { IoMdCloudUpload } from "react-icons/io";
+import { HashLoader } from "react-spinners";
 import { IoTimerOutline } from "react-icons/io5";
 import { MdGroup, MdTrendingUp } from "react-icons/md";
 import { PiCube } from "react-icons/pi";
@@ -24,6 +25,8 @@ import deadlineGraph from "../../../assets/graphs/deadline-prediction.png";
 import performanceGraph from "../../../assets/graphs/performance-insight.png";
 import riskGraph from "../../../assets/graphs/risk-alert.png";
 import BarChart from "../../charts/BarChart";
+import { Link } from "react-router-dom";
+
 
 const AdminDashboard = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -32,60 +35,59 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  let isMounted = true;
-  let dataFetched = false;
+    let isMounted = true;
+    let dataFetched = false;
 
-  const dummyData = {
-    kpi_metrics: {
-      total_active_projects: 5,
-      total_clients: 8,
-      team_utilization: 78,
-      monthly_revenue: 4200000,
-    },
-    ai_insights: {
-      risk_alerts: [{}, {}],
-      deadline_predictions: [{ project_id: "Apollo", confidence: 0.7 }],
-    },
-    recent_activities: [
-      {
-        type: "Dummy Project Initiated",
-        message: "Demo data used as fallback.",
-        icon: <MdGroup />,
+    const dummyData = {
+      kpi_metrics: {
+        total_active_projects: 5,
+        total_clients: 8,
+        team_utilization: 78,
+        monthly_revenue: 4200000,
       },
-    ],
-  };
+      ai_insights: {
+        risk_alerts: [{}, {}],
+        deadline_predictions: [{ project_id: "Apollo", confidence: 0.7 }],
+      },
+      recent_activities: [
+        {
+          type: "Dummy Project Initiated",
+          message: "Demo data used as fallback.",
+          icon: <MdGroup />,
+        },
+      ],
+    };
 
-  const fetchDashboardData = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/api/dashboard/admin`
-      );
+    const fetchDashboardData = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/dashboard/admin`
+        );
 
-      if (response.data?.response?.success && isMounted) {
-        setDashboardData(response.data.response.data);
-        dataFetched = true;
+        if (response.data?.response?.success && isMounted) {
+          setDashboardData(response.data.response.data);
+          dataFetched = true;
+        }
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
       }
-    } catch (error) {
-      console.error("Error fetching dashboard data:", error);
-    }
-  };
+    };
 
-  fetchDashboardData();
+    fetchDashboardData();
 
-  const timeoutId = setTimeout(() => {
-    if (!dataFetched && isMounted) {
-      console.warn("API timeout: Using fallback dummy data.");
-      setDashboardData(dummyData);
-    }
-    setLoading(false);
-  }, 2000); // 2 seconds
+    const timeoutId = setTimeout(() => {
+      if (!dataFetched && isMounted) {
+        console.warn("API timeout: Using fallback dummy data.");
+        setDashboardData(dummyData);
+      }
+      setLoading(false);
+    }, 2000); // 2 seconds
 
-  return () => {
-    isMounted = false;
-    clearTimeout(timeoutId);
-  };
-}, []);
-
+    return () => {
+      isMounted = false;
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   // Stats data combining API and frontend values
   const stats = [
@@ -284,19 +286,26 @@ const AdminDashboard = () => {
 
   const visibleActivities = showAll ? activities : activities.slice(0, 4);
 
-  if (loading || !dashboardData) {
+  if (loading) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-gray-100 ml-64 max-sm:ml-0">
-        <div className=" mx-auto w-fit">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-indigo-500 mx-auto"></div>
-          <p className="mt-4 text-lg font-medium text-gray-700 animate-pulse">
-            Loading dashboard data...
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-50 ml-64 max-sm:ml-0">
+        <div className="text-center">
+          <HashLoader
+            color="#4F46E5"
+            size={70}
+            speedMultiplier={1.5}
+            cssOverride={{
+              display: "block",
+              margin: "0 auto",
+            }}
+          />
+          <p className="mt-4 text-lg font-medium text-gray-700">
+            Loading your dashboard...
           </p>
         </div>
       </div>
     );
   }
-
 
   return (
     <div className="px-6 py-3 rounded-md space-y-4 bg-gray-50 dark:bg-gray-200 min-h-screen h-fit max-sm:px-3 max-sm:w-full">
@@ -313,9 +322,9 @@ const AdminDashboard = () => {
           <FaChevronDown className="absolute top-3 right-3" />
         </div>
         <div className="flex gap-4 max-sm:mx-auto">
-          <button className="bg-gradient-to-r from-indigo-600 to-yellow-600 text-white px-4 py-1.5 flex gap-1 items-center justify-center rounded-lg shadow hover:opacity-90 max-sm:px-2 max-sm:py-1">
+          <Link to="/project/add-new" className="bg-gradient-to-r from-indigo-600 to-yellow-600 text-white px-4 py-1.5 flex gap-1 items-center justify-center rounded-lg shadow hover:opacity-90 max-sm:px-2 max-sm:py-1">
             <div className="font-semibold scale-125">+</div> New Project
-          </button>
+          </Link>
           <button className="flex items-center gap-2 border text-lg border-gray-300 bg-white text-black px-4 py-2 rounded-lg shadow hover:bg-gray-50 max-sm:px-2 max-sm:py-1">
             <MdGroup className="scale-110" /> New Client
           </button>
