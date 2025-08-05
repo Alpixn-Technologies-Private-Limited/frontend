@@ -34,16 +34,34 @@ const Navbar = () => {
           <FaBell />
         </span>
 
-        <button
-          onClick={toggleTheme}
-          className="text-gray-600 text-xl cursor-pointer hover:text-yellow-500 transition duration-200"
-        >
-          {theme === "dark" ? (
-            <FaSun className="text-yellow-500" />
-          ) : (
-            <FaMoon className="text-gray-400" />
-          )}
-        </button>
+        <div className="flex justify-center">
+            <button
+              onClick={toggleTheme}
+              className={`relative inline-flex items-center w-12 h-7 rounded-full transition-all duration-500 ease-in-out transform focus:outline-none ${
+                theme === 'dark'
+                  ? 'bg-gradient-to-r from-gray-800 to-gray-900 shadow-lg shadow-purple-500/25'
+                  : 'bg-gradient-to-r from-orange-600 to-yellow-600 shadow-lg shadow-orange-500/25'
+              }`}
+            >
+              <div
+                className={`absolute top-0 left-0 w-7 h-7 bg-white rounded-full shadow-xl transform transition-all duration-500 ease-in-out flex items-center justify-center ${
+                  theme === 'dark' ? 'translate-x-5' : 'translate-x-0'
+                }`}
+              >
+                <div
+                  className={`transform transition-all duration-500 ease-in-out ${
+                    theme === 'dark' ? 'rotate-12' : 'rotate-0'
+                  }`}
+                >
+                  {theme === 'dark' ? (
+                    <FaMoon className="w-4 h-4 text-gray-700" />
+                  ) : (
+                    <FaSun className="w-4 h-4 text-orange-500" />
+                  )}
+                </div>
+              </div>
+            </button>
+          </div>
 
         <div className="flex items-center bg-gray-100 rounded-full px-4 py-2 max-sm:px-2 max-sm:border max-sm:border-gray-400">
           <FaSearch className="text-gray-500 mr-2 max-sm:mr-1" />

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Calendar, Plus, User, Check } from "lucide-react";
+import { Calendar, Plus, User, Check, Search, PlusIcon } from "lucide-react";
 
 export default function NewProject() {
   const [selectedTemplate, setSelectedTemplate] = useState(
@@ -19,12 +19,42 @@ export default function NewProject() {
   ];
 
   const teamMembers = [
-    { id: 1, name: "John Doe", avatar: "👨‍💼" },
-    { id: 2, name: "Jane Smith", avatar: "👩‍💼" },
-    { id: 3, name: "Mike Johnson", avatar: "👨‍💻" },
-    { id: 4, name: "Sarah Wilson", avatar: "👩‍🎨" },
-    { id: 5, name: "Tom Brown", avatar: "👨‍🔧" },
-    { id: 6, name: "Lisa Davis", avatar: "👩‍🔬" },
+    {
+      id: 1,
+      name: "Catherine Tresa",
+      avatar:
+        "https://www.behindwoods.com/tamil-actress/catherine-tresa/catherine-tresa-stills-photos-pictures-1111.jpg",
+    },
+    {
+      id: 2,
+      name: "Rohit Sharma",
+      avatar:
+        "https://cdn.britannica.com/52/252752-050-2E120356/Cricketer-Rohit-Sharma-2023.jpg",
+    },
+    {
+      id: 3,
+      name: "Anushka Shetty",
+      avatar:
+        "https://m.media-amazon.com/images/M/MV5BODY0ZTBjMmMtYWFhYi00ZTkxLWI0OTItNTkxMmY1MDhhMWE2XkEyXkFqcGc@._V1_.jpg",
+    },
+    {
+      id: 4,
+      name: "Virat Kohli",
+      avatar:
+        "https://upload.wikimedia.org/wikipedia/commons/9/9b/Virat_Kohli_in_PMO_New_Delhi.jpg",
+    },
+    {
+      id: 5,
+      name: "Ellyse Perry",
+      avatar:
+        "https://femalecricket.com/wp-content/uploads/2019/11/Ellyse-Perry-Female-Cricketer-Century-1200x900.jpg",
+    },
+    {
+      id: 6,
+      name: "Jasprit Bumrah",
+      avatar:
+        "https://upload.wikimedia.org/wikipedia/commons/0/02/Jasprit_Bumrah_in_PMO_New_Delhi.jpg",
+    },
   ];
 
   const toggleTeamMember = (memberId) => {
@@ -43,27 +73,27 @@ export default function NewProject() {
   ];
 
   return (
-    <div className="mx-auto p-6 bg-gray-50 min-h-screen">
+    <div className="mx-auto px-2 py-4 bg-gray-50 min-h-screen">
       <h1 className="text-2xl font-bold text-gray-900 mb-6">
         New Project Details
       </h1>
 
       <div className="flex w-full gap-4">
-        <div className="flex flex-col gap-6 mb-6 w-[40%]">
+        <div className="flex flex-col gap-4 mb-6 w-[40%]">
           {/* Basic Information */}
           <div className="bg-white rounded-lg p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Basic Information
             </h2>
 
-            <div className="space-y-4">
+            <div className="space-y-2">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Project Name
                 </label>
                 <input
                   type="text"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 bg-slate-100 border border-gray-300 rounded-md focus:outline-none"
                   placeholder="Enter project name"
                 />
               </div>
@@ -74,7 +104,7 @@ export default function NewProject() {
                 </label>
                 <textarea
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  className="w-full px-3 py-2 bg-slate-100 border border-gray-300 rounded-md focus:outline-none resize-none"
                   placeholder="Enter project description"
                 />
               </div>
@@ -84,7 +114,7 @@ export default function NewProject() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Category
                   </label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <select className="w-full px-3 py-2 bg-slate-100 border border-gray-300 rounded-md focus:outline-none">
                     <option>Select</option>
                     <option>Development</option>
                     <option>Design</option>
@@ -96,7 +126,7 @@ export default function NewProject() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Priority
                   </label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <select className="w-full px-3 py-2 bg-slate-100 border border-gray-300 rounded-md focus:outline-none">
                     <option>Select</option>
                     <option>High</option>
                     <option>Medium</option>
@@ -108,26 +138,26 @@ export default function NewProject() {
           </div>
           {/* Project Template Selection */}
           <div className="bg-white rounded-lg p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">
               Project Template Selection
             </h2>
 
-            <div className="relative mb-4">
+            <div className="relative mb-2">
               <input
                 type="text"
                 placeholder="Find Template"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-slate-100"
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {templates.map((template) => (
                 <div
                   key={template.id}
-                  className={`flex items-center p-3 rounded-lg border cursor-pointer transition-all ${
+                  className={`flex items-center p-2 rounded-lg border cursor-pointer transition-all ${
                     selectedTemplate === template.id
                       ? "border-green-500 bg-green-50"
-                      : "border-gray-200 hover:border-gray-300"
+                      : "border-gray-300 hover:border-gray-300"
                   }`}
                   onClick={() => setSelectedTemplate(template.id)}
                 >
@@ -165,29 +195,35 @@ export default function NewProject() {
           {/* Client Selection */}
           <div className="bg-white rounded-lg p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-gray-900">
                 Client Selection
               </h2>
-              <button className="flex items-center text-blue-600 hover:text-blue-700 text-sm">
-                <Plus className="w-4 h-4 mr-1" />
-                Add New Client
-              </button>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Clients
-              </label>
-              <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-3">
-                <option>Sophie Denney</option>
-              </select>
+              <span className="block text-sm font-medium text-gray-700 mb-1">
+                Client
+              </span>
+              <div className="relative mb-4 flex items-center gap-2">
+                <Search className="absolute left-3 text-gray-400" />
+                <input
+                  type="text"
+                  name="client"
+                  id="client"
+                  placeholder="Search for clients..."
+                  className="h-12 border rounded-lg focus:outline-0 bg-slate-100 w-full pl-10"
+                />
+                <button className="text-gray-500 flex min-w-fit items-center border h-12 px-3 rounded-md bg-white hover:bg-gray-50 transition-colors">
+                  <Plus className="w-4 h-4" /> Add New Client
+                </button>
+              </div>
             </div>
 
-            <div className="space-y-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-48 overflow-y-auto">
               {clients.map((client) => (
                 <div
                   key={client.id}
-                  className="flex items-center p-2 hover:bg-gray-50 rounded"
+                  className="flex items-center p-2 bg-gray-50 border-[1px] border-gray-300 hover:bg-gray-100 rounded"
                 >
                   <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center mr-3">
                     <User className="w-4 h-4 text-gray-600" />
@@ -204,32 +240,47 @@ export default function NewProject() {
           </div>
           {/* Team Assignment */}
           <div className="bg-white rounded-lg p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Team Assignment
             </h2>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label
+                htmlFor="team"
+                className="block text-sm font-medium text-gray-700 mb-3"
+              >
                 Select Team members
               </label>
-              <div className="flex flex-wrap gap-2">
+              <select
+                name="team"
+                id="team"
+                className="w-full px-3 h-12 bg-slate-100 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-0 mb-4"
+              >
+                {teamMembers.map((member) => (
+                  <option key={member.id} value={member.id}>
+                    {member.name}
+                  </option>
+                ))}
+              </select>
+              <div className="flex flex-wrap gap-3">
                 {teamMembers.map((member) => (
                   <button
                     key={member.id}
                     onClick={() => toggleTeamMember(member.id)}
-                    className={`relative w-12 h-12 rounded-full text-2xl border-2 transition-all ${
+                    className={`relative w-[4.5rem] h-[4.5rem] rounded-full text-2xl border-2 transition-all ${
                       selectedTeamMembers.includes(member.id)
                         ? "border-blue-500 bg-blue-50"
-                        : "border-gray-300 hover:border-gray-400"
+                        : "border-gray-600 hover:border-gray-400"
                     }`}
                     title={member.name}
                   >
-                    {member.avatar}
+                    <img src={member.avatar} alt={member.name} className="w-full h-full object-cover rounded-full" />
                     {selectedTeamMembers.includes(member.id) && (
                       <div className="absolute -top-1 -right-1 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
                         <Check className="w-3 h-3 text-white" />
                       </div>
                     )}
+                    <div className="absolute bottom-0 right-0 w-4 h-4 bg-green-700 rounded-full flex items-center justify-center" />
                   </button>
                 ))}
               </div>
@@ -238,10 +289,11 @@ export default function NewProject() {
           {/* Timeline & Milestone */}
           <div className="bg-white rounded-lg p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-gray-900">
                 Timeline & Milestone
               </h2>
-              <button className="px-3 py-1 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors">
+              <button className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-yellow-600 text-base font-medium flex items-center text-white rounded-md hover:bg-blue-700 transition-colors">
+                <PlusIcon className="w-4 h-4 mr-0.5 font-medium" />
                 Add Milestone
               </button>
             </div>
@@ -255,7 +307,7 @@ export default function NewProject() {
                   <input
                     type="date"
                     defaultValue="2024-07-07"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 h-12 border bg-slate-100 border-gray-300 rounded-md focus:outline-none"
                   />
                 </div>
               </div>
@@ -268,7 +320,7 @@ export default function NewProject() {
                   <input
                     type="date"
                     defaultValue="2024-10-10"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 h-12 bg-slate-100 border border-gray-300 rounded-md focus:outline-none"
                   />
                 </div>
               </div>

@@ -25,6 +25,8 @@ import deadlineGraph from "../../../assets/graphs/deadline-prediction.png";
 import performanceGraph from "../../../assets/graphs/performance-insight.png";
 import riskGraph from "../../../assets/graphs/risk-alert.png";
 import BarChart from "../../charts/BarChart";
+import { Link } from "react-router-dom";
+
 
 const AdminDashboard = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -320,9 +322,9 @@ const AdminDashboard = () => {
           <FaChevronDown className="absolute top-3 right-3" />
         </div>
         <div className="flex gap-4 max-sm:mx-auto">
-          <button className="bg-gradient-to-r from-indigo-600 to-yellow-600 text-white px-4 py-1.5 flex gap-1 items-center justify-center rounded-lg shadow hover:opacity-90 max-sm:px-2 max-sm:py-1">
+          <Link to="/project/add-new" className="bg-gradient-to-r from-indigo-600 to-yellow-600 text-white px-4 py-1.5 flex gap-1 items-center justify-center rounded-lg shadow hover:opacity-90 max-sm:px-2 max-sm:py-1">
             <div className="font-semibold scale-125">+</div> New Project
-          </button>
+          </Link>
           <button className="flex items-center gap-2 border text-lg border-gray-300 bg-white text-black px-4 py-2 rounded-lg shadow hover:bg-gray-50 max-sm:px-2 max-sm:py-1">
             <MdGroup className="scale-110" /> New Client
           </button>
