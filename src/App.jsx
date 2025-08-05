@@ -65,8 +65,8 @@ const App = () => {
 
                 {/* Client Pages */}
                 <Route path="/clients" element={<ClientsListPage />} />
-                <Route path="/clients/client-detail" element={<ClientDetailPage />} />
-                <Route path="/clients/edit-form" element={<ClientEditFormPage />} />
+                <Route path="/clients/:id" element={<ClientDetailPage />} />
+                <Route path="/clients/:id/edit-form" element={<ClientEditFormPage />} />
 
                 {/* Client Portal Pages */}
                 <Route path="/access" element={<Access/>}/>
