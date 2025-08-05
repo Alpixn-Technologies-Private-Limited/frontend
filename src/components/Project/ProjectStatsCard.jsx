@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProjectStatsCard = ({ title, value, subtitle, icon, change, changeColor }) => {
   return (
-    <div className="bg-white shadow-sm rounded-xl border-gray-300 p-4 sm:p-5 hover:shadow-md transition">
+    <div className="bg-white shadow-sm rounded-xl border border-gray-300 p-4 sm:p-5 hover:shadow-md transition">
       <div className="flex justify-between items-center mb-3">
         <h4 className="text-sm font-medium text-gray-600">{title}</h4>
         <span className="text-2xl">{icon}</span>
