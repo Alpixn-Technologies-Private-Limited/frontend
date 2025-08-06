@@ -13,7 +13,7 @@ const UserProfileSetting = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row items-start gap-6">
                     {/* Profile Image */}
-                    <div className="relative">
+                    <div className="relative place-self-center">
                         <div className="w-24 h-24 rounded-full overflow-hidden">
                             <img
                                 className="object-cover w-full h-full"
@@ -40,8 +40,8 @@ const UserProfileSetting = () => {
                                 key={idx}
                                 className="flex justify-between items-center bg-white border border-gray-300 rounded-lg px-4 py-2 text-sm"
                             >
-                                <span>{item.label}</span>
-                                <span className="text-gray-600">{item.value}</span>
+                                <span className="font-semibold">{item.label}</span>
+                                <span className="text-gray-600 text-end">{item.value}</span>
                             </div>
                         ))}
                     </div>
@@ -55,47 +55,53 @@ const UserProfileSetting = () => {
                     <MdOutlineKeyboardArrowRight className="text-3xl sm:text-4xl ml-2" />
                 </h2>
 
-                {/** Email, Push, AI Settings */}
-                {[
-                    {
-                        title: "Email Preferences",
-                        items: [
-                            "New Project Assignment",
-                            "Task Deadline Reminder",
-                            "Weekly digest",
-                        ],
-                        allowed: [true, true, false],
-                    },
-                    {
-                        title: "Push Notifications",
-                        items: [
-                            "Mentions in comments",
-                            "New file uploaded to your task",
-                            "Project archived",
-                        ],
-                        allowed: [true, true, false],
-                    },
-                    {
-                        title: "AI Task Suggestions",
-                        items: [
-                            "Risk Predictions",
-                            "AI task suggestions",
-                            "Auto-priority changes",
-                        ],
-                        allowed: [true, true, false],
-                    },
-                ].map((section, idx) => (
+                {[{
+                    title: "Email Preferences",
+                    items: ["New Project Assignment", "Task Deadline Reminder", "Weekly digest"],
+                    allowed: [true, true, false],
+                }, {
+                    title: "Push Notifications",
+                    items: ["Mentions in comments", "New file uploaded to your task", "Project archived"],
+                    allowed: [true, true, false],
+                }, {
+                    title: "AI Task Suggestions",
+                    items: ["Risk Predictions", "AI task suggestions", "Auto-priority changes"],
+                    allowed: [true, true, false],
+                }].map((section, idx) => (
                     <div key={idx} className="rounded-lg mb-6 bg-white border border-gray-300">
                         <div className="flex justify-between items-center px-4 py-2">
                             <h3 className="font-medium">{section.title}</h3>
                             <Toggle />
                         </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm font-semibold px-4 py-2 border-t border-gray-200">
+
+                        {/* Mobile layout (flex row) */}
+                        <div className="divide-y border-t border-gray-200 sm:hidden">
+                            {section.items.map((item, i) => (
+                                <div
+                                    key={i}
+                                    className="flex justify-between items-center px-4 py-2 text-sm"
+                                >
+                                    <span className="font-semibold">{item}</span>
+                                    <span
+                                        className={
+                                            section.allowed[i]
+                                                ? "text-indigo-600 text-xs"
+                                                : "text-gray-400 text-xs"
+                                        }
+                                    >
+                                        {section.allowed[i] ? "Allowed" : "Not Allowed"}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Desktop layout (grid 3 cols) */}
+                        <div className="hidden sm:grid sm:grid-cols-3 gap-4 text-sm font-semibold px-4 py-2 border-t border-gray-200">
                             {section.items.map((item, i) => (
                                 <span key={i}>{item}</span>
                             ))}
                         </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs px-4 pb-4 mt-2">
+                        <div className="hidden sm:grid sm:grid-cols-3 gap-4 text-xs px-4 pb-4 mt-2">
                             {section.allowed.map((allowed, i) => (
                                 <span
                                     key={i}
@@ -116,36 +122,32 @@ const UserProfileSetting = () => {
                     <MdOutlineKeyboardArrowRight className="text-3xl sm:text-4xl ml-2" />
                 </h2>
 
-                {[
-                    {
-                        label: "Change Password",
-                        actions: (
-                            <div className="space-x-2 text-sm text-gray-700">
-                                <button className="hover:underline">Pin |</button>
-                                <button className="hover:underline">Password</button>
-                            </div>
-                        ),
-                    },
-                    {
-                        label: "Two Factor Authentication",
-                        actions: <Toggle />,
-                    },
-                    {
-                        label: "Session Management",
-                        actions: (
-                            <div className="space-x-2 text-sm text-gray-700">
-                                <button className="hover:underline">Safari on iPhone |</button>
-                                <button className="hover:underline">Chrome on Windows</button>
-                            </div>
-                        ),
-                    },
-                ].map((item, idx) => (
+                {[{
+                    label: "Change Password",
+                    actions: (
+                        <div className="space-x-2 text-sm text-gray-700">
+                            <button className="hover:underline">Pin |</button>
+                            <button className="hover:underline">Password</button>
+                        </div>
+                    ),
+                }, {
+                    label: "Two Factor Authentication",
+                    actions: <Toggle />,
+                }, {
+                    label: "Session Management",
+                    actions: (
+                        <div className="space-x-2 text-sm text-gray-700">
+                            <button className="hover:underline">Safari on iPhone |</button>
+                            <button className="hover:underline">Chrome on Windows</button>
+                        </div>
+                    ),
+                }].map((item, idx) => (
                     <div
                         key={idx}
-                        className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white border border-gray-300 rounded-lg px-4 py-2 my-2 text-sm"
+                        className="flex  sm:flex-row justify-between items-start sm:items-center bg-white border border-gray-300 rounded-lg px-4 py-2 my-2 text-sm"
                     >
                         <span className="mb-2 sm:mb-0">{item.label}</span>
-                        <div>{item.actions}</div>
+                        <div className="text-end">{item.actions}</div>
                     </div>
                 ))}
             </section>
