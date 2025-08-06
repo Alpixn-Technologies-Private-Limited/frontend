@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Calendar, Plus, User, Check, Search, PlusIcon } from "lucide-react";
+import {
+  Calendar,
+  Plus,
+  User,
+  Check,
+  Search,
+  PlusIcon,
+  SearchCheckIcon,
+} from "lucide-react";
 
 export default function NewProject() {
   const [selectedTemplate, setSelectedTemplate] = useState(
@@ -65,28 +73,21 @@ export default function NewProject() {
     );
   };
 
-  const templates = [
-    { id: "website-development", name: "Website Development", selected: true },
-    { id: "mobile-app", name: "Mobile App" },
-    { id: "marketing", name: "Marketing Campaign" },
-    { id: "consulting", name: "Consulting Project" },
-  ];
-
   return (
     <div className="mx-auto px-2 py-4 bg-gray-50 min-h-screen">
       <h1 className="text-2xl font-bold text-gray-900 mb-6">
         New Project Details
       </h1>
 
-      <div className="flex w-full gap-4">
-        <div className="flex flex-col gap-4 mb-6 w-[40%]">
+      <div className="flex w-full gap-4 max-sm:flex-col">
+        <div className="flex flex-col gap-6 mb-6 w-[40%] max-sm:w-full">
           {/* Basic Information */}
           <div className="bg-white rounded-lg p-6 shadow-sm">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Basic Information
             </h2>
 
-            <div className="space-y-2">
+            <div className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Project Name
@@ -142,58 +143,42 @@ export default function NewProject() {
               Project Template Selection
             </h2>
 
-            <div className="relative mb-2">
+            <div className="relative my-6">
+              <Search className="absolute left-2 top-3 text-gray-400" />
               <input
                 type="text"
                 placeholder="Find Template"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-slate-100"
+                className="w-full px-4 py-3 pl-10 border border-gray-300 rounded-md focus:outline-none bg-slate-100"
               />
             </div>
 
-            <div className="space-y-1.5">
-              {templates.map((template) => (
-                <div
-                  key={template.id}
-                  className={`flex items-center p-2 rounded-lg border cursor-pointer transition-all ${
-                    selectedTemplate === template.id
-                      ? "border-green-500 bg-green-50"
-                      : "border-gray-300 hover:border-gray-300"
-                  }`}
-                  onClick={() => setSelectedTemplate(template.id)}
-                >
-                  <div
-                    className={`w-4 h-4 rounded-full mr-3 flex items-center justify-center ${
-                      selectedTemplate === template.id
-                        ? "bg-green-500"
-                        : "bg-gray-300"
-                    }`}
-                  >
-                    {selectedTemplate === template.id && (
-                      <Check className="w-2.5 h-2.5 text-white" />
-                    )}
-                  </div>
-                  <div>
-                    <div className="font-medium text-gray-900">
-                      {template.name}
-                    </div>
-                    <div className="text-sm text-gray-500">
-                      {template.id === "website-development" &&
-                        "Complete website development workflow"}
-                    </div>
-                  </div>
+            <div className="flex items-end gap-4 mt-4 max-sm:flex-col">
+              <div className="space-y-1.5 border border-gray-300 rounded-lg p-4 flex-1">
+                <div className="flex items-center gap-2">
+                  <h2 className="text-xl font-medium">Website Development</h2>
+                  <input
+                    type="checkbox"
+                    name="template"
+                    id="website-development"
+                    checked={true}
+                    className="h-5 w-5 rounded-sm border-green-600 accent-white bg-green-400 ring-[1px] focus:ring-green-500"
+                  />
                 </div>
-              ))}
-            </div>
+                <p className="text-sm text-gray-500 mt-2">
+                  Creating Company website and landing pages
+                </p>
+              </div>
 
-            <button className="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-              Use this template
-            </button>
+              <button className="min-w-48 h-fit px-4 py-2 flex gap-0 items-center bg-gradient-to-r from-indigo-600 to-yellow-600 text-white rounded-md transition-colors">
+                <PlusIcon className="w-4 h-4 mr-1" /> Use this template
+              </button>
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-col gap-6 mb-6 w-[60%]">
+        <div className="flex flex-col gap-4 mb-6 w-[60%] max-sm:w-full">
           {/* Client Selection */}
-          <div className="bg-white rounded-lg p-6 shadow-sm">
+          <div className="bg-white rounded-lg p-6 shadow-sm max-sm:p-4">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold text-gray-900">
                 Client Selection
@@ -204,26 +189,26 @@ export default function NewProject() {
               <span className="block text-sm font-medium text-gray-700 mb-1">
                 Client
               </span>
-              <div className="relative mb-4 flex items-center gap-2">
-                <Search className="absolute left-3 text-gray-400" />
+              <div className="relative mb-4 flex items-center gap-2 max-sm:flex-col">
+                <Search className="absolute left-3 text-gray-400 max-sm:top-2 max-sm:left-1.5" />
                 <input
                   type="text"
                   name="client"
                   id="client"
                   placeholder="Search for clients..."
-                  className="h-12 border rounded-lg focus:outline-0 bg-slate-100 w-full pl-10"
+                  className="h-12 border border-gray-300 rounded-lg focus:outline-0 bg-slate-100 w-full pl-10 max-sm:pl-8 max-sm:h-10"
                 />
-                <button className="text-gray-500 flex min-w-fit items-center border h-12 px-3 rounded-md bg-white hover:bg-gray-50 transition-colors">
+                <button className="text-gray-500 flex min-w-fit items-center border border-gray-400 h-12 px-3 rounded-md bg-white hover:bg-gray-50 transition-colors max-sm:h-10 max-sm:ml-auto">
                   <Plus className="w-4 h-4" /> Add New Client
                 </button>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-48 overflow-y-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-48 overflow-y-auto max-sm:border-[1px] max-sm:border-gray-300 max-sm:rounded-lg max-sm:p-1">
               {clients.map((client) => (
                 <div
                   key={client.id}
-                  className="flex items-center p-2 bg-gray-50 border-[1px] border-gray-300 hover:bg-gray-100 rounded"
+                  className="flex items-center p-2 bg-gray-50 border-[1px] border-gray-300 hover:bg-gray-100 rounded-lg"
                 >
                   <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center mr-3">
                     <User className="w-4 h-4 text-gray-600" />
@@ -239,15 +224,15 @@ export default function NewProject() {
             </div>
           </div>
           {/* Team Assignment */}
-          <div className="bg-white rounded-lg p-6 shadow-sm">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          <div className="bg-white rounded-lg p-6 shadow-sm max-sm:p-4">
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">
               Team Assignment
             </h2>
 
             <div>
               <label
                 htmlFor="team"
-                className="block text-sm font-medium text-gray-700 mb-3"
+                className="block text-sm font-medium text-gray-700 mb-1"
               >
                 Select Team members
               </label>
@@ -274,7 +259,11 @@ export default function NewProject() {
                     }`}
                     title={member.name}
                   >
-                    <img src={member.avatar} alt={member.name} className="w-full h-full object-cover rounded-full" />
+                    <img
+                      src={member.avatar}
+                      alt={member.name}
+                      className="w-full h-full object-cover rounded-full"
+                    />
                     {selectedTeamMembers.includes(member.id) && (
                       <div className="absolute -top-1 -right-1 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
                         <Check className="w-3 h-3 text-white" />
@@ -288,17 +277,17 @@ export default function NewProject() {
           </div>
           {/* Timeline & Milestone */}
           <div className="bg-white rounded-lg p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-gray-900">
+            <div className="flex items-center justify-between mb-4 max-sm:flex-col max-sm:items-start">
+              <h2 className="text-xl max-sm:text-2xl font-semibold text-gray-900">
                 Timeline & Milestone
               </h2>
-              <button className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-yellow-600 text-base font-medium flex items-center text-white rounded-md hover:bg-blue-700 transition-colors">
+              <button className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-yellow-600 text-base font-medium flex items-center text-white rounded-md hover:bg-blue-700 transition-colors max-sm:py-1.5 max-sm:w-full max-sm:justify-center max-sm:mt-2">
                 <PlusIcon className="w-4 h-4 mr-0.5 font-medium" />
                 Add Milestone
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Start Date
@@ -332,20 +321,20 @@ export default function NewProject() {
       <div className="flex w-full">
         {/* AI Configuration */}
         <div className="bg-white rounded-lg p-6 shadow-sm w-full">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          <h2 className="text-xl font-semibold text-gray-900 mb-7">
             AI Configuration
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-8">
               <div className="flex items-center justify-between">
                 <div>
                   <div className="font-medium text-gray-900">
                     Enable Task Automation
                   </div>
-                  <div className="text-sm text-gray-500">
+                  {/* <div className="text-sm text-gray-500">
                     Automatically create and assign tasks
-                  </div>
+                  </div> */}
                 </div>
                 <button
                   onClick={() => setTaskAutomation(!taskAutomation)}
@@ -366,9 +355,9 @@ export default function NewProject() {
                   <div className="font-medium text-gray-900">
                     Enable risk prediction
                   </div>
-                  <div className="text-sm text-gray-500">
+                  {/* <div className="text-sm text-gray-500">
                     Predict potential project risks
-                  </div>
+                  </div> */}
                 </div>
                 <button
                   onClick={() => setRiskPrediction(!riskPrediction)}
@@ -385,15 +374,15 @@ export default function NewProject() {
               </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-8">
               <div className="flex items-center justify-between">
                 <div>
                   <div className="font-medium text-gray-900">
                     Enable event prediction
                   </div>
-                  <div className="text-sm text-gray-500">
+                  {/* <div className="text-sm text-gray-500">
                     Predict upcoming events and deadlines
-                  </div>
+                  </div> */}
                 </div>
                 <button
                   onClick={() => setEventPrediction(!eventPrediction)}
@@ -435,18 +424,16 @@ export default function NewProject() {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex justify-between mt-6">
-        <button className="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors">
+      <div className="flex justify-center gap-5 max-sm:gap-2 mt-6 max-sm:flex-wrap max-sm:justify-between">
+        <button className="px-6 py-2 bg-white shadow-md cursor-pointer border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors max-sm:px-3 max-sm:py-1.5 max-sm:w-[48%]">
           Cancel
         </button>
-        <div className="space-x-3">
-          <button className="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors">
-            Save as Draft
-          </button>
-          <button className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-            Create Project
-          </button>
-        </div>
+        <button className="px-6 py-2 bg-white shadow-md cursor-pointer border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors max-sm:px-3 max-sm:py-1.5 max-sm:w-[48%]">
+          Save as Draft
+        </button>
+        <button className="px-6 py-2 cursor-pointer shadow-md bg-gradient-to-r from-indigo-600 to-yellow-600 text-white rounded-md hover:bg-blue-700 transition-colors max-sm:px-3 max-sm:py-1.5 max-sm:w-full max-sm:mt-2">
+          Create Project
+        </button>
       </div>
 
       <style jsx>{`
