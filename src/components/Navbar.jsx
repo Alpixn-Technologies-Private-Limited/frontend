@@ -30,27 +30,42 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center space-x-6 max-sm:space-x-2 max-sm:scale-95">
-        <span className="text-gray-600 text-xl cursor-pointer hover:text-black transition duration-200">
-          <FaBell />
+        <span className="text-gray-600 text-xl cursor-pointer hover:text-black transition duration-200 relative">
+          <FaBell className="w-6 h-6" />
+          <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center justify-center">
+            {"0"}
+          </span>
         </span>
 
-        <button
-          onClick={toggleTheme}
-          className="text-gray-600 text-xl cursor-pointer hover:text-yellow-500 transition duration-200"
-        >
-          {theme === "dark" ? (
-            <FaSun className="text-yellow-500" />
-          ) : (
-            <FaMoon className="text-gray-400" />
-          )}
-        </button>
+        <div className="flex justify-center">
+          <button
+            onClick={toggleTheme}
+            className={`relative inline-flex items-center w-14 h-7 rounded-full transition-all duration-300 ease-in-out ring-gray-400 ring-[1px] focus:outline-none focus:ring-[1px] focus:ring-offset-0 ${
+              theme === "dark"
+                ? "bg-gray-700 focus:ring-gray-500"
+                : "bg-gray-200 focus:ring-gray-400"
+            }`}
+          >
+            <div
+              className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transform transition-transform duration-300 ease-in-out flex items-center justify-center ${
+                theme === "dark" ? "translate-x-8" : "translate-x-0.5"
+              }`}
+            >
+              {theme === "dark" ? (
+                <FaMoon className="w-3 h-3 text-gray-600" />
+              ) : (
+                <FaSun className="w-3 h-3 text-yellow-600" />
+              )}
+            </div>
+          </button>
+        </div>
 
-        <div className="flex items-center bg-gray-100 rounded-full px-4 py-2 max-sm:px-2 max-sm:border max-sm:border-gray-400">
+        <div className="flex items-center bg-gray-100 rounded-full border-[1px] border-gray-400 px-4 py-1.5 max-sm:px-2 max-sm:border max-sm:border-gray-400">
           <FaSearch className="text-gray-500 mr-2 max-sm:mr-1" />
           <input
             type="text"
             placeholder="Search projects, client, tasks..."
-            className="bg-transparent outline-none text-sm text-gray-700 w-64 placeholder:text-gray-400 max-sm:w-24"
+            className="bg-transparent outline-none text-base text-gray-700 w-64 placeholder:text-gray-400 max-sm:w-24"
           />
         </div>
       </div>
