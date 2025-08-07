@@ -126,7 +126,7 @@ const ClientDetails = () => {
                 <h2 className="text-2xl font-semibold text-gray-800">
                     Client Details
                 </h2>
-                <Link to="/clients/edit-form">
+                <Link to="/clients/:id/edit-form">
                     <button className="cursor-pointer flex items-center gap-2 border border-gray-300 rounded-lg py-1 px-3 text-xs hover:bg-gray-100 w-fit">
                         Edit Details <FaRegEdit />
                     </button>
