@@ -25,32 +25,33 @@ const LoginForm = () => {
         try {
             const loadingToast = toast.loading("Signing you in...");
             const res = await axios.post(
-                "/auth/login",
+                "/api/auth/login",
                 { email, password, remember_me: rememberMe },
                 { withCredentials: true }
             );
+
             toast.dismiss(loadingToast);
 
             if (res?.data?.success) {
                 toast.success("Login successful!");
 
                 const { token, refresh_token, user } = res.data.data;
-
                 if (rememberMe) {
                     localStorage.setItem("token", token);
                     localStorage.setItem("refresh_token", refresh_token);
+                    localStorage.setItem("user", JSON.stringify(user));
                 } else {
                     sessionStorage.setItem("token", token);
                     sessionStorage.setItem("refresh_token", refresh_token);
+                    sessionStorage.setItem("user", JSON.stringify(user));
                 }
+                loadUser();
 
-                await loadUser();
-
-                if (user.role === "admin") {
+                if (user.role === "ADMIN") {
                     navigate("/dashboard/admin");
-                } else if (user.role === "pm") {
+                } else if (user.role === "PM") {
                     navigate("/dashboard/pm");
-                } else if (user.role === "team") {
+                } else if (user.role === "TEAM") {
                     navigate("/dashboard/team");
                 } else {
                     navigate("/login");
@@ -90,9 +91,7 @@ const LoginForm = () => {
                             </span>
                         </h1>
                         <p className="text-gray-700 mt-1 sm:mt-2 text-sm sm:text-base">
-                            Smart. Scalable.{" "}
-                            <span className="font-semibold">AI-powered</span>{" "}
-                            Operations
+                            Smart. Scalable. <span className="font-semibold">AI-powered</span> Operations
                         </p>
                     </div>
 

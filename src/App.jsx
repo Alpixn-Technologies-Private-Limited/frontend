@@ -1,15 +1,15 @@
-import React from "react";
-import './App.css';
+import React, { useEffect } from "react";
+import "./App.css";
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Navigate,
 } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
-import ChangePasswordPage from "./components/ChangePassword"
+import ChangePasswordPage from "./components/ChangePassword";
 import ClientDetailPage from "./pages/ClientDetailPage";
 import ClientsListPage from "./pages/ClientsListPage";
 import ClientEditFormPage from "./pages/ClientEditFormPage";
@@ -32,52 +32,66 @@ import UserProfileSettingPage from "./pages/UserProfileSettingPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import Access from "./components/clientPortal/Access";
 import ClientPortalPage from "./pages/ClientPortalPage";
-import AddNewProject from "./pages/AddNewProject";
-
-const ProtectedRoute = ({ isAuthenticated, children }) => {
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  return children;
-};
+import { useAuth } from "./context/AuthContext";
 
 const App = () => {
-    const isAuthenticated = false;
-
+    const { loadUser, user, loading } = useAuth();
+    useEffect(() => {
+        loadUser?.();
+        console.log("user that is using my website", user);
+    }, []);
+    if (loading) return <div className="p-6 text-center">Loading...</div>;
+    const ProtectedRoute = ({ children }) => {
+        return user ? children : <Navigate to="/login" replace />;
+    };
     return (
         <Router>
             <Routes>
-                <Route
-                    path="/"
-                    element={
-                        isAuthenticated ? (
-                            <Navigate to="/dashboard/pm" replace />
-                        ) : (
-                            <Navigate to="/login" replace />
-                        )
-                    }
-                />
+                <Route path="/" element={<LoginPage />} />
 
                 {/* Auth Pages */}
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-                <Route path="/change-password" element={<ChangePasswordPage />} />
-
+                <Route
+                    path="/forgot-password"
+                    element={<ForgotPasswordPage />}
+                />
+                <Route
+                    path="/change-password"
+                    element={<ChangePasswordPage />}
+                />
 
                 {/* Client Pages */}
-                <Route path="/clients" element={<ClientsListPage />} />
+                <Route
+                    path="/clients"
+                    element={
+                        <ProtectedRoute>
+                            <ClientsListPage />
+                        </ProtectedRoute>
+                    }
+                />
                 <Route path="/clients/:id" element={<ClientDetailPage />} />
-                <Route path="/clients/:id/edit-form" element={<ClientEditFormPage />} />
+                <Route
+                    path="/clients/:id/edit-form"
+                    element={<ClientEditFormPage />}
+                />
 
                 {/* Client Portal Pages */}
-                <Route path="/access" element={<Access/>}/>
-                <Route path="/client-portal" element={<ClientPortalPage/>}/>
+                <Route path="/access" element={<Access />} />
+                <Route path="/client-portal" element={<ClientPortalPage />} />
 
-        {/* Dashboard */}
-        <Route path="/dashboard" element={<AdminDashBoardPage />} />     // Admin Dashboard remove this line
-        <Route path="/dashboard/admin" element={<AdminDashBoardPage />} />
-        <Route path="/dashboard/pm" element={<ProjectManagerDashboard />} />
-        <Route path="/dashboard/team" element={<MemberDashBoardPage />} />
+                {/* Dashboard */}
+                <Route
+                    path="/dashboard/admin"
+                    element={<AdminDashBoardPage />}
+                />
+                <Route
+                    path="/dashboard/pm"
+                    element={<ProjectManagerDashboard />}
+                />
+                <Route
+                    path="/dashboard/team"
+                    element={<MemberDashBoardPage />}
+                />
 
                 {/* AI Console */}
                 <Route path="/ai-console" element={<AIConsole />} />
@@ -86,28 +100,42 @@ const App = () => {
                 {/* Analytics Pages */}
                 <Route path="/analytics" element={<AnalyticsPage />} />
 
-        {/* Project Pages */}
-        <Route path="/project" element={<Project />} />
-        <Route path="/project/:id" element={<ProjectDetail />} />
-        <Route path="/project/tasks" element={<ProjectTaskPage />} />
-        <Route path="/project/task-board" element={<TaskBoardPage />} />
-        <Route path="/project/task-details/*" element={<ProjectTaskDetailsPage />} />
-        <Route path="/project/add-new" element={<AddNewProject />} />
+                {/* Project Pages */}
+                <Route path="/projects" element={<Project />} />
+                <Route path="/project/:id" element={<ProjectDetail />} />
+                <Route path="/project/tasks" element={<ProjectTaskPage />} />
+                <Route path="/project/task-board" element={<TaskBoardPage />} />
+                <Route
+                    path="/project/task-details/*"
+                    element={<ProjectTaskDetailsPage />}
+                />
 
                 {/* Team Management Pages */}
                 <Route path="/team-management" element={<TeamMembersPage />} />
-                <Route path="/team-management/member-profile" element={<TeamMemberProfilePage />} />
-                <Route path="/team-management/teamWorkload" element={<TeamWorkloadPage />} />
+                <Route
+                    path="/team-management/member-profile"
+                    element={<TeamMemberProfilePage />}
+                />
+                <Route
+                    path="/team-management/teamWorkload"
+                    element={<TeamWorkloadPage />}
+                />
 
                 {/* Setting and Configuration */}
-                <Route path="/settings/system" element={<SystemSettingsPage />} />
-                <Route path="/settings/user" element={<UserProfileSettingPage />} />
-                
+                <Route
+                    path="/settings/system"
+                    element={<SystemSettingsPage />}
+                />
+                <Route
+                    path="/settings/user"
+                    element={<UserProfileSettingPage />}
+                />
+
                 {/* Catch All Route */}
-                <Route path="*" element={<Navigate to="/login" replace />}/>
+                <Route path="*" element={<Navigate to="/login" replace />} />
             </Routes>
         </Router>
     );
-}
+};
 
 export default App;
