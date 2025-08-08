@@ -8,7 +8,7 @@ const ClientPortalPage = () => {
   return (
     <div className="min-h-screen flex bg-gray-50">
       {/* Sidebar */}
-      <div className="fixed top-0 left-0 bottom-0 w-64 z-50 border-r bg-white max-sm:hidden">
+      <div className="fixed top-0 left-0 bottom-0 w-64 max-sm:w-0 z-50 border-r bg-white">
         <Sidebar />
       </div>
 
