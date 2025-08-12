@@ -19,7 +19,7 @@ const AiSettingPage = () => {
           <AiConsoleSetting />
         </main>
       </div>
-      <div className="pb-5 bg-gray-50 ml-64 max-sm:ml-0 max-sm:px-3">
+      <div className="pb-5 bg-gray-50 ml-64 dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76] max-sm:ml-0 max-sm:px-3">
         <Footer />
       </div>
     </div>

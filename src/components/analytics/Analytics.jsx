@@ -122,16 +122,16 @@ const Analytics = () => {
   };
 
   return (
-    <div className="px-6 py-4 space-y-6">
+    <div className="px-6 py-4 space-y-6 dark:bg-white/10 backdrop-blur-md rounded-xl">
       <div className="flex justify-between items-start flex-wrap gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-black">Analytics</h2>
-          <p className="text-sm text-gray-600">
+          <h2 className="text-2xl font-bold text-black dark:text-white">Analytics</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
             Track your team&apos;s performance and project metrics
           </p>
         </div>
         <div className="flex gap-2 items-center">
-          <select className="border px-3 py-1 rounded-md text-sm">
+          <select className="border px-3 py-1 rounded-md text-sm dark:bg-white/10 backdrop-blur-md dark:text-white">
             <option value="7">Last 7 days</option>
             <option value="15">Last 15 days</option>
             <option value="30">Last Month</option>
@@ -242,7 +242,7 @@ const Analytics = () => {
         </div>
       </div>
         {/* Custom Reports Section */}
-        <h3 className="text-2xl font-semibold mt-12">Custom Reports</h3>
+        <h3 className="text-2xl font-semibold mt-12 dark:text-white">Custom Reports</h3>
         <CustomReportsComponent />
     </div>
   );

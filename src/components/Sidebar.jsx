@@ -22,6 +22,10 @@ const Sidebar = () => {
   const location = useLocation();
   const { isSidebarOpen, closeSidebar } = useSidebar();
 
+  const handleLogout = () => {
+    toast.success("Logged out successfully");
+  };
+
   return (
     <>
       {isSidebarOpen && (
@@ -61,7 +65,7 @@ const Sidebar = () => {
                   className={`flex items-center space-x-3 px-2 py-3  my-1 font-medium text-[16px] cursor-pointer transition duration-200 ${
                     location.pathname.startsWith(item.path)
                       ? "border-[#4F46E5] border-l-4 text-[#4F46E5] dark:bg-white dark:border-white"
-                      : "text-black hover:bg-gray-100 dark:text-white"
+                      : "text-black hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                   }`}
                 >
                   <span className="text-xl">{item.icon}</span>
