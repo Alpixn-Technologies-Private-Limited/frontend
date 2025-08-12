@@ -31,7 +31,7 @@ const Sidebar = () => {
       )}
       <div
         className={`
-    sm:fixed top-0 left-0 h-screen w-64 max-sm:w-56 bg-white border-r shadow border-gray-300 py-6
+    sm:fixed top-0 left-0 h-screen w-64 max-sm:w-56 bg-white dark:bg-gradient-to-br dark:from-[#282a5c] dark:via-[#091523] dark:to-[#34307d] dark:text-white border-r-2 dark:border-gray-500 shadow border-gray-300 py-6
     flex flex-col justify-between font-[Segoe UI] z-50
     transform transition-all duration-500 sm:translate-x-0 sm:opacity-100
     ${
@@ -57,10 +57,10 @@ const Sidebar = () => {
             {menuItems.map((item, index) => (
               <Link to={item.path} key={index} onClick={closeSidebar}>
                 <div
-                  className={`flex items-center space-x-3 p-2 my-1 font-medium text-[16px] cursor-pointer transition duration-200 ${
+                  className={`flex items-center space-x-3 px-2 py-3  my-1 font-medium text-[16px] cursor-pointer transition duration-200 ${
                     location.pathname.startsWith(item.path)
-                      ? "border-[#4F46E5] border-l-4 text-[#4F46E5]"
-                      : "text-black hover:bg-gray-100"
+                      ? "border-[#4F46E5] border-l-4 text-[#4F46E5] dark:bg-white dark:border-white"
+                      : "text-black hover:bg-gray-100 dark:text-white"
                   }`}
                 >
                   <span className="text-xl">{item.icon}</span>
