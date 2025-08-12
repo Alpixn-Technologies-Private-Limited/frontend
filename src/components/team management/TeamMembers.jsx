@@ -1,59 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
 import { Link } from "react-router-dom";
-
-// Sample team members data
-const teamMembersData = [
-    {
-        name: "Chloe Bennett",
-        role: "Product Manager",
-        skills: "Product Manager",
-        performance: 75,
-        rating: 4.8,
-        status: "Available",
-    },
-    {
-        name: "Owen Carter",
-        role: "Software Engineer",
-        skills: "Software Engineer",
-        performance: 50,
-        rating: 4.5,
-        status: "Busy",
-    },
-    {
-        name: "Isabella Hayes",
-        role: "Data Scientist",
-        skills: "Data Scientist",
-        performance: 90,
-        rating: 4.9,
-        status: "Away",
-    },
-    {
-        name: "Noah Thompson",
-        role: "Marketing Specialist",
-        skills: "Marketing Specialist",
-        performance: 60,
-        rating: 4.7,
-        status: "Available",
-    },
-    {
-        name: "Lily Evans",
-        role: "Customer Support",
-        skills: "Customer Support",
-        performance: 40,
-        rating: 4.6,
-        status: "Busy",
-    },
-];
-
-// Extract unique values for dropdowns
-const uniqueValues = (arr, key) => [...new Set(arr.map((item) => item[key]))];
+import axios from "../../utils/axios";
+import { HashLoader } from "react-spinners";
+const uniqueValues = (arr, key) => {
+    return [...new Set(arr.map((item) => item[key]).filter(Boolean))];
+};
 
 const TeamMembers = () => {
+    const [teamMembersData, setTeamMembersData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [roleFilter, setRoleFilter] = useState("Role");
     const [skillsFilter, setSkillsFilter] = useState("Skills");
     const [statusFilter, setStatusFilter] = useState("Status");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchTeamMembers = async () => {
+            try {
+                setLoading(true);
+                const res = await axios.get("/api/team", {
+                    headers: {
+                        Authorization: `Bearer ${
+                            localStorage.getItem("token") ||
+                            sessionStorage.getItem("token")
+                        }`,
+                    },
+                });
+                const data=res?.data;
+                // console.log(data)
+                const mappedData = data.map((member) => ({
+                    name: member.name,
+                    role: member.role || "Not Assigned",
+                    skills: member.skills || "N/A",
+                    performance: member.capacity || 0,
+                    rating: member.hourlyRate
+                        ? (member.hourlyRate / 20).toFixed(1)
+                        : 4.5,
+                    status: member.availability || "Unknown",
+                    avatarUrl:
+                        member.avatarUrl ||
+                        "https://cdn-icons-png.freepik.com/512/6997/6997668.png?ga=GA1.1.530808846.1751615351",
+                    teamId:member.id
+                }));
+                // console.log(mappedData)
+
+                setTeamMembersData(mappedData);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
+        };
+
+        fetchTeamMembers();
+    }, []);
 
     const roles = uniqueValues(teamMembersData, "role");
     const skills = uniqueValues(teamMembersData, "skills");
@@ -74,6 +76,22 @@ const TeamMembers = () => {
         return matchesSearch && matchesRole && matchesSkills && matchesStatus;
     });
 
+    if (loading) {
+        return (
+            <div className="absolute md:left-30 inset-0 flex items-center justify-center">
+                    <HashLoader size={60} color="#6366F1" />
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex justify-center items-center min-h-screen text-red-500">
+                <p>{error}</p>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen flex justify-center bg-gray-50 px-4 sm:px-6 lg:px-8 py-6">
             <div className="w-full max-w-7xl bg-white p-6 sm:p-8 rounded-xl shadow">
@@ -86,6 +104,7 @@ const TeamMembers = () => {
                     </p>
                 </div>
 
+                {/* Search Bar */}
                 <div className="my-6 flex items-center border border-gray-300 rounded-2xl bg-[#F0F2F5]">
                     <div className="w-10 sm:w-12 px-2 sm:px-3 text-2xl text-gray-600 flex items-center justify-center">
                         <CiSearch />
@@ -98,15 +117,14 @@ const TeamMembers = () => {
                         className="flex-1 h-10 bg-[#F0F2F5] outline-none rounded-r-2xl px-2 text-sm"
                     />
                 </div>
+
+                {/* Filters */}
                 <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 mb-6 text-sm">
                     <select
                         value={roleFilter}
                         onChange={(e) => setRoleFilter(e.target.value)}
                         className="sm:w-32 w-full px-2 py-2 border border-gray-300 rounded-2xl bg-[#F0F2F5] outline-none"
                     >
-                        <option value="Role" disabled hidden>
-                            Role
-                        </option>
                         <option value="Role">Role</option>
                         {roles.map((role) => (
                             <option key={role} value={role}>
@@ -120,9 +138,6 @@ const TeamMembers = () => {
                         onChange={(e) => setSkillsFilter(e.target.value)}
                         className="sm:w-32 w-full px-2 py-2 border border-gray-300 rounded-2xl bg-[#F0F2F5] outline-none"
                     >
-                        <option value="Skills" disabled hidden>
-                            Skills
-                        </option>
                         <option value="Skills">Skills</option>
                         {skills.map((skill) => (
                             <option key={skill} value={skill}>
@@ -136,9 +151,6 @@ const TeamMembers = () => {
                         onChange={(e) => setStatusFilter(e.target.value)}
                         className="sm:w-32 w-full px-2 py-2 border border-gray-300 rounded-2xl bg-[#F0F2F5] outline-none"
                     >
-                        <option value="Status" disabled hidden>
-                            Status
-                        </option>
                         <option value="Status">Status</option>
                         {statuses.map((status) => (
                             <option key={status} value={status}>
@@ -147,6 +159,8 @@ const TeamMembers = () => {
                         ))}
                     </select>
                 </div>
+
+                {/* Add Member Button */}
                 <div className="mb-5">
                     <button
                         type="button"
@@ -155,6 +169,8 @@ const TeamMembers = () => {
                         Add Team Member
                     </button>
                 </div>
+
+                {/* Table */}
                 <div className="overflow-x-auto rounded-lg border border-gray-200">
                     <table className="min-w-full bg-white">
                         <thead className="bg-gray-50">
@@ -198,9 +214,10 @@ const TeamMembers = () => {
                                         <td className="p-4 flex items-center gap-3">
                                             <img
                                                 className="w-10 h-10 rounded-full"
-                                                src="https://cdn-icons-png.freepik.com/512/6997/6997668.png?ga=GA1.1.530808846.1751615351"
+                                                src={member.avatarUrl}
+                                                alt={member.name}
                                             />
-                                            <Link to="/team-management/member-profile">
+                                            <Link to={`/team-management/${member?.teamId}`}>
                                                 <span className="font-semibold text-gray-800">
                                                     {member.name}
                                                 </span>

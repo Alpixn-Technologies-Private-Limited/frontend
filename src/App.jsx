@@ -69,10 +69,21 @@ const App = () => {
                         </ProtectedRoute>
                     }
                 />
-                <Route path="/clients/:id" element={<ClientDetailPage />} />
+                <Route
+                    path="/clients/:id"
+                    element={
+                        <ProtectedRoute>
+                            <ClientDetailPage />
+                        </ProtectedRoute>
+                    }
+                />
                 <Route
                     path="/clients/:id/edit-form"
-                    element={<ClientEditFormPage />}
+                    element={
+                        <ProtectedRoute>
+                            <ClientEditFormPage />
+                        </ProtectedRoute>
+                    }
                 />
 
                 {/* Client Portal Pages */}
@@ -111,14 +122,29 @@ const App = () => {
                 />
 
                 {/* Team Management Pages */}
-                <Route path="/team-management" element={<TeamMembersPage />} />
                 <Route
-                    path="/team-management/member-profile"
-                    element={<TeamMemberProfilePage />}
+                    path="/team-management"
+                    element={
+                        <ProtectedRoute>
+                            <TeamMembersPage />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/team-management/:id"
+                    element={
+                        <ProtectedRoute>
+                            <TeamMemberProfilePage />
+                        </ProtectedRoute>
+                    }
                 />
                 <Route
                     path="/team-management/teamWorkload"
-                    element={<TeamWorkloadPage />}
+                    element={
+                        <ProtectedRoute>
+                            <TeamWorkloadPage />
+                        </ProtectedRoute>
+                    }
                 />
 
                 {/* Setting and Configuration */}

@@ -49,9 +49,9 @@ const LoginForm = () => {
 
                 if (user.role === "ADMIN") {
                     navigate("/dashboard/admin");
-                } else if (user.role === "PM") {
+                } else if (user.role === "PROJECT_MANAGER") {
                     navigate("/dashboard/pm");
-                } else if (user.role === "TEAM") {
+                } else if (user.role === "TEAM_MEMBER") {
                     navigate("/dashboard/team");
                 } else {
                     navigate("/login");
