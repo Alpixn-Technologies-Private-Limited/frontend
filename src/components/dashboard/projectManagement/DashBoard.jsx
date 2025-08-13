@@ -325,7 +325,7 @@ const DashBoard = () => {
 
   if (loading) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-gray-50 ml-64 max-sm:ml-0">
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-50 dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76] ml-64 max-sm:ml-0">
         <div className="text-center">
           <HashLoader
             color="#4F46E5"
@@ -336,7 +336,7 @@ const DashBoard = () => {
               margin: "0 auto",
             }}
           />
-          <p className="mt-4 text-lg font-medium text-gray-700">
+          <p className="mt-4 text-lg font-medium text-gray-700 dark:text-white">
             Loading your dashboard...
           </p>
         </div>
@@ -360,7 +360,7 @@ const DashBoard = () => {
     : dummyTeamPerformance;
 
   return (
-    <div className="px-1 space-y-6 font-[Segoe UI]">
+    <div className="px-3 py-2 rounded-xl space-y-6 font-[Segoe UI] dark:bg-white/10 dark:backdrop-blur-md max-sm:px-2 max-sm:py-3">
       <div className="flex justify-end items-center w-full">
         <button className="bg-gradient-to-r from-indigo-600 to-yellow-600 text-white px-4 py-1.5 flex gap-1 items-center justify-center rounded-lg shadow hover:opacity-90">
           <div className="font-semibold scale-125">+</div> New Project

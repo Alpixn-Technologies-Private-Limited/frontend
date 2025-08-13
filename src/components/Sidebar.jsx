@@ -9,7 +9,7 @@ import { useSidebar } from "../context/SidebarContext";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 const menuItems = [
-    { label: "Dashboard", icon: <IoMdHome />, path: "/dashboard/admin" },
+    { label: "Dashboard", icon: <IoMdHome />, path: "/dashboard" },
     { label: "Clients", icon: <FaGlobeAmericas />, path: "/clients" },
     { label: "Projects", icon: <GrProjects />, path: "/projects" },
     { label: "Team Management", icon: <MdGroups />, path: "/team-management" },
