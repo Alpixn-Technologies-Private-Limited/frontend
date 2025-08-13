@@ -29,7 +29,7 @@ ChartJS.register(
 
 const CustomReportsComponent = () => {
   const [selectedMetrics, setSelectedMetrics] = useState([]);
-  const [chartType, setChartType] = useState("bar");
+  const [chartType, setChartType] = useState("line");
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const reportsPerPage = 5;
@@ -178,7 +178,7 @@ const tableColumns = [
   );
 
   return (
-    <div className="p-6 border border-gray-400 rounded-2xl space-y-8 -mt-4">
+    <div className="p-6 border border-gray-400 dark:bg-white/80 backdrop-blur-md rounded-2xl space-y-8 -mt-4">
       <div className="flex justify-between items-center">
         <h5 className="text-2xl font-semibold text-indigo-600">
           Report Builder
@@ -219,7 +219,7 @@ const tableColumns = [
                   key={type}
                   onClick={() => setChartType(type)}
                   className={`px-3 py-1 border rounded capitalize ${
-                    chartType === type ? "bg-indigo-100" : ""
+                    chartType === type ? "bg-indigo-200" : ""
                   }`}
                 >
                   {type} Chart
@@ -277,20 +277,20 @@ const tableColumns = [
           onChange={(e) => setSearch(e.target.value)}
           className="w-full px-3 py-2 border rounded mb-4"
         />
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border">
-            <thead className="bg-gray-100">
+        <div className="overflow-x-auto rounded-lg">
+          <table className="w-full text-left border rounded-lg">
+            <thead className="bg-gray-100 dark:bg-gray-500 rounded-t-lg">
               <tr>
-                <th className="p-2">Name</th>
-                <th className="p-2">Owner</th>
-                <th className="p-2">Last Modified</th>
-                <th className="p-2">Status</th>
-                <th className="p-2">Actions</th>
+                <th className="px-2 py-3">Name</th>
+                <th className="px-2 py-3">Owner</th>
+                <th className="px-2 py-3">Last Modified</th>
+                <th className="px-2 py-3">Status</th>
+                <th className="px-2 py-3">Actions</th>
               </tr>
             </thead>
             <tbody>
               {currentReports.map((report, i) => (
-                <tr key={i} className="border-t">
+                <tr key={i} className="border-t dark:bg-gray-400">
                   <td className="p-2">{report.name}</td>
                   <td className="p-2">{report.owner}</td>
                   <td className="p-2">{report.modified}</td>

@@ -10,7 +10,7 @@ const Navbar = () => {
   const { toggleSidebar } = useSidebar();
 
   return (
-    <div className="w-full bg-white border-b border-gray-300 shadow px-6 py-4 flex items-center justify-between max-sm:px-3 max-sm:py-2 ">
+    <div className="w-full bg-white dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76] border-b-2 border-gray-300 dark:border-gray-600 shadow px-6 py-4 flex items-center justify-between max-sm:px-3 max-sm:py-2 ">
       <IoReorderThree
         className="sm:hidden max-sm:text-xl scale-[135%] bg-gray-200 rounded-sm ml-2 p-[2px]"
         onClick={toggleSidebar}
@@ -19,18 +19,18 @@ const Navbar = () => {
         <img
           src="https://i.pinimg.com/564x/c7/4c/78/c74c78c049af7061319694743ccb0f8e.jpg"
           alt="Logo"
-          className="w-10 h-10 object-cover rounded-full"
+          className="w-10 h-10 object-cover rounded-full dark:border dark:border-gray-50"
         />
         <Link to={"/settings/user"}>
-          <div className="text-gray-700 text-lg max-sm:hidden">
+          <div className="text-gray-700 dark:text-white text-lg max-sm:hidden">
             <span>Hello,</span>{" "}
-            <span className="font-semibold text-black">Katherine</span>
+            <span className="font-semibold text-black dark:text-white">Katherine</span>
           </div>
         </Link>
       </div>
 
       <div className="flex items-center space-x-6 max-sm:space-x-2 max-sm:scale-95">
-        <span className="text-gray-600 text-xl cursor-pointer hover:text-black transition duration-200 relative">
+        <span className="text-gray-600 dark:text-white text-xl cursor-pointer hover:text-black transition duration-200 relative">
           <FaBell className="w-6 h-6" />
           <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center justify-center">
             {"0"}
@@ -42,7 +42,7 @@ const Navbar = () => {
             onClick={toggleTheme}
             className={`relative inline-flex items-center w-14 h-7 rounded-full transition-all duration-300 ease-in-out ring-gray-400 ring-[1px] focus:outline-none focus:ring-[1px] focus:ring-offset-0 ${
               theme === "dark"
-                ? "bg-gray-700 focus:ring-gray-500"
+                ? "bg-gray-500 focus:ring-gray-50"
                 : "bg-gray-200 focus:ring-gray-400"
             }`}
           >
