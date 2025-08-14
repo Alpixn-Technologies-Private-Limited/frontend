@@ -245,7 +245,7 @@ const AiConsoleDashboard = () => {
   return (
     <div className="p-3 space-y-6 bg-gray-50 dark:bg-transparent rounded-xl min-h-screen max-sm:p-3 max-sm:space-y-3">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-sm:gap-3">
-        <div className="bg-white p-6 rounded-lg shadow-md max-sm:p-3">
+        <div className="bg-white dark:bg-white/80 p-6 rounded-lg shadow-md max-sm:p-3">
           <h3 className="text-xl font-bold mb-4 max-sm:text-center">
             AI Insights Panel
           </h3>
@@ -319,7 +319,7 @@ const AiConsoleDashboard = () => {
         </Link>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md max-sm:p-3">
+      <div className="bg-white dark:bg-white/80 p-6 rounded-lg shadow-md max-sm:p-3">
         <div className="flex justify-between items-center mb-4 max-sm:flex-col max-sm:items-start">
           <h3 className="text-xl font-semibold max-sm:mb-3 max-sm:ml-3">
             Automations List

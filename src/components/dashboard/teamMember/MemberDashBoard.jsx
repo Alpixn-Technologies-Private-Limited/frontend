@@ -214,6 +214,24 @@ const MemberDashBoard = () => {
     fetchDashboardData();
   }, []);
 
+  
+  // Use API data or fallback to dummy data
+  const projectData =
+  dashboardData?.my_tasks_today?.length > 0
+  ? dashboardData.my_tasks_today
+  : dummyProjectData;
+  
+  const timelineData =
+  dashboardData?.project_timeline?.length > 0
+  ? dashboardData.project_timeline
+  : dummyTimelineData;
+  
+  const collaborationData = dummyCollaborationData; // Always use dummy since not in API
+  
+  const productivityMetrics = dashboardData?.productivity_metrics
+  ? dashboardData.productivity_metrics
+  : dummyProductivityMetrics;
+  
   if (loading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-gray-50 dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76] ml-64 max-sm:ml-0">
@@ -234,39 +252,21 @@ const MemberDashBoard = () => {
       </div>
     );
   }
-
-  // Use API data or fallback to dummy data
-  const projectData =
-    dashboardData?.my_tasks_today?.length > 0
-      ? dashboardData.my_tasks_today
-      : dummyProjectData;
-
-  const timelineData =
-    dashboardData?.project_timeline?.length > 0
-      ? dashboardData.project_timeline
-      : dummyTimelineData;
-
-  const collaborationData = dummyCollaborationData; // Always use dummy since not in API
-
-  const productivityMetrics = dashboardData?.productivity_metrics
-    ? dashboardData.productivity_metrics
-    : dummyProductivityMetrics;
-
   return (
-    <div className="p-5 flex flex-col gap-5 font-[Segoe UI] max-sm:p-2 max-sm:gap-3">
+    <div className="p-5 flex flex-col gap-5 font-[Segoe UI] max-sm:p-2 max-sm:gap-3 dark:bg-white/10 dark:backdrop-blur-md rounded-xl">
       <div className="flex gap-5 flex-col lg:flex-row max-sm:gap-3">
-        <div className="w-full lg:w-2/3 border border-gray-200 py-3 px-5 rounded-lg shadow bg-white dark:bg-white/80 dark:backdrop-blur-md max-sm:px-3">
-          <h3 className="text-lg font-semibold mb-5 max-sm:mb-2">My Tasks Today</h3>
+        <div className="w-full lg:w-2/3 border border-gray-200 py-3 px-5 rounded-lg shadow bg-white dark:bg-white/10 dark:backdrop-blur-md max-sm:px-3">
+          <h3 className="text-lg font-semibold mb-5 max-sm:mb-2 dark:text-white">My Tasks Today</h3>
           <Table data={projectData} columns={overviewColumns} />
-          <button className="mt-6 bg-gradient-to-r from-indigo-600 to-yellow-600 text-white px-4 py-2.5 flex gap-1 items-center justify-center rounded-lg shadow hover:opacity-90 max-sm:mt-2.5 max-sm:px-3 max-sm:py-1.5 max-sm:mx-auto w-[60%] md:w-fit md:px-4">
+          <button className="mt-6 bg-gradient-to-r from-indigo-600 to-yellow-600 text-white px-4 py-2.5 flex gap-1 items-center justify-center rounded-lg shadow hover:opacity-90 max-sm:mt-2.5 max-sm:px-3 max-sm:py-1.5 max-sm:mx-auto w-[60%] md:w-fit md:px-6">
             <span className="font-semibold scale-125 md:scale-100">+ Add Task</span>
           </button>
         </div>
 
-        <div className="w-full lg:w-1/3 border border-gray-200 p-5 rounded-lg shadow bg-white dark:bg-white/80 dark:backdrop-blur-md max-sm:p-3">
-          <h3 className="text-lg font-semibold mb-3 max-sm:mb-1.5">Project Timeline</h3>
-          <div className="text-sm border border-gray-200 py-2 rounded-lg bg-white">
-            <div className="font-medium text-[16px] text-gray-800 px-3 py-2 border-b border-gray-300 max-sm:px-1.5 max-sm:tracking-tight max-sm:text-center">
+        <div className="w-full lg:w-1/3 border border-gray-200 p-5 rounded-lg shadow bg-white dark:bg-white/10 dark:backdrop-blur-md max-sm:p-3">
+          <h3 className="text-lg font-semibold mb-3 max-sm:mb-1.5 dark:text-white">Project Timeline</h3>
+          <div className="text-sm border border-gray-200 py-2 rounded-lg bg-white dark:bg-white/20">
+            <div className="font-medium text-[16px] text-gray-800 dark:text-white px-3 py-2 border-b border-gray-300 max-sm:px-1.5 max-sm:tracking-tight max-sm:text-center">
               Current Phase / Next Milestone
             </div>
             {timelineData.map((item, index) => (
@@ -275,16 +275,16 @@ const MemberDashBoard = () => {
                 className="flex justify-between py-2 border-b border-gray-300 last:border-0"
               >
                 <span className="px-3">
-                  <p className="font-medium text-gray-800">
+                  <p className="font-medium text-gray-800 dark:text-white">
                     {item.current_phase}
                   </p>
-                  <p className="text-gray-500 text-sm">{item.project_name}</p>
+                  <p className="text-gray-500 text-sm dark:text-gray-300">{item.project_name}</p>
                 </span>
                 <div className="px-3 text-right">
-                  <p className="text-black mt-1 text-sm">
+                  <p className="text-black mt-1 text-sm dark:text-white">
                     {item.next_milestone}
                   </p>
-                  <p className="text-gray-500 text-xs">
+                  <p className="text-gray-500 text-xs dark:text-gray-300">
                     {formatDate(item.milestone_date)}
                   </p>
                 </div>
@@ -298,11 +298,11 @@ const MemberDashBoard = () => {
       </div>
 
       <div className="flex gap-5 flex-col lg:flex-row max-sm:gap-3">
-        <div className="w-full lg:w-2/3 border border-gray-200 p-5 rounded-lg shadow bg-white dark:bg-white/80 dark:backdrop-blur-md max-sm:p-3">
-          <h3 className="text-lg font-semibold mb-3 max-sm:mb-1.5">Recent Collaboration</h3>
-          <div className="overflow-x-auto border pt-5 pb-2 rounded-lg border-gray-300 bg-white">
+        <div className="w-full lg:w-2/3 border border-gray-200 p-5 rounded-lg shadow bg-white dark:bg-white/10 dark:backdrop-blur-md max-sm:p-3">
+          <h3 className="text-lg font-semibold mb-3 max-sm:mb-1.5 dark:text-white">Recent Collaboration</h3>
+          <div className="overflow-x-auto border pt-5 pb-2 rounded-lg border-gray-300 bg-white dark:bg-white/10">
             <table className="w-full text-left text-sm max-sm:w-[110vw]">
-              <thead className="text-gray-600 border-b border-gray-300">
+              <thead className="text-gray-600 dark:text-white border-b border-gray-300">
                 <tr>
                   <th className="pb-2 pl-3">Comment/File</th>
                   <th className="pb-2">From Whom</th>
@@ -314,7 +314,7 @@ const MemberDashBoard = () => {
                 {collaborationData.map((item) => (
                   <tr
                     key={item.id}
-                    className="border-b hover:bg-gray-50 last:border-0 border-gray-300 text-gray-600"
+                    className="border-b hover:bg-gray-50 dark:hover:bg-white/30 last:border-0 border-gray-300 text-gray-600 dark:text-white"
                   >
                     <td className="py-3 pl-3">{item.comment}</td>
                     <td className="py-3">{item.from}</td>
@@ -327,24 +327,24 @@ const MemberDashBoard = () => {
           </div>
         </div>
 
-        <div className="w-full lg:w-1/3 border border-gray-200 p-5 rounded-lg shadow bg-white dark:bg-white/80 dark:backdrop-blur-md max-sm:p-3">
-          <h3 className="text-lg font-semibold mb-3 max-sm:mb-1.5">Today's Productivity</h3>
-          <div className="text-sm text-gray-700 space-y-4 bg-white border border-gray-300 py-4 rounded-lg max-sm:space-y-2">
+        <div className="w-full lg:w-1/3 border border-gray-200 p-5 rounded-lg shadow bg-white dark:bg-white/10 dark:backdrop-blur-md max-sm:p-3">
+          <h3 className="text-lg font-semibold mb-3 max-sm:mb-1.5 dark:text-white">Today's Productivity</h3>
+          <div className="text-sm text-gray-700 space-y-4 bg-white dark:bg-white/10 dark:text-white border border-gray-300 py-4 rounded-lg max-sm:space-y-2">
             <div className="flex justify-between border-b px-4 py-1 text-sm font-semibold max-sm:px-2">
               <span>Tasks Completed</span>
-              <span className="text-xl font-bold text-black">
+              <span className="text-xl font-bold text-black dark:text-gray-200">
                 {productivityMetrics.tasks_completed_today} Task(s)
               </span>
             </div>
             <div className="flex justify-between items-center border-b px-4 py-1 text-sm font-semibold max-sm:px-2">
               <span>Hours Logged</span>
-              <span className="text-xl font-bold text-black">
+              <span className="text-xl font-bold text-black dark:text-gray-200">
                 {productivityMetrics.hours_logged} Hrs
               </span>
             </div>
             <div className="flex justify-between items-center px-4 py-1 text-sm font-semibold max-sm:px-2">
               <span>Current Streak</span>
-              <span className="text-xl font-bold text-black">
+              <span className="text-xl font-bold text-black dark:text-gray-200">
                 {productivityMetrics.streak_days} Days
               </span>
             </div>
