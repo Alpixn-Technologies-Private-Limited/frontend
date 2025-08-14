@@ -6,10 +6,10 @@ import { MdGroups2, MdInfoOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { HashLoader } from "react-spinners";
-import axios from "axios";
 
 import DoughnutChart from "../charts/DoughnutChart";
 import Table from "../charts/Table";
+import axios from "../../utils/axios";
 
 const AiConsoleDashboard = () => {
   const [apiData, setApiData] = useState(null);
@@ -75,18 +75,25 @@ const AiConsoleDashboard = () => {
       try {
         setLoading(true);
 
-        const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/ai-console/dashboard`
-        );
-
+        const response = await axios.get(`/api/ai-console/dashboard`, {
+          headers: {
+            Authorization: `Bearer ${
+              localStorage.getItem("token") || sessionStorage.getItem("token")
+            }`,
+          },
+        });
         if (response?.data?.response?.success) {
           setApiData(response.data.response.data);
         } else {
-          setApiData(dummyData);
+          // setApiData(dummyData);
+          console.error(
+            "Failed to fetch AI console data:",
+            response?.data?.response?.message
+          );
         }
       } catch (error) {
         console.warn("API timeout or error occurred:", error);
-        setApiData(dummyData);
+        // setApiData(dummyData);
       } finally {
         setTimeout(() => {
           setLoading(false);
@@ -99,7 +106,7 @@ const AiConsoleDashboard = () => {
 
   if (loading) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-gray-50 dark:bg-gray-400 ml-64 max-sm:ml-0">
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-50 dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76] ml-64 max-sm:ml-0">
         <div className="text-center">
           <HashLoader
             color="#4F46E5"
@@ -107,7 +114,7 @@ const AiConsoleDashboard = () => {
             speedMultiplier={1.5}
             cssOverride={{ display: "block", margin: "0 auto" }}
           />
-          <p className="mt-4 text-lg font-medium text-gray-700">
+          <p className="mt-4 text-lg font-medium text-gray-700 dark:text-white">
             Loading your dashboard...
           </p>
         </div>
@@ -138,8 +145,7 @@ const AiConsoleDashboard = () => {
     },
     {
       title: "Resource Recommendation",
-      description:
-        data?.resourceRecommendations?.[0]?.message,
+      description: data?.resourceRecommendations?.[0]?.message,
       color: "text-yellow-500",
       icon: (
         <MdGroups2 className="text-white bg-yellow-500 p-1.5 rounded-md scale-125" />

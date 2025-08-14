@@ -288,7 +288,7 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-gray-50 ml-64 max-sm:ml-0">
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-50 dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76] ml-64 max-sm:ml-0">
         <div className="text-center">
           <HashLoader
             color="#4F46E5"
@@ -299,7 +299,7 @@ const AdminDashboard = () => {
               margin: "0 auto",
             }}
           />
-          <p className="mt-4 text-lg font-medium text-gray-700">
+          <p className="mt-4 text-lg font-medium text-gray-700 dark:text-white">
             Loading your dashboard...
           </p>
         </div>
@@ -308,7 +308,7 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="px-6 py-3 rounded-md space-y-4 bg-gray-50 dark:bg-gray-200 min-h-screen h-fit max-sm:px-3 max-sm:w-full">
+    <div className="px-6 py-3 rounded-md space-y-4 bg-gray-50 dark:bg-white/10 dark:backdrop-blur-md min-h-screen h-fit max-sm:px-3 max-sm:w-full">
       {/* Header */}
       <div className="flex justify-between items-center flex-wrap gap-4 max-sm:pt-2">
         <div className="flex items-center gap-2 relative text-white bg-[#4F46E5] py-2 w-fit rounded-lg shadow-sm max-sm:mx-auto max-sm:w-[90%]">

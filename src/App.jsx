@@ -38,7 +38,7 @@ const App = () => {
     const { loadUser, user, loading } = useAuth();
     useEffect(() => {
         loadUser?.();
-        console.log("user that is using my website", user);
+        console.log("user that is using my website(logged in user)", user);
     }, []);
     if (loading) return <div className="p-6 text-center">Loading...</div>;
     const ProtectedRoute = ({ children }) => {
@@ -91,6 +91,7 @@ const App = () => {
                 <Route path="/client-portal" element={<ClientPortalPage />} />
 
                 {/* Dashboard */}
+                <Route path="/dashboard" element={<Navigate to="/dashboard/admin" replace />} />
                 <Route
                     path="/dashboard/admin"
                     element={<AdminDashBoardPage />}
