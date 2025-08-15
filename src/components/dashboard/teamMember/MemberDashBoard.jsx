@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { HashLoader } from "react-spinners";
 import Table from "../../charts/Table";
+import axiosInstance from "../../../utils/axios";
 
 // Dummy data for fallback
 const dummyProjectData = [
@@ -125,16 +126,6 @@ const formatDate = (dateString) => {
   });
 };
 
-const formatTimeAgo = (dateString) => {
-  // This is a simplified version - in a real app you'd calculate actual time difference
-  if (!dateString) return "";
-  const hours = Math.floor(Math.random() * 24);
-  if (hours < 1) return "Less than 1h ago";
-  if (hours < 24) return `${hours}h ago`;
-  const days = Math.floor(hours / 24);
-  return `${days}d ago`;
-};
-
 const overviewColumns = [
   {
     header: "Task",
@@ -191,27 +182,41 @@ const overviewColumns = [
 const MemberDashBoard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [apiData, setApiData] = useState(null);
 
   useEffect(() => {
-    const fetchDashboardData = async () => {
+    const fetchTeamDashboardData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/dashboard/team`
-        );
-        if (response.data?.response?.success) {
-          setDashboardData(response.data.response.data);
+
+        const response = await axiosInstance.get(`/api/dashboard/team`, {
+          headers: {
+            Authorization: `Bearer ${
+              localStorage.getItem("token") || sessionStorage.getItem("token")
+            }`,
+          },
+        });
+        console.log("Team Dashboard Data Response:", response);
+
+        let apiData = null;
+        if (response?.data?.success && response.data?.data) {
+          apiData = response.data.data;
         }
+
+        // Merge API data or dummy data with extra fields
+        const finalData = apiData;
+        setDashboardData(finalData);
       } catch (error) {
-        console.error("Error fetching dashboard data:", error);
+        console.warn("API timeout or error occurred:", error);
+        setDashboardData(null);
       } finally {
         setTimeout(() => {
           setLoading(false);
-        }, 1000);
+        }, 500);
       }
     };
 
-    fetchDashboardData();
+    fetchTeamDashboardData();
   }, []);
 
   

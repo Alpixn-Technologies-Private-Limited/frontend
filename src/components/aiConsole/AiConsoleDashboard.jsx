@@ -203,7 +203,7 @@ const AiConsoleDashboard = () => {
   const automationsData = data?.automationRules?.map((item) => ({
     ...item,
     btn: (
-      <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90" />
+      <BsThreeDots className="text-gray-500 text-xl cursor-pointer rotate-90 dark:text-white" />
     ),
   }));
 
@@ -319,13 +319,13 @@ const AiConsoleDashboard = () => {
         </Link>
       </div>
 
-      <div className="bg-white dark:bg-white/80 p-6 rounded-lg shadow-md max-sm:p-3">
+      <div className="bg-white dark:bg-white/20 p-6 rounded-lg shadow-md max-sm:p-3">
         <div className="flex justify-between items-center mb-4 max-sm:flex-col max-sm:items-start">
-          <h3 className="text-xl font-semibold max-sm:mb-3 max-sm:ml-3">
+          <h3 className="text-xl font-semibold max-sm:mb-3 max-sm:ml-3 dark:text-white">
             Automations List
           </h3>
           <div className="flex items-center gap-3 max-sm:ml-auto">
-            <FiFilter className="w-5 h-5 text-gray-600" />
+            <FiFilter className="w-5 h-5 text-gray-600 dark:text-white" />
             <button className="bg-gradient-to-r from-[#4F46E5] to-[#D6A700] text-white px-4 py-2 rounded-md text-sm font-medium">
               + Create New Rule
             </button>
