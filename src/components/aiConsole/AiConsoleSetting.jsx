@@ -12,6 +12,9 @@ import { BsThreeDots } from "react-icons/bs";
 import { FaSquareArrowUpRight } from "react-icons/fa6";
 import Table from "../charts/Table";
 import { useTheme } from "../../context/ThemeContext";
+import { useEffect, useState } from "react";
+import axiosInstance from "../../utils/axios";
+import { set } from "date-fns";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
@@ -138,6 +141,43 @@ const TableData = [
 const AiConsoleSetting = () => {
   const { theme } = useTheme();
   const isDarkMode = theme === "dark";
+  const [loading, setLoading] = useState(true);
+  const [apiData, setApiData] = useState(null);
+
+  useEffect(() => {
+    const fetchAIConsoleSettingData = async () => {
+      try {
+        setLoading(true);
+
+        const response = await axiosInstance.get(`/api/analytics/projects`, {
+          headers: {
+            Authorization: `Bearer ${
+              localStorage.getItem("token") || sessionStorage.getItem("token")
+            }`,
+          },
+        });
+        console.log(response?.data);
+        if (response?.data?.response?.success) {
+          setApiData(response.data.response.data);
+        } else {
+          // setApiData(dummyData);
+          console.error(
+            "Failed to fetch AI console data:",
+            response?.data?.response?.message
+          );
+        }
+      } catch (error) {
+        console.warn("API timeout or error occurred:", error);
+        // setApiData(dummyData);
+      } finally {
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
+      }
+    };
+
+    fetchAIConsoleSettingData();
+  }, []);
 
   const options = {
     responsive: true,

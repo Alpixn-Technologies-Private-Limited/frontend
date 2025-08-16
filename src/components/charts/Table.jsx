@@ -17,8 +17,8 @@ const Table = ({ data, columns }) => {
 
   return (
     <div className="overflow-x-auto w-full border border-gray-200 rounded-lg shadow-sm">
-      <table className="min-w-full divide-y divide-gray-200 text-sm text-left text-gray-700">
-        <thead className="bg-gray-100 dark:bg-white/10 backdrop-blur-md">
+      <table className="min-w-full divide-y divide-gray-200 text-sm text-left text-gray-700 dark:text-white">
+        <thead className="bg-gray-100 dark:bg-white/30 backdrop-blur-md">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
@@ -31,7 +31,7 @@ const Table = ({ data, columns }) => {
         </thead>
         <tbody className="divide-y divide-gray-200 max-sm:text-nowrap">
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id} className="hover:bg-gray-50 dark:bg-white/40 backdrop-blur-md dark:hover:bg-white/30 transition">
+            <tr key={row.id} className="hover:bg-gray-50 dark:bg-white/10 backdrop-blur-md dark:hover:bg-white/30 transition">
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id} className="px-4 py-3">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -26,99 +25,138 @@ import performanceGraph from "../../../assets/graphs/performance-insight.png";
 import riskGraph from "../../../assets/graphs/risk-alert.png";
 import BarChart from "../../charts/BarChart";
 import { Link } from "react-router-dom";
+import axiosInstance from "../../../utils/axios";
+import { useTheme } from "../../../context/ThemeContext";
 
+// Dummy API data
+const dummyData = {
+  kpiMetrics: {
+    totalActiveProjects: 3,
+    totalClients: 8,
+    teamUtilization: 78.5,
+    monthlyRevenue: 250000.0,
+  },
+  aiInsights: {
+    riskAlerts: [
+      {
+        id: 1,
+        projectId: 5,
+        projectName: "Nova Platform dummy",
+        riskLevel: "medium",
+        message: "Minor delay due to resource shortage",
+        suggestedActions: ["Reallocate team members", "Request extension"],
+      },
+    ],
+    deadlinePredictions: [
+      {
+        projectId: 9,
+        predictedCompletion: "2025-08-30",
+        confidence: 0.75,
+      },
+    ],
+  },
+  recentActivities: [
+    {
+      id: 1,
+      type: "project_created dummy",
+      user: "Jane Doe dummy",
+      message: "Created new project: Orion App dummy",
+      timestamp: "2025-07-15T09:00:00Z",
+    },
+  ],
+  projectHealth: {
+    healthy: 2,
+    atRisk: 1,
+    critical: 0,
+  },
+};
+
+// Hardcoded extra fields that are missing in API
+const extraData = {
+  statsChanges: {
+    activeProjects: "+3 this week",
+    totalClients: "+5 New",
+    teamUtilization: "Stable",
+    monthlyRevenue: "+12% from last month",
+  },
+  performanceInsight: {
+    detail: "+8% Revenue/Employee",
+    change: "Steady growth trend",
+    timeGap: "Based on last 30 days",
+  },
+};
 
 const AdminDashboard = () => {
+  const { theme } = useTheme();
+  const isDarkMode = theme === "dark";
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showAll, setShowAll] = useState(false);
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let isMounted = true;
-    let dataFetched = false;
-
-    const dummyData = {
-      kpi_metrics: {
-        total_active_projects: 5,
-        total_clients: 8,
-        team_utilization: 78,
-        monthly_revenue: 4200000,
-      },
-      ai_insights: {
-        risk_alerts: [{}, {}],
-        deadline_predictions: [{ project_id: "Apollo", confidence: 0.7 }],
-      },
-      recent_activities: [
-        {
-          type: "Dummy Project Initiated",
-          message: "Demo data used as fallback.",
-          icon: <MdGroup />,
-        },
-      ],
-    };
-
-    const fetchDashboardData = async () => {
+    const fetchAdminDashboardData = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/dashboard/admin`
-        );
+        setLoading(true);
 
-        if (response.data?.response?.success && isMounted) {
-          setDashboardData(response.data.response.data);
-          dataFetched = true;
+        const response = await axiosInstance.get(`/api/dashboard/admin`, {
+          headers: {
+            Authorization: `Bearer ${
+              localStorage.getItem("token") || sessionStorage.getItem("token")
+            }`,
+          },
+        });
+        console.log("Admin Dashboard Data Response:", response);
+
+        let apiData = null;
+        if (response?.data?.success && response.data?.data) {
+          apiData = response.data.data;
         }
+
+        // Merge API data or dummy data with extra fields
+        const finalData = apiData || dummyData;
+        setDashboardData(finalData);
       } catch (error) {
-        console.error("Error fetching dashboard data:", error);
-      }
-    };
-
-    fetchDashboardData();
-
-    const timeoutId = setTimeout(() => {
-      if (!dataFetched && isMounted) {
-        console.warn("API timeout: Using fallback dummy data.");
+        console.warn("API timeout or error occurred:", error);
         setDashboardData(dummyData);
+      } finally {
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
       }
-      setLoading(false);
-    }, 2000); // 2 seconds
-
-    return () => {
-      isMounted = false;
-      clearTimeout(timeoutId);
     };
+
+    fetchAdminDashboardData();
   }, []);
 
   // Stats data combining API and frontend values
   const stats = [
     {
       title: "Active Projects",
-      value: `${
-        dashboardData?.kpi_metrics?.total_active_projects || 0
-      } Projects`,
-      change: "+3 this week", // Frontend value
+      value: `${dashboardData?.kpiMetrics?.totalActiveProjects || 0} Projects`,
+      change: extraData.statsChanges.activeProjects,
       icon: <PiCube />,
     },
     {
       title: "Total Clients",
-      value: `${dashboardData?.kpi_metrics?.total_clients || 0} Clients`,
-      change: "+5 New", // Frontend value
+      value: `${dashboardData?.kpiMetrics?.totalClients || 0} Clients`,
+      change: extraData.statsChanges.totalClients,
       icon: <CiGlobe />,
     },
     {
       title: "Team Utilisation",
-      value: `${dashboardData?.kpi_metrics?.team_utilization || 0}%`,
-      change: "Stable", // Frontend value
+      value: `${dashboardData?.kpiMetrics?.teamUtilization || 0}%`,
+      change: extraData.statsChanges.teamUtilization,
       icon: <IoTimerOutline />,
     },
     {
       title: "This month revenue (in Lac)",
       value: `₹${
-        dashboardData?.kpi_metrics?.monthly_revenue
-          ? (dashboardData.kpi_metrics.monthly_revenue / 100000).toFixed(2)
+        dashboardData?.kpiMetrics?.monthlyRevenue
+          ? (dashboardData.kpiMetrics.monthlyRevenue / 100000).toFixed(2)
           : "0.00"
       }`,
-      change: "+12% from last month", // Frontend value
+      change: extraData.statsChanges.monthlyRevenue,
       icon: <TbMoneybag />,
     },
   ];
@@ -127,11 +165,11 @@ const AdminDashboard = () => {
   const aiInsights = [
     {
       title: "Risk Alert",
-      detail: dashboardData?.ai_insights?.risk_alerts?.length
-        ? `Project(s) ${dashboardData.ai_insights.risk_alerts.length} at Risk`
+      detail: dashboardData?.aiInsights?.riskAlerts?.length
+        ? `Project(s) ${dashboardData.aiInsights.riskAlerts.length} at Risk`
         : "No current risks",
-      change: dashboardData?.ai_insights?.risk_alerts?.length
-        ? `+${dashboardData.ai_insights.risk_alerts.length} risk this week`
+      change: dashboardData?.aiInsights?.riskAlerts?.length
+        ? `+${dashboardData.aiInsights.riskAlerts.length} risk this week`
         : "No changes",
       icon: (
         <AiFillWarning className="p-[3px] bg-red-500 text-white rounded-md scale-[160%] mr-1" />
@@ -141,15 +179,14 @@ const AdminDashboard = () => {
     },
     {
       title: "Deadline Prediction",
-      detail: dashboardData?.ai_insights?.deadline_predictions?.length
+      detail: dashboardData?.aiInsights?.deadlinePredictions?.length
         ? `Project(s) ${
-            dashboardData.ai_insights.deadline_predictions[0]?.project_id || "-"
+            dashboardData.aiInsights.deadlinePredictions[0]?.projectId || "-"
           } late`
         : "No deadline predictions",
-      change: dashboardData?.ai_insights?.deadline_predictions?.length
+      change: dashboardData?.aiInsights?.deadlinePredictions?.length
         ? `-${Math.round(
-            (1 -
-              dashboardData.ai_insights.deadline_predictions[0]?.confidence) *
+            (1 - dashboardData.aiInsights.deadlinePredictions[0]?.confidence) *
               100
           )}% On Time Confidence`
         : "No changes",
@@ -161,12 +198,12 @@ const AdminDashboard = () => {
     },
     {
       title: "Performance Insight",
-      detail: "+8% Revenue/Employee", // Frontend value
-      change: "Steady growth trend", // Frontend value
+      detail: extraData.performanceInsight.detail,
+      change: extraData.performanceInsight.change,
       icon: (
         <BsGraphUp className="p-[3px] bg-green-700 text-white rounded-md scale-[160%] mr-1" />
       ),
-      timeGap: "Based on last 30 days", // Frontend value
+      timeGap: extraData.performanceInsight.timeGap,
       img: performanceGraph,
     },
   ];
@@ -221,7 +258,7 @@ const AdminDashboard = () => {
         position: "bottom",
         labels: {
           boxWidth: 20,
-          color: "#374151",
+          color: isDarkMode ? "#D1D5DB" : "#4B5563",
           padding: 15,
         },
       },
@@ -233,7 +270,7 @@ const AdminDashboard = () => {
         ticks: {
           stepSize: 10,
           callback: (value) => `${value}%`,
-          color: "#6B7280",
+          color: isDarkMode ? "#E5E7EB" : "#4B5563",
         },
         grid: {
           color: "#E5E7EB",
@@ -241,7 +278,7 @@ const AdminDashboard = () => {
       },
       x: {
         ticks: {
-          color: "#6B7280",
+          color: isDarkMode ? "#E5E7EB" : "#4B5563",
         },
         grid: {
           display: false,
@@ -251,38 +288,16 @@ const AdminDashboard = () => {
   };
 
   // Recent activities (frontend values)
-  const activities = [dashboardData?.recent_activities[0]] || [
-    {
-      title: "Project Apollo Marked Complete",
-      desc: "Final Milestone Reached Successfully",
-      icon: <MdGroup />,
-    },
-    {
-      title: "Nova Budget Approved",
-      desc: "Finance team confirmed the funding",
-      icon: <MdGroup />,
-    },
-    {
-      title: "Vega Client Feedback Received",
-      desc: "Positive feedback with suggestions",
-      icon: <MdGroup />,
-    },
-    {
-      title: "Zenith Kickoff Meeting Scheduled",
-      desc: "Initial team briefing set",
-      icon: <MdGroup />,
-    },
-    {
-      title: "Orion Phase 2 Started",
-      desc: "Development resumed as planned",
-      icon: <MdGroup />,
-    },
-    {
-      title: "Helix Delayed Report",
-      desc: "Blocked due to external dependency",
-      icon: <MdGroup />,
-    },
-  ];
+  const activities =
+    dashboardData?.recentActivities?.length > 0
+      ? dashboardData.recentActivities
+      : [
+          {
+            title: "Project Apollo Marked Complete",
+            desc: "Final Milestone Reached Successfully",
+            icon: <MdGroup />,
+          },
+        ];
 
   const visibleActivities = showAll ? activities : activities.slice(0, 4);
 
@@ -322,7 +337,10 @@ const AdminDashboard = () => {
           <FaChevronDown className="absolute top-3 right-3" />
         </div>
         <div className="flex gap-4 max-sm:mx-auto">
-          <Link to="/project/add-new" className="bg-gradient-to-r from-indigo-600 to-yellow-600 text-white px-4 py-1.5 flex gap-1 items-center justify-center rounded-lg shadow hover:opacity-90 max-sm:px-2 max-sm:py-1">
+          <Link
+            to="/project/add-new"
+            className="bg-gradient-to-r from-indigo-600 to-yellow-600 text-white px-4 py-1.5 flex gap-1 items-center justify-center rounded-lg shadow hover:opacity-90 max-sm:px-2 max-sm:py-1"
+          >
             <div className="font-semibold scale-125">+</div> New Project
           </Link>
           <button className="flex items-center gap-2 border text-lg border-gray-300 bg-white text-black px-4 py-2 rounded-lg shadow hover:bg-gray-50 max-sm:px-2 max-sm:py-1">
@@ -335,37 +353,41 @@ const AdminDashboard = () => {
         {stats.map((item, index) => (
           <div
             key={index}
-            className="bg-white shadow-sm border border-gray-300 rounded-xl p-5 transition-transform hover:-translate-y-1 duration-200 max-sm:p-3"
+            className="bg-white dark:bg-white/10 dark:backdrop-blur-md shadow-sm border border-gray-300 rounded-xl p-5 transition-transform hover:-translate-y-1 duration-200 max-sm:p-3"
           >
-            <div className="flex justify-between items-center text-gray-500">
+            <div className="flex justify-between items-center text-gray-500 dark:text-gray-100">
               <span className="font-semibold">{item.title}</span>
-              <span className="text-2xl text-[#4F46E5] bg-gray-100 border-gray-300 rounded-full p-2 border max-sm:scale-110 max-sm:p-1.5">
+              <span className="text-2xl text-[#4F46E5] bg-gray-100 dark:bg-white/10 dark:text-white dark:border-[#ae68f9] dark:border-2 border-gray-300 rounded-full p-2 border max-sm:scale-110 max-sm:p-1.5">
                 {item.icon}
               </span>
             </div>
             <div className="mt-3 flex items-center gap-2">
-              <span className="text-xl font-bold text-gray-800">
+              <span className="text-xl font-bold text-gray-800 dark:text-gray-200">
                 {item.value}
               </span>
-              <FaCaretUp className="text-green-500" />
-              <span className="text-sm text-green-500">{item.change}</span>
+              <FaCaretUp className="text-green-500 dark:text-green-600" />
+              <span className="text-sm text-green-500 dark:text-green-600 dark:tracking-wide">
+                {item.change}
+              </span>
             </div>
           </div>
         ))}
       </div>
 
       <div className="flex flex-col justify-between lg:flex-row gap-6 w-full">
-        <div className="w-[49%] bg-white shadow-sm border border-gray-300 h-fit rounded-xl p-5 space-y-5 pt-3 max-sm:w-full">
+        <div className="w-[49%] bg-white dark:bg-white/10 dark:backdrop-blur-md shadow-sm border border-gray-300 h-fit rounded-xl p-5 space-y-5 pt-3 max-sm:w-full">
           <div className="flex justify-between items-center mt-1">
-            <h5 className="text-2xl font-semibold text-black">AI Insights</h5>
+            <h5 className="text-2xl font-semibold text-black dark:text-white">
+              AI Insights
+            </h5>
             <div className="relative inline-block">
-              <select className="appearance-none px-3 pr-6 py-1 rounded-md w-fit outline-none font-medium text-center text-sm">
+              <select className="appearance-none px-3 pr-6 py-1 dark:text-white rounded-md w-fit outline-none font-medium text-center text-sm">
                 <option>Daily</option>
                 <option>Weekly</option>
                 <option>Monthly</option>
                 <option>Yearly</option>
               </select>
-              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500 text-sm">
+              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500 dark:text-gray-100 text-sm">
                 <FaChevronDown />
               </div>
             </div>
@@ -374,27 +396,27 @@ const AdminDashboard = () => {
             {aiInsights.map((item, index) => (
               <div
                 key={index}
-                className="py-1 px-2 border border-gray-200 flex justify-between items-center rounded-lg hover:bg-gray-50 bg-white transition shadow-sm"
+                className="py-1 px-2 border border-gray-200 flex justify-between items-center rounded-lg dark:bg-white/80 dark:hover:bg-white/90 hover:bg-gray-50 bg-white transition shadow-sm"
               >
                 <div>
                   <div className="flex items-center gap-2 p-1 rounded-lg font-semibold">
                     {item.icon}
                     <span>{item.title}</span>
                   </div>
-                  <div className="text-gray-700 font-semibold text-xl flex gap-1 max-sm:font-medium max-sm:text-lg max-sm:leading-6">
+                  <div className="text-gray-700 dark:text-black font-semibold text-xl flex gap-1 max-sm:font-medium max-sm:text-lg max-sm:leading-6">
                     {item.detail}
                     <span className="ml-2 text-green-600 text-xs flex items-center gap-1">
                       <MdTrendingUp /> {item.change}
                     </span>
                   </div>
-                  <div className="text-gray-500 text-xs flex items-center gap-1 mt-1">
+                  <div className="text-gray-500 dark:text-gray-700 text-xs flex items-center gap-1 mt-1">
                     {item.timeGap}
                   </div>
                 </div>
                 <img
                   src={item.img}
                   alt="img"
-                  className="w-32 h-20 object-cover rounded-lg max-sm:hidden"
+                  className="w-32 h-20 object-cover rounded-lg max-sm:hidden dark:brightness-75"
                 />
               </div>
             ))}
@@ -406,13 +428,17 @@ const AdminDashboard = () => {
             {quickActions.map((task, i) => (
               <div
                 key={i}
-                className="border border-gray-300 h-[11rem] px-4 rounded-lg bg-white transition shadow-sm flex flex-col items-center justify-center gap-2 hover:shadow-lg cursor-pointer"
+                className="border border-gray-300 h-[11rem] px-4 rounded-lg bg-white dark:bg-white/20 transition shadow-sm flex flex-col items-center justify-center gap-2 hover:shadow-lg cursor-pointer"
               >
-                <span className="text-[#4F46E5] bg-[#6b64f42c] text-4xl rounded-md mb-1 p-2 border mt-6">
+                <span className="text-[#4F46E5] dark:text-white bg-[#6b64f42c] text-4xl rounded-md mb-1 p-2 border mt-6">
                   {task.icon}
                 </span>
-                <span className="font-semibold text-lg">{task.title}</span>
-                <p className="text-sm text-gray-600 mb-6">{task.desc}</p>
+                <span className="font-semibold text-lg dark:text-gray-300">
+                  {task.title}
+                </span>
+                <p className="text-sm text-gray-600 mb-6 dark:text-gray-400">
+                  {task.desc}
+                </p>
               </div>
             ))}
           </div>
@@ -420,12 +446,12 @@ const AdminDashboard = () => {
       </div>
 
       <div className="h-[24rem] mt-8 flex justify-between flex-col md:flex-row text-gray-500 gap-6 max-sm:h-fit max-sm:gap-2">
-        <div className="w-full bg-white md:w-2/3 border border-gray-300 p-4 max-sm:p-2 rounded-lg shadow-sm">
+        <div className="w-full bg-white dark:bg-white/20 md:w-2/3 border border-gray-300 p-4 max-sm:p-2 rounded-lg shadow-sm">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-800">
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
               Project Health Overview
             </h3>
-            <select className="border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-400 outline-none max-sm:px-1">
+            <select className="border border-gray-300 rounded-md dark:text-white px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-400 outline-none max-sm:px-1">
               <option value="">Last 6 Months</option>
               <option value="">Last Year</option>
               <option value="">This Quarter</option>
@@ -436,8 +462,8 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="w-full flex flex-col border border-gray-300 shadow-sm rounded-lg bg-white md:w-1/3 p-3 max-w-sm text-left">
-          <h4 className="text-lg font-semibold text-gray-800 mb-4">
+        <div className="w-full flex flex-col border border-gray-300 shadow-sm rounded-lg bg-white dark:bg-white/20 md:w-1/3 p-3 max-w-sm text-left">
+          <h4 className="text-lg font-semibold text-gray-800 mb-4 dark:text-white">
             Recent Activity
           </h4>
 
@@ -449,7 +475,7 @@ const AdminDashboard = () => {
             {visibleActivities.map((item, index) => (
               <div
                 key={index}
-                className="flex w-full items-center gap-3 bg-gray-100 py-1.5 px-3 rounded-lg shadow-md border border-gray-300 hover:bg-gray-50 transition max-sm:gap-1.5 max-sm:px-1 max-sm:tracking-tight"
+                className="flex w-full items-center gap-3 bg-gray-100 dark:bg-gray-200 py-1.5 px-3 rounded-lg shadow-md border border-gray-300 hover:bg-gray-50 transition max-sm:gap-1.5 max-sm:px-1 max-sm:tracking-tight"
               >
                 {item.icon ? (
                   <span className="text-2xl text-gray-600">{item.icon}</span>
@@ -458,9 +484,11 @@ const AdminDashboard = () => {
                 )}
                 <div className="flex-1">
                   <h5 className="font-medium text-gray-700">{item.type}</h5>
-                  <p className="text-sm text-gray-500">{item.message}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-600">
+                    {item.message}
+                  </p>
                 </div>
-                <CiSettings className="text-xl text-gray-400 hover:text-indigo-500 cursor-pointer" />
+                <CiSettings className="text-xl text-gray-400 dark:text-gray-700 hover:text-indigo-500 cursor-pointer" />
               </div>
             ))}
           </div>
