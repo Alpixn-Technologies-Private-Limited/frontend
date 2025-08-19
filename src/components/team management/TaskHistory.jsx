@@ -95,35 +95,37 @@ const TaskHistory = () => {
     };
 
     return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#111827] mb-1">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 
+            dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76]">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#111827] dark:text-white mb-1">
                 Task History
             </h2>
-            <p className="text-sm text-[#4A739C] mb-6">
+            <p className="text-sm text-[#4A739C] dark:text-gray-300 mb-6">
                 View and manage the task history for Sarah Miller.
             </p>
 
             <div className="flex flex-col gap-4 sm:gap-5 mb-6 sm:max-w-xl">
                 <input
                     type="text"
-                    // placeholder="Search by task"
-                    className="h-10 border bg-[#F7FAFC] border-gray-300 rounded-md px-3 text-sm focus:outline-none focus:ring-1 focus:ring-gray-200"
+                    className="h-10 border bg-[#F7FAFC] dark:bg-[#1a1443] border-gray-300 dark:border-gray-600 
+                    rounded-md px-3 text-sm focus:outline-none focus:ring-1 focus:ring-gray-200 dark:text-white"
                 />
                 <input
                     type="text"
-                    // placeholder="Search by project"
-                    className="h-10 border bg-[#F7FAFC] border-gray-300 rounded-md px-3 text-sm focus:outline-none focus:ring-1 focus:ring-gray-200"
+                    className="h-10 border bg-[#F7FAFC] dark:bg-[#1a1443] border-gray-300 dark:border-gray-600 
+                    rounded-md px-3 text-sm focus:outline-none focus:ring-1 focus:ring-gray-200 dark:text-white"
                 />
                 <input
                     type="text"
-                    // placeholder="Search by status"
-                    className="h-10 border bg-[#F7FAFC] border-gray-300 rounded-md px-3 text-sm focus:outline-none focus:ring-1 focus:ring-gray-200"
+                    className="h-10 border bg-[#F7FAFC] dark:bg-[#1a1443] border-gray-300 dark:border-gray-600 
+                    rounded-md px-3 text-sm focus:outline-none focus:ring-1 focus:ring-gray-200 dark:text-white"
                 />
             </div>
 
-            <div className="overflow-x-auto border border-gray-200 rounded-lg bg-[#F7FAFC]">
+            <div className="overflow-x-auto border border-gray-200 dark:border-gray-700 
+                rounded-lg bg-[#F7FAFC] dark:bg-[#1a1443]">
                 <table className="min-w-[600px] w-full text-sm">
-                    <thead className="bg-[#F9FAFB] text-[#111827]">
+                    <thead className="bg-[#F9FAFB] dark:bg-[#2b1a76] text-[#111827] dark:text-white">
                         <tr>
                             <th className="px-4 py-3 text-left font-medium">Task</th>
                             <th className="px-4 py-3 text-left font-medium">Project</th>
@@ -132,26 +134,27 @@ const TaskHistory = () => {
                             <th className="px-4 py-3 text-left font-medium">Completed At</th>
                         </tr>
                     </thead>
-                    <tbody className="text-[#111827]">
+                    <tbody className="text-[#111827] dark:text-gray-200">
                         {tasks.map((task) => (
-                            <tr key={task.id} className="border-t border-gray-200">
-                                <td className="px-4 py-3 text-[#0D141C]">{task.task}</td>
+                            <tr key={task.id} className="border-t border-gray-200 dark:border-gray-700">
+                                <td className="px-4 py-3">{task.task}</td>
                                 <td className="px-4 py-3">
-                                    <span className="text-[#4A739C] cursor-pointer">
+                                    <span className="text-[#4A739C] dark:text-indigo-300 cursor-pointer">
                                         {task.project}
                                     </span>
                                 </td>
                                 <td className="px-4 py-3">
-                                    <span className="px-4 py-1 rounded-full text-xs font-medium bg-[#E8EDF5] inline-block">
+                                    <span className="px-4 py-1 rounded-full text-xs font-medium 
+                                        bg-[#E8EDF5] dark:bg-gray-700 inline-block dark:text-gray-200">
                                         {task.status}
                                     </span>
                                 </td>
                                 <td className="px-4 py-3">
-                                    <span className="text-[#4A739C] hover:underline cursor-pointer">
+                                    <span className="text-[#4A739C] dark:text-indigo-300 hover:underline cursor-pointer">
                                         {task.assignedBy}
                                     </span>
                                 </td>
-                                <td className="px-4 py-3 text-[#4A739C]">
+                                <td className="px-4 py-3 text-[#4A739C] dark:text-gray-400">
                                     {task.completedAt}
                                 </td>
                             </tr>
@@ -163,13 +166,16 @@ const TaskHistory = () => {
             <div className="flex flex-col sm:flex-row justify-end gap-3 mt-6">
                 <button
                     onClick={handleExportCSV}
-                    className="px-4 py-2 rounded-md text-sm font-medium bg-[#E8EDF5] text-[#111827] hover:bg-gray-300 transition"
+                    className="px-4 py-2 rounded-md text-sm font-medium 
+                        bg-[#E8EDF5] text-[#111827] hover:bg-gray-300 transition 
+                        dark:bg-[#241f53] dark:text-white hover:dark:bg-[#2b1a76] cursor-pointer"
                 >
                     Export CSV
                 </button>
                 <button
                     onClick={handleExportPDF}
-                    className="px-4 py-2 rounded-md text-sm font-medium bg-[#0D80F2] text-white hover:bg-[#1E4DB7] transition"
+                    className="px-4 py-2 rounded-md text-sm font-medium 
+                        bg-[#0D80F2] text-white hover:bg-[#1E4DB7] transition"
                 >
                     Export PDF
                 </button>
