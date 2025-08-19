@@ -5,7 +5,15 @@ import { FaBell, FaPhone, FaRupeeSign } from "react-icons/fa";
 import { HashLoader } from "react-spinners";
 import BarChart from "../../charts/BarChart";
 import Table from "../../charts/Table";
+import { useTheme } from "../../../context/ThemeContext";
 
+
+
+const DashBoard = () => {
+  const [dashboardData, setDashboardData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const { theme } = useTheme();
+const isDarkMode = theme === "dark";
 // Dummy data for fallback
 const dummyProjectData = [
   {
@@ -220,7 +228,7 @@ const chartOptions = {
       display: true,
       position: "top",
       labels: {
-        color: "#374151",
+        color: isDarkMode ? "#D1D5DB" : "#4B5563",
         font: { size: 14, weight: "bold" },
       },
     },
@@ -237,13 +245,16 @@ const chartOptions = {
       ticks: {
         stepSize: 20,
         callback: (value) => `${value}%`,
-        color: "#6B7280",
+        color: isDarkMode ? "#E5E7EB" : "#4B5563",
         font: { size: 12, weight: "bold" },
       },
       grid: { color: "#E5E7EB" },
     },
     x: {
-      ticks: { color: "#6B7280", font: { size: 12, weight: "bold" } },
+      ticks: {
+        color: isDarkMode ? "#E5E7EB" : "#4B5563",
+        font: { size: 12, weight: "bold" },
+      },
       grid: { display: false },
     },
   },
@@ -278,10 +289,6 @@ const suggestions = [
     button: "Follow Up Now",
   },
 ];
-
-const DashBoard = () => {
-  const [dashboardData, setDashboardData] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
@@ -360,7 +367,7 @@ const DashBoard = () => {
     : dummyTeamPerformance;
 
   return (
-    <div className="px-3 py-2 rounded-xl space-y-6 font-[Segoe UI] dark:bg-white/10 dark:backdrop-blur-md max-sm:px-2 max-sm:py-3">
+    <div className="px-3 py-4 rounded-xl space-y-6 font-[Segoe UI] dark:bg-white/10 dark:backdrop-blur-md max-sm:px-2 max-sm:py-3">
       <div className="flex justify-end items-center w-full">
         <button className="bg-gradient-to-r from-indigo-600 to-yellow-600 text-white px-4 py-1.5 flex gap-1 items-center justify-center rounded-lg shadow hover:opacity-90">
           <div className="font-semibold scale-125">+</div> New Project
@@ -369,73 +376,79 @@ const DashBoard = () => {
 
       <div className="flex flex-col lg:flex-row gap-6 h-full">
         <div className="w-full lg:w-[70%] space-y-6">
-          <div className="border border-gray-300 p-4 bg-white rounded-lg shadow-sm max-sm:p-3">
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+          <div className="border border-gray-300 p-4 bg-white dark:bg-white/10 rounded-lg shadow-sm max-sm:p-3">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
               My Project Overview
             </h3>
             <Table data={projectData} columns={overviewColumns} />
           </div>
 
-          <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white max-sm:p-3">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">
+          <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white dark:bg-white/10 max-sm:p-3">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4 dark:text-white">
               Team Performance Metrics
             </h3>
             <div className="flex gap-6 mb-4 text-sm text-gray-600 justify-between max-sm:flex-wrap max-sm:gap-2 max-sm:items-center">
-              <div className="px-4 py-6 border rounded-md border-slate-300 max-sm:px-2 max-sm:py-3 max-sm:w-[48%] max-sm:text-center">
-                <p className="font-medium">Avg. Task Completion Time:</p>
-                <p className="font-semibold text-xl text-center text-black mt-2">
+              <div className="px-4 py-6 border rounded-md border-slate-300 dark:bg-white/20 max-sm:px-2 max-sm:py-3 max-sm:w-[48%] max-sm:text-center">
+                <p className="font-medium dark:text-white">
+                  Avg. Task Completion Time:
+                </p>
+                <p className="font-semibold text-xl text-center text-black dark:text-gray-200 mt-2">
                   {teamPerformance.average_completion_time}{" "}
                   <span className="font-medium text-lg">Days</span>
                 </p>
               </div>
-              <div className="px-4 py-6 border rounded-md border-slate-300 max-sm:px-2 max-sm:py-3 max-sm:w-[48%] max-sm:text-center">
-                <p className="font-medium">Tasks Completed This Week:</p>
-                <p className="font-semibold text-xl text-center text-black mt-2">
+              <div className="px-4 py-6 border rounded-md border-slate-300 dark:bg-white/20 max-sm:px-2 max-sm:py-3 max-sm:w-[48%] max-sm:text-center">
+                <p className="font-medium dark:text-white">
+                  Tasks Completed This Week:
+                </p>
+                <p className="font-semibold text-xl text-center text-black dark:text-gray-200 mt-2">
                   {teamPerformance.total_tasks_completed}
                 </p>
               </div>
-              <div className="px-4 py-6 border rounded-md border-slate-300 max-sm:px-2 max-sm:py-3 max-sm:w-[48%] max-sm:text-center max-sm:mx-auto">
-                <p className="font-medium">Active Members This Week:</p>
-                <p className="font-semibold text-xl text-center text-black mt-2">
+              <div className="px-4 py-6 border rounded-md border-slate-300 dark:bg-white/20 max-sm:px-2 max-sm:py-3 max-sm:w-[48%] max-sm:text-center max-sm:mx-auto">
+                <p className="font-medium dark:text-white">
+                  Active Members This Week:
+                </p>
+                <p className="font-semibold text-xl text-center text-black dark:text-gray-200 mt-2">
                   {teamPerformance.active_members || "6 out of 7"}
                 </p>
               </div>
             </div>
             <div className="w-full overflow-x-auto max-sm:mt-3">
-              <div className="min-w-[500px] h-[300px] max-sm:h-[250px] max-sm:overflow-x-auto">
+              <div className="min-w-[500px] h-[300px] max-sm:h-[250px] dark:bg-white/10 max-sm:overflow-x-auto">
                 <BarChart data={chartData} options={chartOptions} />
               </div>
             </div>
           </div>
 
-          <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+          <div className="border border-gray-300 p-4 rounded-lg shadow-sm bg-white dark:bg-white/10">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2 dark:text-white">
               Upcoming Deadlines
             </h3>
             <Table data={deadlineData} columns={deadlineColumns} />
           </div>
         </div>
 
-        <div className="w-full lg:w-[30%] border border-gray-300 bg-white py-3 px-6 rounded-lg shadow-sm min-h-[700px] flex flex-col justify-between">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+        <div className="w-full lg:w-[30%] border border-gray-300 bg-white dark:bg-white/10 py-3 px-6 rounded-lg shadow-sm min-h-[700px] flex flex-col justify-between">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4 dark:text-white">
             AI Suggestions
           </h2>
           <div className="flex flex-col gap-4 flex-1 justify-between">
             {suggestions.map((item, i) => (
               <div
                 key={i}
-                className="text-gray-600 px-8 py-3 flex flex-col gap-5 border items-center border-[#E0E0E0] rounded-md shadow-md shadow-gray-300 min-h-[150px]"
+                className="text-gray-600 dark:text-white px-8 py-3 flex flex-col gap-5 dark:bg-white/20 border items-center border-[#E0E0E0] rounded-md shadow-md dark:shadow-sm shadow-gray-300 min-h-[150px]"
               >
                 <div className="flex items-center gap-2 text-[15px] font-medium mt-3">
                   {item.icon}
                   {item.title}
                 </div>
-                <p className="text-[14px] font-normal leading-relaxed px-3 text-gray-500">
+                <p className="text-[14px] font-normal leading-relaxed px-3 text-gray-500 dark:text-gray-100">
                   {item.message}
                 </p>
                 {item.button && (
                   <button
-                    className="text-sm font-medium text-black border border-gray-300 px-4 py-2 mb-6 cursor-pointer bg-white rounded hover:bg-gray-50 w-fit"
+                    className="text-sm font-medium text-black border border-gray-300 px-4 py-2 mb-6 cursor-pointer bg-white dark:bg-white/60 rounded hover:bg-gray-50 w-fit"
                     style={{
                       boxShadow:
                         "inset 0 1px 2px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.2)",
