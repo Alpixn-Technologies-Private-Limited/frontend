@@ -17,25 +17,25 @@ const ClientSelection = () => {
         <input
           type="text"
           placeholder="Search for existing client"
-          className="h-12 w-full sm:w-100 px-4 py-2 border bg-white border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="h-12 w-full sm:w-100 px-4 py-2 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
-      <button className="text-black font-semibold hover:underline mb-6">
+      <button className="text-black px-2 py-3 rounded dark:bg-white dark:text-black font-semibold hover:underline mb-6">
         Add New Client
       </button>
 
       <div className="flex flex-col sm:flex-row justify-end gap-3 mt-6">
         <button
           type="button"
-          className="text-sm px-4 py-2 text-gray-600 hover:text-black rounded"
+          className="text-sm dark:bg-white px-4 py-2 text-gray-600 hover:text-black rounded"
         >
           Cancel
         </button>
         <button
           type="button"
           onClick={handleNext}
-          className="text-sm bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="text-sm bg-blue-600 dark:bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           Next
         </button>

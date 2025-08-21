@@ -84,17 +84,24 @@ const TaskBoard = () => {
   ]
 
   return (
-    <div className="mt-9 bg-white px-4">
+    <div
+      className="bg-white/80 dark:bg-white/10 dark:backdrop-blur-md
+                 border border-gray-200 dark:border-white/20
+                 px-4 rounded-xl shadow-lg transition-all"
+    >
       {/* Heading */}
-      <h2 className="text-3xl py-4 font-semibold text-gray-800 m-8">
+      <h2 className="text-3xl py-6 font-semibold text-gray-800 dark:text-white">
         Project Task Board
       </h2>
 
       {/* Columns Row */}
-      <div className="flex flex-col m-6 md:flex-row gap-6">
+      <div className="flex flex-col md:flex-row gap-6 m-6">
         
-        {/* To Do Column Card */}
-        <div className="bg-gray-100 rounded-lg p-4 shadow-sm min-h-[520px] md:w-1/3">
+        {/* To Do */}
+        <div className="bg-white/80 dark:bg-white/10 dark:backdrop-blur-md
+                        border border-gray-200 dark:border-white/20
+                        rounded-lg p-4 shadow-sm min-h-[520px] w-full md:w-1/3
+                        transition hover:shadow-md">
           <TaskColumn
             title="To Do"
             count={todoTasks.length}
@@ -103,8 +110,11 @@ const TaskBoard = () => {
           />
         </div>
 
-        {/* Pending Column Card */}
-        <div className="bg-gray-100 rounded-lg p-4 shadow-sm min-h-[520px] w-full md:w-1/3">
+        {/* Pending */}
+        <div className="bg-white/80 dark:bg-white/10 dark:backdrop-blur-md
+                        border border-gray-200 dark:border-white/20
+                        rounded-lg p-4 shadow-sm min-h-[520px] w-full md:w-1/3
+                        transition hover:shadow-md">
           <TaskColumn
             title="Pending"
             count={pendingTasks.length}
@@ -113,8 +123,11 @@ const TaskBoard = () => {
           />
         </div>
 
-        {/* Completed Column Card */}
-        <div className="bg-gray-100 rounded-lg p-4 shadow-sm min-h-[520px] w-full md:w-1/3">
+        {/* Completed */}
+        <div className="bg-white/80 dark:bg-white/10 dark:backdrop-blur-md
+                        border border-gray-200 dark:border-white/20
+                        rounded-lg p-4 shadow-sm min-h-[520px] w-full md:w-1/3
+                        transition hover:shadow-md">
           <TaskColumn
             title="Completed"
             count={completedTasks.length}

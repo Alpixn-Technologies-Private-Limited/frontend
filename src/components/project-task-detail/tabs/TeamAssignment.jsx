@@ -33,7 +33,7 @@ const TeamAssignment = () => {
       <div className="flex flex-col sm:flex-row justify-end gap-3 mt-6">
         <button
           type="button"
-          className="text-sm px-4 py-2 text-gray-600 hover:text-black rounded"
+          className="text-sm px-4 dark:bg-white py-2 text-gray-600 hover:text-black rounded"
         >
           Cancel
         </button>

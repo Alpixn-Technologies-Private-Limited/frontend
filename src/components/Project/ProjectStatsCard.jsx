@@ -1,19 +1,28 @@
-import React from 'react';
+import React from "react";
 
 const ProjectStatsCard = ({ title, value, subtitle, icon, change, changeColor }) => {
   return (
-    <div className="bg-white shadow-sm rounded-xl border border-gray-300 p-4 sm:p-5 hover:shadow-md transition">
-      <div className="flex justify-between items-center mb-3">
-        <h4 className="text-sm font-medium text-gray-600">{title}</h4>
-        <span className="text-2xl">{icon}</span>
-      </div>
-      <h2 className="text-2xl font-bold text-gray-900">
+    <div
+      className="bg-white/70 dark:bg-[#1a1a1a]/40 dark:backdrop-blur-md
+                 border border-gray-200 dark:border-white/10
+                 rounded-xl p-4 sm:p-5 shadow-sm
+                 transition-all hover:shadow-lg hover:-translate-y-1"
+    >
+      {/* Icon */}
+      <div className="text-2xl mb-2">{icon}</div>
+
+      {/* Value */}
+      <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
         {value}
-        {subtitle && (
-          <span className="ml-1 text-base font-medium text-gray-600">{subtitle}</span>
-        )}
-      </h2>
-      <p className={`text-sm font-medium mt-2 ${changeColor}`}>{change}</p>
+      </h3>
+
+      {/* Title + Subtitle */}
+      <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
+        {title} {subtitle && `- ${subtitle}`}
+      </p>
+
+      {/* Change Indicator */}
+      <p className={`text-xs mt-2 ${changeColor}`}>{change}</p>
     </div>
   );
 };

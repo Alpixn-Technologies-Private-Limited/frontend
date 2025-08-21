@@ -17,8 +17,8 @@ const ProjectSetupForm = () => {
   const activeTab = location.pathname.split("/").filter(Boolean).pop();
 
   return (
-    <div className="bg-gray-200 rounded shadow p-6 mt-6">
-      <h3 className="text-lg font-semibold text-black mb-4">Project Setup</h3>
+    <div className="bg-gray-200 dark:bg-white/5 dark:backdrop-blur-md border-white/20 transition rounded shadow p-6 mt-6">
+      <h3 className="text-lg font-semibold dark:text-white text-black mb-4">Project Setup</h3>
       <p className="text-sm text-gray-500 mb-6">Follow the steps below to configure your project.</p>
 
       {/* Tab Header */}
@@ -29,7 +29,7 @@ const ProjectSetupForm = () => {
             onClick={() => navigate(tab.path)}
             className={`pb-2 whitespace-nowrap ${
               activeTab === tab.path
-                ? "border-b-2 border-black text-black"
+                ? "border-b-2 border-black dark:border-blue-400 dark:text-white text-black"
                 : "text-gray-500 hover:text-black"
             }`}
           >

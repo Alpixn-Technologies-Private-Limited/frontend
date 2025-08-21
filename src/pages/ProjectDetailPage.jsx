@@ -35,21 +35,30 @@ const ProjectDetail = () => {
   }, [id]);
 
   return (
-    <div className="h-screen flex bg-gray-50 flex-col">
+    <div className="h-screen flex flex-col 
+                    bg-gray-100 
+                    dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76]">
+      
       {/* Sidebar */}
-      <div className="fixed top-0 left-0 bottom-0 w-64 max-sm:w-0 z-50 border-r bg-white">
+      <div className="fixed top-0 left-0 bottom-0 w-64 max-sm:w-0 z-50 
+                      border-r border-gray-200 dark:border-gray-700 
+                      bg-white dark:bg-[#0f172a]">
         <Sidebar />
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col ml-64 max-sm:ml-0">
+      <div className="flex-1 flex flex-col ml-64 max-sm:ml-0 
+                      bg-gray-100 
+                      dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76]">
+        
         {/* Navbar */}
-        <div className="fixed top-0 left-64 right-0 z-40 h-16 max-sm:left-0 bg-white border-b">
+        <div className="fixed top-0 left-64 right-0 z-40 h-16 max-sm:left-0 
+                        bg-white dark:bg-[#0f172a] border-b border-gray-200 dark:border-gray-700">
           <Navbar />
         </div>
 
         {/* Scrollable Content Area */}
-        <div className="pt-16 px-4 md:px-6 pb-6 flex-1">
+        <div className="pt-16 px-4 md:px-6 pb-6 flex-1 overflow-y-auto">
           {loading ? (
             <div className="flex items-center justify-center h-full">
               <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-indigo-500 border-solid"></div>
@@ -77,7 +86,10 @@ const ProjectDetail = () => {
         </div>
 
         {/* Footer */}
-        <div className="px-4 md:px-6 py-4 bg-gray-50 mt-auto">
+        <div className="px-4 md:px-6 py-4 
+                        bg-gray-100 
+                        dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76] 
+                        border-gray-200 dark:border-gray-700 mt-auto">
           <Footer />
         </div>
       </div>
