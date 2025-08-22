@@ -4,10 +4,14 @@ import { Link } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { useSidebar } from "../context/SidebarContext";
 import { FaMoon } from "react-icons/fa6";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
+  const { loadUser, user, loading } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const { toggleSidebar } = useSidebar();
+
+  console.log(user?.name, "from navbar");
 
   return (
     <div className="w-full bg-white dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76] border-b-2 border-gray-300 dark:border-gray-600 shadow px-6 py-4 flex items-center justify-between max-sm:px-3 max-sm:py-2 ">
@@ -17,14 +21,16 @@ const Navbar = () => {
       />
       <div className="flex items-center space-x-4 max-sm:hidden">
         <img
-          src="https://i.pinimg.com/564x/c7/4c/78/c74c78c049af7061319694743ccb0f8e.jpg"
+          src={user?.avatar || "https://i.pinimg.com/564x/c7/4c/78/c74c78c049af7061319694743ccb0f8e.jpg"}
           alt="Logo"
           className="w-10 h-10 object-cover rounded-full dark:border dark:border-gray-50"
         />
         <Link to={"/settings/user"}>
           <div className="text-gray-700 dark:text-white text-lg max-sm:hidden">
             <span>Hello,</span>{" "}
-            <span className="font-semibold text-black dark:text-white">Katherine</span>
+            <span className="font-semibold text-black dark:text-white">
+              {user?.name}
+            </span>
           </div>
         </Link>
       </div>

@@ -106,7 +106,7 @@ const AdminDashboard = () => {
             }`,
           },
         });
-        console.log("Admin Dashboard Data Response:", response);
+        // console.log("Admin Dashboard Data Response:", response);
 
         let apiData = null;
         if (response?.data?.success && response.data?.data) {
@@ -122,7 +122,7 @@ const AdminDashboard = () => {
       } finally {
         setTimeout(() => {
           setLoading(false);
-        }, 500);
+        }, 100);
       }
     };
 
@@ -343,9 +343,9 @@ const AdminDashboard = () => {
           >
             <div className="font-semibold scale-125">+</div> New Project
           </Link>
-          <button className="flex items-center gap-2 border text-lg border-gray-300 bg-white text-black px-4 py-2 rounded-lg shadow hover:bg-gray-50 max-sm:px-2 max-sm:py-1">
+          <Link to="/clients/new" className="flex items-center gap-2 border text-lg border-gray-300 bg-white text-black px-4 py-2 rounded-lg shadow hover:bg-gray-50 max-sm:px-2 max-sm:py-1">
             <MdGroup className="scale-110" /> New Client
-          </button>
+          </Link>
         </div>
       </div>
 
