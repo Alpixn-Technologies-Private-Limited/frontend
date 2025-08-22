@@ -35,6 +35,7 @@ import ClientPortalPage from "./pages/ClientPortalPage";
 import { useAuth } from "./context/AuthContext";
 import ClientAddForm from "./pages/ClientAddFormPage";
 import ClientAddFormPage from "./pages/ClientAddFormPage";
+import AddNewProject from "./pages/AddNewProject";
 
 const App = () => {
     const { loadUser, user, loading } = useAuth();
@@ -127,6 +128,7 @@ const App = () => {
                 <Route path="/project/:id" element={<ProjectDetail />} />
                 <Route path="/project/tasks" element={<ProjectTaskPage />} />
                 <Route path="/project/task-board" element={<TaskBoardPage />} />
+                <Route path="/project/add-new" element={<AddNewProject />} />
                 <Route
                     path="/project/task-details/*"
                     element={<ProjectTaskDetailsPage />}

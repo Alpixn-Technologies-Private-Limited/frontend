@@ -14,10 +14,18 @@ import axiosInstance from "../utils/axios";
 const Sidebar = () => {
   const { loadUser, user, loading } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const { isSidebarOpen, closeSidebar } = useSidebar();
-
-  const handleLogout = async () => {
-    toast.success("Logged out successfully");
+  const {logout}=useAuth();
+  const handleLogout = () => {
+    try {
+      logout();
+      navigate("/login");
+    } catch(error) {
+      console.log("some error occured while logging out")
+      toast.error("some error occured!")
+    }
+    
   };
 
   // 🔑 Define menus based on role

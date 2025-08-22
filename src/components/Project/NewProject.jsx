@@ -74,48 +74,48 @@ export default function NewProject() {
   };
 
   return (
-    <div className="mx-auto px-2 py-4 bg-gray-50 min-h-screen">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">
+    <div className="mx-auto px-4 py-4 bg-gray-50 min-h-screen dark:bg-white/10 rounded-xl">
+      <h1 className="text-2xl font-bold text-gray-900 mb-6 dark:text-white">
         New Project Details
       </h1>
 
       <div className="flex w-full gap-4 max-sm:flex-col">
         <div className="flex flex-col gap-6 mb-6 w-[40%] max-sm:w-full">
           {/* Basic Information */}
-          <div className="bg-white rounded-lg p-6 shadow-sm">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          <div className="bg-white rounded-lg p-6 shadow-sm dark:bg-white/10">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4 dark:text-white">
               Basic Information
             </h2>
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-white">
                   Project Name
                 </label>
                 <input
                   type="text"
-                  className="w-full px-3 py-2 bg-slate-100 border border-gray-300 rounded-md focus:outline-none"
+                  className="w-full px-3 py-2 bg-slate-100 border border-gray-300 rounded-md focus:outline-none dark:bg-white/10 dark:placeholder:text-white/80"
                   placeholder="Enter project name"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-white">
                   Description
                 </label>
                 <textarea
                   rows={4}
-                  className="w-full px-3 py-2 bg-slate-100 border border-gray-300 rounded-md focus:outline-none resize-none"
+                  className="w-full px-3 py-2 bg-slate-100 border border-gray-300 rounded-md focus:outline-none resize-none dark:bg-white/10 dark:placeholder:text-white/80"
                   placeholder="Enter project description"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-white">
                     Category
                   </label>
-                  <select className="w-full px-3 py-2 bg-slate-100 border border-gray-300 rounded-md focus:outline-none">
+                  <select className="w-full px-3 py-2 bg-slate-100 border border-gray-300 rounded-md focus:outline-none dark:bg-white/10 dark:text-white/80">
                     <option>Select</option>
                     <option>Development</option>
                     <option>Design</option>
@@ -124,10 +124,10 @@ export default function NewProject() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-white">
                     Priority
                   </label>
-                  <select className="w-full px-3 py-2 bg-slate-100 border border-gray-300 rounded-md focus:outline-none">
+                  <select className="w-full px-3 py-2 bg-slate-100 border border-gray-300 rounded-md focus:outline-none dark:bg-white/10 dark:text-white/80">
                     <option>Select</option>
                     <option>High</option>
                     <option>Medium</option>
@@ -138,8 +138,8 @@ export default function NewProject() {
             </div>
           </div>
           {/* Project Template Selection */}
-          <div className="bg-white rounded-lg p-6 shadow-sm">
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          <div className="bg-white rounded-lg p-6 shadow-sm dark:bg-white/10">
+            <h2 className="text-xl font-semibold text-gray-900 mb-2 dark:text-white">
               Project Template Selection
             </h2>
 
@@ -148,14 +148,14 @@ export default function NewProject() {
               <input
                 type="text"
                 placeholder="Find Template"
-                className="w-full px-4 py-3 pl-10 border border-gray-300 rounded-md focus:outline-none bg-slate-100"
+                className="w-full px-4 py-3 pl-10 border border-gray-300 rounded-md focus:outline-none bg-slate-100 dark:bg-white/10 dark:text-white"
               />
             </div>
 
             <div className="flex items-end gap-4 mt-4 max-sm:flex-col">
-              <div className="space-y-1.5 border border-gray-300 rounded-lg p-4 flex-1">
+              <div className="space-y-1.5 border border-gray-300 rounded-lg p-4 flex-1 dark:bg-white/10">
                 <div className="flex items-center gap-2">
-                  <h2 className="text-xl font-medium">Website Development</h2>
+                  <h2 className="text-xl font-medium dark:text-white">Website Development</h2>
                   <input
                     type="checkbox"
                     name="template"
@@ -164,7 +164,7 @@ export default function NewProject() {
                     className="h-5 w-5 rounded-sm border-green-600 accent-white bg-green-400 ring-[1px] focus:ring-green-500"
                   />
                 </div>
-                <p className="text-sm text-gray-500 mt-2">
+                <p className="text-sm text-gray-500 mt-2 dark:text-gray-300">
                   Creating Company website and landing pages
                 </p>
               </div>
@@ -178,15 +178,15 @@ export default function NewProject() {
 
         <div className="flex flex-col gap-4 mb-6 w-[60%] max-sm:w-full">
           {/* Client Selection */}
-          <div className="bg-white rounded-lg p-6 shadow-sm max-sm:p-4">
+          <div className="bg-white rounded-lg p-6 shadow-sm max-sm:p-4 dark:bg-white/10">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                 Client Selection
               </h2>
             </div>
 
             <div>
-              <span className="block text-sm font-medium text-gray-700 mb-1">
+              <span className="block text-sm font-medium text-gray-700 mb-1 dark:text-white">
                 Client
               </span>
               <div className="relative mb-4 flex items-center gap-2 max-sm:flex-col">
@@ -196,9 +196,9 @@ export default function NewProject() {
                   name="client"
                   id="client"
                   placeholder="Search for clients..."
-                  className="h-12 border border-gray-300 rounded-lg focus:outline-0 bg-slate-100 w-full pl-10 max-sm:pl-8 max-sm:h-10"
+                  className="h-12 border border-gray-300 rounded-lg focus:outline-0 bg-slate-100 dark:bg-white/10 dark:text-white w-full pl-10 max-sm:pl-8 max-sm:h-10"
                 />
-                <button className="text-gray-500 flex min-w-fit items-center border border-gray-400 h-12 px-3 rounded-md bg-white hover:bg-gray-50 transition-colors max-sm:h-10 max-sm:ml-auto">
+                <button className="text-gray-500 flex min-w-fit items-center border border-gray-400 h-12 px-3 rounded-md bg-white dark:bg-white/10 dark:text-white dark:hover:bg-white/20 hover:bg-gray-50 transition-colors max-sm:h-10 max-sm:ml-auto">
                   <Plus className="w-4 h-4" /> Add New Client
                 </button>
               </div>
@@ -208,7 +208,7 @@ export default function NewProject() {
               {clients.map((client) => (
                 <div
                   key={client.id}
-                  className="flex items-center p-2 bg-gray-50 border-[1px] border-gray-300 hover:bg-gray-100 rounded-lg"
+                  className="flex items-center p-2 bg-gray-50 dark:bg-white/30 border-[1px] border-gray-300 hover:bg-gray-100 dark:hover:bg-white/20 rounded-lg"
                 >
                   <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center mr-3">
                     <User className="w-4 h-4 text-gray-600" />
@@ -217,29 +217,29 @@ export default function NewProject() {
                     <div className="text-sm font-medium text-gray-900">
                       {client.name}
                     </div>
-                    <div className="text-xs text-gray-500">{client.email}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-300">{client.email}</div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
           {/* Team Assignment */}
-          <div className="bg-white rounded-lg p-6 shadow-sm max-sm:p-4">
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          <div className="bg-white rounded-lg p-6 shadow-sm max-sm:p-4 dark:bg-white/10">
+            <h2 className="text-xl font-semibold text-gray-900 mb-2 dark:text-white">
               Team Assignment
             </h2>
 
             <div>
               <label
                 htmlFor="team"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 mb-1 dark:text-white"
               >
                 Select Team members
               </label>
               <select
                 name="team"
                 id="team"
-                className="w-full px-3 h-12 bg-slate-100 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-0 mb-4"
+                className="w-full px-3 h-12 bg-slate-100 dark:bg-white/10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-0 mb-4"
               >
                 {teamMembers.map((member) => (
                   <option key={member.id} value={member.id}>
@@ -276,9 +276,9 @@ export default function NewProject() {
             </div>
           </div>
           {/* Timeline & Milestone */}
-          <div className="bg-white rounded-lg p-6 shadow-sm">
+          <div className="bg-white rounded-lg p-6 shadow-sm dark:bg-white/10">
             <div className="flex items-center justify-between mb-4 max-sm:flex-col max-sm:items-start">
-              <h2 className="text-xl max-sm:text-2xl font-semibold text-gray-900">
+              <h2 className="text-xl max-sm:text-2xl font-semibold text-gray-900 dark:text-white">
                 Timeline & Milestone
               </h2>
               <button className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-yellow-600 text-base font-medium flex items-center text-white rounded-md hover:bg-blue-700 transition-colors max-sm:py-1.5 max-sm:w-full max-sm:justify-center max-sm:mt-2">
@@ -289,27 +289,27 @@ export default function NewProject() {
 
             <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-white">
                   Start Date
                 </label>
                 <div className="relative">
                   <input
                     type="date"
                     defaultValue="2024-07-07"
-                    className="w-full px-3 py-2 h-12 border bg-slate-100 border-gray-300 rounded-md focus:outline-none"
+                    className="w-full px-3 py-2 h-12 border bg-slate-100 dark:bg-white/40 border-gray-300 rounded-md focus:outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-white">
                   End Date
                 </label>
                 <div className="relative">
                   <input
                     type="date"
                     defaultValue="2024-10-10"
-                    className="w-full px-3 py-2 h-12 bg-slate-100 border border-gray-300 rounded-md focus:outline-none"
+                    className="w-full px-3 py-2 h-12 bg-slate-100 dark:bg-white/40 border border-gray-300 rounded-md focus:outline-none"
                   />
                 </div>
               </div>
@@ -320,8 +320,8 @@ export default function NewProject() {
 
       <div className="flex w-full">
         {/* AI Configuration */}
-        <div className="bg-white rounded-lg p-6 shadow-sm w-full">
-          <h2 className="text-xl font-semibold text-gray-900 mb-7">
+        <div className="bg-white rounded-lg p-6 shadow-sm w-full dark:bg-white/10 dark:text-white">
+          <h2 className="text-xl font-semibold text-gray-900 mb-7 dark:text-white">
             AI Configuration
           </h2>
 
@@ -329,7 +329,7 @@ export default function NewProject() {
             <div className="space-y-8">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="font-medium text-gray-900">
+                  <div className="font-medium text-gray-900 dark:text-white">
                     Enable Task Automation
                   </div>
                   {/* <div className="text-sm text-gray-500">
@@ -352,7 +352,7 @@ export default function NewProject() {
 
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="font-medium text-gray-900">
+                  <div className="font-medium text-gray-900 dark:text-white">
                     Enable risk prediction
                   </div>
                   {/* <div className="text-sm text-gray-500">
@@ -377,7 +377,7 @@ export default function NewProject() {
             <div className="space-y-8">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="font-medium text-gray-900">
+                  <div className="font-medium text-gray-900 dark:text-white">
                     Enable event prediction
                   </div>
                   {/* <div className="text-sm text-gray-500">
@@ -399,7 +399,7 @@ export default function NewProject() {
               </div>
 
               <div>
-                <div className="font-medium text-gray-900 mb-2">
+                <div className="font-medium text-gray-900 mb-2 dark:text-white">
                   Suggestion Sensitivity
                 </div>
                 <div className="space-y-2">
@@ -425,10 +425,10 @@ export default function NewProject() {
 
       {/* Action Buttons */}
       <div className="flex justify-center gap-5 max-sm:gap-2 mt-6 max-sm:flex-wrap max-sm:justify-between">
-        <button className="px-6 py-2 bg-white shadow-md cursor-pointer border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors max-sm:px-3 max-sm:py-1.5 max-sm:w-[48%]">
+        <button className="px-6 py-2 bg-white dark:bg-white/70 shadow-md cursor-pointer border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors max-sm:px-3 max-sm:py-1.5 max-sm:w-[48%]">
           Cancel
         </button>
-        <button className="px-6 py-2 bg-white shadow-md cursor-pointer border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors max-sm:px-3 max-sm:py-1.5 max-sm:w-[48%]">
+        <button className="px-6 py-2 bg-white dark:bg-white/70 shadow-md cursor-pointer border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors max-sm:px-3 max-sm:py-1.5 max-sm:w-[48%]">
           Save as Draft
         </button>
         <button className="px-6 py-2 cursor-pointer shadow-md bg-gradient-to-r from-indigo-600 to-yellow-600 text-white rounded-md hover:bg-blue-700 transition-colors max-sm:px-3 max-sm:py-1.5 max-sm:w-full max-sm:mt-2">

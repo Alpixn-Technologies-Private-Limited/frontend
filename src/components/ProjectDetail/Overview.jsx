@@ -31,28 +31,28 @@ const Overview = () => {
         {/* Logo & Name */}
         <div className="flex items-center gap-4 flex-1 min-w-[200px]">
           <div className="w-10 h-10 bg-indigo-600 text-white rounded-md flex items-center justify-center text-xl font-bold">
-            {project.name.charAt(0)}
+            {project?.name.charAt(0)}
           </div>
           <div>
-            <h3 className="font-semibold text-green-600">{project.name}</h3>
-            <p className="text-sm text-gray-500">{project.client}</p>
+            <h3 className="font-semibold text-green-600">{project?.name}</h3>
+            <p className="text-sm text-gray-500">{project?.client}</p>
           </div>
         </div>
 
         {/* Due Date */}
         <div className="text-sm text-indigo-500 min-w-[120px]">
-          Due {project.dueDate}
+          Due {project?.dueDate}
         </div>
 
         {/* Progress */}
         <div className="flex items-center gap-2 flex-1 min-w-[200px]">
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div
-              className={`${project.progressColor} h-2 rounded-full`}
-              style={{ width: `${project.progress}%` }}
+              className={`${project?.progressColor} h-2 rounded-full`}
+              style={{ width: `${project?.progress}%` }}
             ></div>
           </div>
-          <span className="text-sm text-green-600">{project.progress}%</span>
+          <span className="text-sm text-green-600">{project?.progress}%</span>
         </div>
 
         {/* Team + Status in one row */}

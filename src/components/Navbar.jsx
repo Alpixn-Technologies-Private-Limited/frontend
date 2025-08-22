@@ -21,7 +21,7 @@ const Navbar = () => {
       />
       <div className="flex items-center space-x-4 max-sm:hidden">
         <img
-          src={user?.avatar || "https://i.pinimg.com/564x/c7/4c/78/c74c78c049af7061319694743ccb0f8e.jpg"}
+          src={user?.avatar || "https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659652_640.png"}
           alt="Logo"
           className="w-10 h-10 object-cover rounded-full dark:border dark:border-gray-50"
         />
@@ -36,7 +36,7 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center space-x-6 max-sm:space-x-2 max-sm:scale-95">
-        <span className="text-gray-600 dark:text-white text-xl cursor-pointer hover:text-black transition duration-200 relative">
+        <span className="text-gray-600 dark:text-white text-xl cursor-pointer hover:text-black dark:hover:text-amber-50 transition duration-200 relative">
           <FaBell className="w-6 h-6" />
           <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center justify-center">
             {"0"}
