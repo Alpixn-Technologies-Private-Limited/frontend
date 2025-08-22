@@ -68,16 +68,14 @@ const LoginForm = () => {
 
     return (
         <div
-            style={{
-                backgroundImage: `
-                  linear-gradient(180deg, #EAE9FF 0%, #F1F8FF 62.81%),
-                  linear-gradient(213.06deg, rgba(183, 0, 255, 0.036) 9.26%, rgba(255, 255, 255, 0) 80.28%)
-                `,
-            }}
-            className="flex flex-col h-[100vh] max-w-[100vw]"
+            className="
+      flex flex-col h-[100vh] max-w-[100vw] 
+      bg-gradient-to-b from-[#EAE9FF] to-[#F1F8FF] 
+      dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76]
+    "
         >
             <img
-                className="absolute top-0 left-1/2 transform -translate-x-1/2 mt-[-60px] w-[90%] max-w-[829px] h-auto"
+                className="absolute top-0 left-1/2 transform -translate-x-1/2 mt-[-60px] w-[90%] max-w-[829px] h-auto "
                 src={Login_page_top_image}
                 alt="Top Banner"
             />
@@ -90,14 +88,14 @@ const LoginForm = () => {
                                 Project Pilot
                             </span>
                         </h1>
-                        <p className="text-gray-700 mt-1 sm:mt-2 text-sm sm:text-base">
+                        <p className="text-gray-700 dark:text-white mt-1 sm:mt-2 text-sm sm:text-base">
                             Smart. Scalable. <span className="font-semibold">AI-powered</span> Operations
                         </p>
                     </div>
 
                     <form className="space-y-4" onSubmit={handleSubmit}>
                         <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-1">
+                            <label className="block dark:text-white text-sm font-semibold text-gray-700 mb-1">
                                 Email Address
                             </label>
                             <input
@@ -105,11 +103,11 @@ const LoginForm = () => {
                                 placeholder="e.g. varun123@gmail.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm sm:text-base"
+                                className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm sm:text-base dark:bg-black dark:text-white"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-1 mt-3">
+                            <label className="block text-sm font-semibold dark:text-white text-gray-700 mb-1 mt-3">
                                 Password
                             </label>
                             <div className="relative">
@@ -118,18 +116,18 @@ const LoginForm = () => {
                                     placeholder="Enter Password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm sm:text-base"
+                                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm sm:text-base  dark:bg-black dark:text-white"
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-white"
                                 >
                                     {showPassword ? <FiEye /> : <FiEyeOff />}
                                 </button>
                             </div>
                             <div className="flex justify-between items-center mt-2">
-                                <label className="flex items-center text-xs sm:text-sm font-medium">
+                                <label className="flex items-center text-xs sm:text-sm font-medium dark:text-white">
                                     <input
                                         type="checkbox"
                                         className="mr-2"
@@ -140,7 +138,7 @@ const LoginForm = () => {
                                 </label>
                                 <Link
                                     to="/forgot-password"
-                                    className="text-blue-600 text-xs sm:text-sm hover:underline"
+                                    className="text-blue-600 text-xs sm:text-sm dark:text-yellow-400 hover:underline"
                                 >
                                     Forgot Password?
                                 </Link>
@@ -149,7 +147,7 @@ const LoginForm = () => {
 
                         <button
                             type="submit"
-                            className="w-full bg-gradient-to-r from-[#4F46E5] to-[#D6A700] text-white py-2 rounded hover:opacity-90 transition text-sm sm:text-base cursor-pointer"
+                            className="w-full bg-gradient-to-r from-[#4F46E5] to-[#D6A700] text-white py-2 rounded hover:opacity-90 transition text-sm sm:text-base cursor-pointer dark:text-white"
                         >
                             Sign In
                         </button>
@@ -157,7 +155,7 @@ const LoginForm = () => {
                 </div>
             </div>
 
-            <footer className="text-center text-xs text-gray-500 py-4">
+            <footer className="text-center text-xs text-gray-500 py-4 dark:text-white">
                 © 2025 Alpixn Technologies Private Limited. All rights reserved.
             </footer>
         </div>

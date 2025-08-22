@@ -33,6 +33,8 @@ import AnalyticsPage from "./pages/AnalyticsPage";
 import Access from "./components/clientPortal/Access";
 import ClientPortalPage from "./pages/ClientPortalPage";
 import { useAuth } from "./context/AuthContext";
+import ClientAddForm from "./pages/ClientAddFormPage";
+import ClientAddFormPage from "./pages/ClientAddFormPage";
 
 const App = () => {
     const { loadUser, user, loading } = useAuth();
@@ -66,6 +68,14 @@ const App = () => {
                     element={
                         <ProtectedRoute>
                             <ClientsListPage />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/clients/new"
+                    element={
+                        <ProtectedRoute>
+                            <ClientAddFormPage />
                         </ProtectedRoute>
                     }
                 />

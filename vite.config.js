@@ -9,4 +9,7 @@ export default defineConfig({
     theme: {
         extend: {},
     },
+    server:{
+        port:3000
+    }
 });
