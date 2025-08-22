@@ -30,18 +30,19 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.post("/api/auth/logout", {
+            const res = await axios.post("/api/auth/logout", {
                 headers: {
-                    Authorization: `Bearer ${
-                        localStorage.getItem("token") ||
-                        sessionStorage.getItem("token")
-                    }`,
+                    Authorization: `Bearer ${localStorage.getItem("token") || sessionStorage.getItem("token")
+                        }`,
                 },
                 withCredentials: true,
-            })
+            },
+
+            )
+            console.log(res)
         } catch {
             console.log("some error occured while logging out the user")
-            toast.error("some error occured"    )
+            toast.error("some error occured")
         }
         localStorage.removeItem("token");
         localStorage.removeItem("refresh_token");

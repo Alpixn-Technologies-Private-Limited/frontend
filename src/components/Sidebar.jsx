@@ -21,9 +21,15 @@ const menuItems = [
 const Sidebar = () => {
   const location = useLocation();
   const { isSidebarOpen, closeSidebar } = useSidebar();
-
+  const {logout}=useAuth();
   const handleLogout = () => {
-    toast.success("Logged out successfully");
+    try {
+      logout();
+    } catch(error) {
+      console.log("some error occured while logging out")
+      toast.error("some error occured!")
+    }
+    
   };
 
   return (
