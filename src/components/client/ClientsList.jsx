@@ -11,8 +11,10 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "../../utils/axios";
 import { toast } from "react-hot-toast";
 import { HashLoader } from "react-spinners";
+import { useTheme } from "../../context/ThemeContext";
 
 const ClientsList = () => {
+    const { theme } = useTheme();
     const [clients, setClients] = useState([]);
     const [industryFilter, setIndustryFilter] = useState("Select");
     const [statusFilter, setStatusFilter] = useState("Select");
@@ -120,26 +122,26 @@ const ClientsList = () => {
     );
 
     return (
-        <div className="min-h-screen bg-gray-50 p-4">
+        <div className="min-h-screen bg-gray-50 p-4 dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76]">
             {loading ? (
                 <div className="absolute md:left-30 inset-0 flex items-center justify-center">
                     <HashLoader size={60} color="#6366F1" />
                 </div>
             ) : clients.length === 0 ? (
-                <p className="text-center py-6 text-gray-500">
+                <p className="text-center py-6 text-gray-500 dark:text-white">
                     No clients found.
                 </p>
             ) : (
                 <div>
                     <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                        <div className="text-sm text-gray-600">
+                        <div className="text-sm text-gray-600 dark:text-white">
                             <Link to="/dashboard/pm">Dashboard</Link> &gt;{" "}
-                            <span className="text-blue-800">Clients</span>
+                            <span className="text-blue-800 dark:text-yellow-400">Clients</span>
                         </div>
 
                         <div className="flex flex-wrap gap-4">
                             <div className="flex items-center gap-2">
-                                <label className="text-sm font-medium text-gray-700">
+                                <label className="text-sm font-medium text-gray-700 dark:text-white">
                                     Industry
                                 </label>
                                 <select
@@ -156,7 +158,7 @@ const ClientsList = () => {
                                 </select>
                             </div>
                             <div className="flex items-center gap-2">
-                                <label className="text-sm font-medium text-gray-700">
+                                <label className="text-sm font-medium text-gray-700 dark:text-white">
                                     Status
                                 </label>
                                 <select
@@ -172,7 +174,6 @@ const ClientsList = () => {
                                 </select>
                             </div>
                             <Link
-                                to="/clients/:id/edit-form"
                                 className="flex items-center gap-1 bg-gradient-to-r from-purple-700 to-yellow-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 transition"
                             >
                                 <FiPlus size={16} />
@@ -180,34 +181,34 @@ const ClientsList = () => {
                             </Link>
                         </div>
                     </div>
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76]">
                         <div className="p-4 sm:p-6">
-                            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                            <h2 className="text-lg font-semibold text-gray-900 mb-4 dark:text-white">
                                 Client List
                             </h2>
                             <div className="overflow-x-auto border border-gray-300 rounded-lg">
                                 <table className="w-full text-sm">
-                                    <thead className="bg-gray-50">
-                                        <tr className="border-b border-gray-200">
-                                            <th className="text-left py-3 px-4 font-medium text-gray-700">
+                                    <thead className="bg-gray-50 dark:bg-[#2b1a76] dark:text-white">
+                                        <tr className="border-b border-gray-200 dark:text-white">
+                                            <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-white">
                                                 Client
                                             </th>
-                                            <th className="text-left py-3 px-4 font-medium text-gray-700">
+                                            <th className="dark:text-white text-left py-3 px-4 font-medium text-gray-700">
                                                 Email
                                             </th>
-                                            <th className="text-left py-3 px-4 font-medium text-gray-700">
+                                            <th className="dark:text-white text-left py-3 px-4 font-medium text-gray-700">
                                                 Industry
                                             </th>
-                                            <th className="text-left py-3 px-4 font-medium text-gray-700">
+                                            <th className="dark:text-white text-left py-3 px-4 font-medium text-gray-700">
                                                 Projects
                                             </th>
-                                            <th className="text-left py-3 px-4 font-medium text-gray-700">
+                                            <th className="dark:text-white text-left py-3 px-4 font-medium text-gray-700">
                                                 Last Interaction
                                             </th>
-                                            <th className="text-left py-3 px-4 font-medium text-gray-700">
+                                            <th className="dark:text-white text-left py-3 px-4 font-medium text-gray-700">
                                                 Status
                                             </th>
-                                            <th className="text-left py-3 px-4 font-medium text-gray-700">
+                                            <th className="dark:text-white text-left py-3 px-4 font-medium text-gray-700">
                                                 Action
                                             </th>
                                         </tr>
@@ -216,37 +217,38 @@ const ClientsList = () => {
                                         {clients.map((client) => (
                                             <tr
                                                 key={client.id}
-                                                className="border-b border-gray-100 hover:bg-gray-50"
+                                                className="border-b border-gray-100 dark:text-white"
                                             >
-                                                <td className="py-3 px-4 text-gray-900 font-medium">
+                                                <td className="py-3 px-4 text-gray-900 font-medium dark:text-white">
                                                     {client.name}
                                                 </td>
-                                                <td className="py-3 px-4 text-gray-700">
+                                                <td className="py-3 px-4 text-gray-700 dark:text-white">
                                                     {client.email || "N/A"}
                                                 </td>
-                                                <td className="py-3 px-4 text-gray-700">
+                                                <td className="py-3 px-4 text-gray-700 dark:text-white">
                                                     {client.industry || "N/A"}
                                                 </td>
-                                                <td className="py-3 px-4 text-gray-700">
+                                                <td className="py-3 px-4 text-gray-700 dark:text-white">
                                                     {client.active_projects ??
                                                         0}
                                                 </td>
-                                                <td className="py-3 px-4 text-gray-700">
+                                                <td className="py-3 px-4 text-gray-700 dark:text-white">
                                                     {client.last_interaction
                                                         ? new Date(
                                                               client.last_interaction
                                                           ).toLocaleDateString()
                                                         : "N/A"}
                                                 </td>
-                                                <td className="py-3 px-4">
+                                                <td className="py-3 px-4 dark:text-white">
                                                     <StatusBadge
                                                         status={client.status}
                                                     />
                                                 </td>
-                                                <td className="py-3 px-4">
-                                                    <div className="flex items-center gap-2">
+                                                <td className="py-3 px-4 dark:text-white">
+                                                    <div className="flex items-center gap-2 dark:text-white">
                                                         <ActionButton
                                                             icon={FiEye}
+                                                            className="hover:bg-green-100 cursor-pointer"
                                                             onClick={() =>
                                                                 navigate(
                                                                     `/clients/${client.id}`
@@ -255,6 +257,7 @@ const ClientsList = () => {
                                                         />
                                                         <ActionButton
                                                             icon={FiEdit}
+                                                            className="hover:bg-yellow-100 cursor-pointer"
                                                             onClick={() =>
                                                                 navigate(
                                                                     `/clients/${client.id}/edit-form`
@@ -263,7 +266,7 @@ const ClientsList = () => {
                                                         />
                                                         <ActionButton
                                                             icon={FiTrash2}
-                                                            className="hover:bg-red-100"
+                                                            className="hover:bg-red-500 cursor-pointer dark:text-white"
                                                             onClick={() =>
                                                                 handleDeleteClient(
                                                                     client?.id

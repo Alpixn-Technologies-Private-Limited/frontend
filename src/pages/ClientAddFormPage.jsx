@@ -1,10 +1,9 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
-import SystemSettings from '../components/setting and configurations/SystemSettings'
 import Footer from '../components/Footer'
-
-const SystemSettingsPage = () => {
+import AddNewClient from '../components/client/AddNewClient'
+const ClientAddFormPage = () => {
   return (
     <div className="h-screen flex flex-col dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76]">
       <div className="fixed top-0 left-64 right-0 z-40 max-sm:left-0">
@@ -16,7 +15,7 @@ const SystemSettingsPage = () => {
           <Sidebar />
         </div>
         <main className="ml-64 max-sm:ml-0 flex-1 overflow-y-auto bg-gray-50 p-4 md:p-6 max-sm:p-1 max-sm:mx-auto max-sm:w-full dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76]">
-          <SystemSettings />
+          <AddNewClient />
         </main>
       </div>
       <div className="pb-5 bg-gray-50 ml-64 max-sm:ml-0 max-sm:px-3 dark:bg-gradient-to-r dark:from-[#241f53] dark:via-[#0d0130] dark:to-[#2b1a76]">
@@ -26,4 +25,4 @@ const SystemSettingsPage = () => {
   )
 }
 
-export default SystemSettingsPage
+export default ClientAddFormPage
