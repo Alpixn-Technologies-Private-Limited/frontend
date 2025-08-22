@@ -174,7 +174,6 @@ const ClientsList = () => {
                                 </select>
                             </div>
                             <Link
-                                to="/clients/:id/edit-form"
                                 className="flex items-center gap-1 bg-gradient-to-r from-purple-700 to-yellow-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 transition"
                             >
                                 <FiPlus size={16} />
