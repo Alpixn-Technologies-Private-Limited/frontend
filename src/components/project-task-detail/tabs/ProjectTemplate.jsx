@@ -46,7 +46,7 @@ const ProjectTemplate = () => {
             }`}
           >
             {/* Inner White Card */}
-            <div className="bg-white w-full rounded-xl shadow p-4 h-full">
+            <div className="bg-white dark:text-black w-full rounded-xl shadow p-4 h-full">
               <img
                 src={template.image}
                 alt={template.name}
@@ -68,7 +68,7 @@ const ProjectTemplate = () => {
 
       {/* Navigation Buttons */}
       <div className="flex flex-col sm:flex-row justify-end gap-3">
-        <button className="text-sm text-gray-600 hover:text-black px-4 py-2 rounded">
+        <button className="text-sm dark:bg-white text-gray-600 hover:text-black px-4 py-2 rounded">
           Cancel
         </button>
         <button className="text-sm bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700">

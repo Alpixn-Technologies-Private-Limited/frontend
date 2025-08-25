@@ -4,6 +4,7 @@ import gridMenu from "../../assets/grid.png";
 import lineMenu from "../../assets/menu.png";
 import add from "../../assets/add.png";
 import client from "../../assets/client.png";
+import { Link } from "react-router-dom";
 
 const ProjectHeader = ({ onViewChange, view }) => {
   return (
@@ -43,10 +44,13 @@ const ProjectHeader = ({ onViewChange, view }) => {
 
         {/* New Project + New Client: In mobile stacked in row 2 */}
         <div className="flex w-full sm:w-auto gap-4">
-          <button className="flex items-center justify-center w-1/2 sm:w-auto text-white text-sm font-medium px-4 py-3 rounded-md shadow bg-gradient-to-r from-indigo-600 via-purple-500 to-yellow-500">
+          <Link 
+            to="/add-new" 
+            className="flex items-center justify-center w-1/2 sm:w-auto text-white text-sm font-medium px-4 py-3 rounded-md shadow bg-gradient-to-r from-indigo-600 via-purple-500 to-yellow-500"
+          >
             <img className="h-4 w-4 mr-2" src={add} alt="Add" />
             New Project
-          </button>
+          </Link>
 
           <button className="flex items-center justify-center w-1/2 sm:w-auto text-gray-800 text-sm font-medium px-4 py-3 rounded-md shadow bg-white border hover:bg-gray-50 transition">
             <img className="h-4 w-4 mr-2" src={client} alt="Client" />

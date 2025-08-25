@@ -15,14 +15,22 @@ const milestones = [
 ];
 
 const MilestoneChecklist = () => {
-  // split milestones in two columns
   const mid = Math.ceil(milestones.length / 2);
   const left = milestones.slice(0, mid);
   const right = milestones.slice(mid);
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow mt-6">
-      <h2 className="text-lg font-semibold mb-4 text-gray-800">Milestone Progress Checklist</h2>
+    <div
+      className="rounded-2xl p-6 mt-6 
+                 bg-white/30 dark:bg-white/10
+                 backdrop-blur-md 
+                 border border-white/20 dark:border-white/10 
+                 shadow-lg hover:shadow-xl
+                 transition-all duration-300"
+    >
+      <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-100">
+        Milestone Progress Checklist
+      </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {/* Left Column */}
@@ -30,13 +38,15 @@ const MilestoneChecklist = () => {
           {left.map((item, idx) => (
             <li key={idx} className="flex items-center gap-2">
               {item.completed ? (
-                <MdCheckBox className="text-indigo-600 text-xl" />
+                <MdCheckBox className="text-indigo-500 dark:text-indigo-400 text-xl" />
               ) : (
-                <MdCheckBoxOutlineBlank className="text-gray-400 text-xl" />
+                <MdCheckBoxOutlineBlank className="text-gray-400 dark:text-gray-500 text-xl" />
               )}
               <span
                 className={`text-sm ${
-                  item.completed ? "line-through text-indigo-600" : "text-black"
+                  item.completed
+                    ? "line-through text-indigo-500 dark:text-indigo-400"
+                    : "text-black dark:text-gray-200"
                 }`}
               >
                 {item.text}
@@ -50,13 +60,15 @@ const MilestoneChecklist = () => {
           {right.map((item, idx) => (
             <li key={idx} className="flex items-center gap-2">
               {item.completed ? (
-                <MdCheckBox className="text-indigo-600 text-xl" />
+                <MdCheckBox className="text-indigo-500 dark:text-indigo-400 text-xl" />
               ) : (
-                <MdCheckBoxOutlineBlank className="text-gray-400 text-xl" />
+                <MdCheckBoxOutlineBlank className="text-gray-400 dark:text-gray-500 text-xl" />
               )}
               <span
                 className={`text-sm ${
-                  item.completed ? "line-through text-indigo-600" : "text-black"
+                  item.completed
+                    ? "line-through text-indigo-500 dark:text-indigo-400"
+                    : "text-black dark:text-gray-200"
                 }`}
               >
                 {item.text}

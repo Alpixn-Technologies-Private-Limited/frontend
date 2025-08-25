@@ -22,7 +22,7 @@ const AIConfiguration = () => {
 
       {/* AI Parameter Slider (static visual) */}
       <div className="mb-10 flex flex-col sm:flex-row items-start sm:items-center gap-3">
-        <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+        <label className="text-sm dark:text-white font-medium text-gray-700 whitespace-nowrap">
           AI Parameter 1
         </label>
         <div className="flex items-center w-full gap-2">
@@ -30,35 +30,35 @@ const AIConfiguration = () => {
             <div className="bg-black w-1/2"></div>
             <div className="bg-gray-300 w-1/2"></div>
           </div>
-          <span className="text-sm text-gray-700">50</span>
+          <span className="text-sm dark:text-white text-gray-700">50</span>
         </div>
       </div>
 
       {/* Textarea 1 */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block dark:text-white text-sm font-medium text-gray-700 mb-2">
           Customize AI Automation
         </label>
         <textarea
           rows={4}
-          className="w-full px-3 py-2 border bg-white border-gray-300 rounded-md"
+          className="w-100 px-3 py-2 border bg-white border-gray-300 rounded-md"
         />
       </div>
 
       {/* Textarea 2 */}
       <div className="mb-10">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block dark:text-white text-sm font-medium text-gray-700 mb-2">
           Rules for Task Assignment and Prioritization
         </label>
         <textarea
           rows={4}
-          className="w-full px-3 py-2 border bg-white border-gray-300 rounded-md"
+          className="w-100 px-3 py-2 border bg-white border-gray-300 rounded-md"
         />
       </div>
 
       {/* Buttons */}
       <div className="flex flex-col sm:flex-row justify-end gap-3">
-        <button className="text-sm text-gray-600 hover:text-black px-4 py-2 rounded">
+        <button className="text-sm dark:bg-white text-gray-600 hover:text-black px-4 py-2 rounded">
           Cancel
         </button>
         <button className="text-sm bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700">
